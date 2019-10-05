@@ -37,4 +37,4 @@ dependencies {
 
 }
 
-mainClassName = 'HelloMain'
+mainClassName = 'Main'

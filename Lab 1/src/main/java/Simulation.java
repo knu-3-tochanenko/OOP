@@ -1,21 +1,12 @@
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.material.Material;
-import com.jme3.post.FilterPostProcessor;
+import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
-import com.jme3.math.ColorRGBA;
 import com.jme3.scene.shape.Sphere;
 
-/** Sample 1 - how to get started with the most simple JME 3 application.
- * Display a blue 3D cube and view from all sides by
- * moving the mouse and pressing the WASD keys. */
-public class HelloMain extends SimpleApplication {
-
-    public static void main(String[] args){
-        HelloMain app = new HelloMain();
-        app.start(); // start the game
-    }
+public class Simulation extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
