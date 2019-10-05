@@ -8,6 +8,11 @@ import com.jme3.scene.shape.Sphere;
 
 public class Simulation extends SimpleApplication {
 
+    private Voyager voyager;
+    private Jupiter jupiter;
+
+    public static final int G = 5;
+
     @Override
     public void simpleInitApp() {
         Box b = new Box(5, 0, 5); // create cube shape
