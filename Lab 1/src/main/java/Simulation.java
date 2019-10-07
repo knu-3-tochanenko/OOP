@@ -6,14 +6,15 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
+import com.jme3.util.SkyFactory;
 
 public class Simulation extends SimpleApplication {
     // Scene objects
-    private Voyager voyager = new Voyager("Voyager 2", 100.0f, 0.1f);
+    private Voyager voyager = new Voyager("Voyager 2", 300.0f, 0.1f);
     private Jupiter jupiter = new Jupiter("Jupiter", 5_000_000, 200);
 
     // Scene properties
-    private static final int G = 5;
+    private static final int G = 100;
     private static final int CAM_SPEED = 400;
     private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
@@ -49,6 +50,15 @@ public class Simulation extends SimpleApplication {
         setFooter();
 
         voyager.start();
+
+        cam.setFrustumFar(10000);
+        cam.onFrameChange();
+
+        getRootNode().attachChild(
+                SkyFactory.createSky(getAssetManager(),
+                        "Textures/sky.jpg",
+                        SkyFactory.EnvMapType.SphereMap)
+        );
     }
 
     void addLight(Node rootNode) {
