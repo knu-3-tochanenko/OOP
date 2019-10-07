@@ -14,18 +14,4 @@ public class SpaceObject {
         this.control = control;
     }
 
-    void setPhysics(BulletAppState state, float mass) {
-        RigidBodyControl control = new RigidBodyControl(mass);
-        this.getGeometry().addControl(control);
-        state.getPhysicsSpace().add(control);
-        this.setControl(control);
-    }
-
-    public Spatial getGeometry() {
-        return null;
-    }
-
-    public void setGeometry(Spatial geometry) {
-    }
-
 }

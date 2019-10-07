@@ -1,5 +1,6 @@
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
+import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
@@ -15,7 +16,7 @@ public class Jupiter extends SpaceObject {
     private Sphere sphere;
     private Geometry geometry;
 
-    private static final int SPHERE_SAMPLES = 16;
+    private static final int SPHERE_SAMPLES = 32;
 
     public Jupiter(String name, int mass, float radius) {
         this.name = name;
@@ -25,10 +26,19 @@ public class Jupiter extends SpaceObject {
         sphere = new Sphere(
                 SPHERE_SAMPLES,
                 SPHERE_SAMPLES,
-                1
+                radius,
+                true,
+                false
         );
         // Allow texture to be be flat on sphere
         sphere.setTextureMode(Sphere.TextureMode.Projected);
+    }
+
+    void setPhysics(BulletAppState state, float mass) {
+        RigidBodyControl control = new RigidBodyControl(mass);
+        this.getGeometry().addControl(control);
+        state.getPhysicsSpace().add(control);
+        this.setControl(control);
     }
 
     public void setMaterial(AssetManager manager, String texturePath) {
@@ -70,20 +80,11 @@ public class Jupiter extends SpaceObject {
         return sphere;
     }
 
-    public void setSphere(Sphere sphere) {
-        this.sphere = sphere;
-    }
-
     public Geometry getGeometry() {
         return geometry;
     }
 
-
     public int getMass() {
         return mass;
-    }
-
-    public void setMass(int mass) {
-        this.mass = mass;
     }
 }
