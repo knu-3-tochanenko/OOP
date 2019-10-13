@@ -11,13 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
 public class MainClass extends ApplicationAdapter {
-	short [][] matrix = {
-			{0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 1},
-			{1, 0, 1, 1, 1},
-			{1, 0, 0, 0, 1},
-			{1, 1, 1, 0, 1}
-	};
+	Labyrinth labyrinth = new Labyrinth();
 
 	SpriteBatch batch;
 	SpriteBatch lavaBatch;
@@ -37,41 +31,36 @@ public class MainClass extends ApplicationAdapter {
 
 			@Override
 			public void onUp() {
-
-				if (posY < (matrix.length - 1) && matrix[posY + 1][posX] != 1)
+				if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.UP))
 					posY++;
-				if (isEnd())
+				if (labyrinth.isEnd(posX, posY))
 					posX = posY = 0;
 			}
 
 			@Override
 			public void onRight() {
-				if (posX < (matrix.length - 1) && matrix[posY][posX + 1] != 1)
+				if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.RIGHT))
 				posX++;
-				if (isEnd())
+				if (labyrinth.isEnd(posX, posY))
 					posX = posY = 0;
 			}
 
 			@Override
 			public void onLeft() {
-				if (posX > 0 && matrix[posY][posX - 1] != 1)
+				if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.LEFT))
 					posX--;
-				if (isEnd())
+				if (labyrinth.isEnd(posX, posY))
 					posX = posY = 0;
 			}
 
 			@Override
 			public void onDown() {
-				if (posY > 0 && matrix[posY - 1][posX] != 1)
+				if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.DOWN))
 				posY--;
-				if (isEnd())
+				if (labyrinth.isEnd(posX, posY))
 					posX = posY = 0;
 			}
 		}));
-	}
-
-	private boolean isEnd() {
-		return (posY == matrix.length - 1 || posX == matrix.length - 1);
 	}
 
 	@Override
@@ -82,9 +71,12 @@ public class MainClass extends ApplicationAdapter {
 		batch.draw(img, posX * 64 + 7, posY * 64 + 7, 50, 50);
 		batch.end();
 		lavaBatch.begin();
-		for (int i = 0; i < matrix.length; i++)
-			for (int j = 0; j < matrix[0].length; j++)
-				if (matrix[i][j] == 1) {
+
+		int xLength = labyrinth.getXLength();
+		int yLength = labyrinth.getYLength();
+		for (int i = 0; i < yLength; i++)
+			for (int j = 0; j < xLength; j++)
+				if (labyrinth.isWall(j, i)) {
 					lavaBatch.draw(lava, j * 64, i * 64, 64, 64);
 				}
 		lavaBatch.end();
