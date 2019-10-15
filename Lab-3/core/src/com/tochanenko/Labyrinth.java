@@ -1,19 +1,21 @@
 package com.tochanenko;
 
 public class Labyrinth {
-    private short [][] matrix = {
-            {0, 0, 0, 0, 1, 1, 0, 1},
-            {1, 0, 0, 0, 1, 1, 0, 1},
-            {1, 0, 1, 1, 1, 1, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1}
-    };
+    private short [][] matrix;
 
     private short endX = 6, endY = 0;
 
     public enum MOVE {
         UP, LEFT, RIGHT, DOWN
     }
+
+    Labyrinth() {
+        LabyrinthGenerator generator = new LabyrinthGenerator();
+        generator.generate(7, 7);
+        this.matrix = generator.getMatrix();
+        endX = endY = 6;
+    }
+
     public boolean canMove(int posX, int posY, MOVE direction) {
         if (direction == MOVE.UP)
             return (posY < (matrix.length - 1) && matrix[posY + 1][posX] != 1);
