@@ -3,7 +3,7 @@ package com.tochanenko;
 public class Labyrinth {
     private short [][] matrix;
 
-    private short endX = 6, endY = 0;
+    private short endX = 5, endY = 0;
 
     public enum MOVE {
         UP, LEFT, RIGHT, DOWN
@@ -11,7 +11,7 @@ public class Labyrinth {
 
     Labyrinth() {
         LabyrinthGenerator generator = new LabyrinthGenerator();
-        generator.generate(7, 7);
+        generator.generate(40, 21);
         this.matrix = generator.getMatrix();
         endX = endY = 6;
     }
