@@ -3,27 +3,24 @@ package com.tochanenko;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
 public class MainClass extends ApplicationAdapter {
-	private static final int LAVA_SIZE = 32;
-	private static final int SMILE_SIZE = 28;
-	private static final int SIZE_DEIFF = (LAVA_SIZE - SMILE_SIZE) / 2;
+	private static final int BLOCK_SIZE = 32;
+	private static final int CHARACTER_SIZE = 28;
+	private static final int SIZE_DIFF = (BLOCK_SIZE - CHARACTER_SIZE) / 2;
 
-	Labyrinth labyrinth;
+	private Labyrinth labyrinth;
 
-	SpriteBatch batch;
-	SpriteBatch lavaBatch;
-	Texture img;
-	Texture lava;
+	private SpriteBatch lavaBatch;
+	private SpriteBatch batch;
+	private Texture lava;
+	private Texture img;
 
-	int posX = 0, posY = 0;
+	private int posX = 0, posY = 0;
 
 	private void goUp() {
 		if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.UP))
@@ -65,18 +62,9 @@ public class MainClass extends ApplicationAdapter {
 		lava = new Texture("lava.png");
 
 		labyrinth = new Labyrinth(
-				Gdx.graphics.getWidth() / LAVA_SIZE,
-				Gdx.graphics.getHeight() / LAVA_SIZE
+				Gdx.graphics.getWidth() / BLOCK_SIZE,
+				Gdx.graphics.getHeight() / BLOCK_SIZE
 		);
-
-		if(Gdx.input.isKeyPressed(Input.Keys.UP))
-			goUp();
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-			goRight();
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-			goLeft();
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
-			goDown();
 
 		Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
 
@@ -104,13 +92,22 @@ public class MainClass extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		if(Gdx.input.isKeyJustPressed(Input.Keys.W))
+			goUp();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.D))
+			goRight();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.A))
+			goLeft();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.S))
+			goDown();
+
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img,
-				posX * LAVA_SIZE + SIZE_DEIFF,
-				posY * LAVA_SIZE + SIZE_DEIFF,
-				SMILE_SIZE, SMILE_SIZE);
+				posX * BLOCK_SIZE + SIZE_DIFF,
+				posY * BLOCK_SIZE + SIZE_DIFF,
+				CHARACTER_SIZE, CHARACTER_SIZE);
 		batch.end();
 		lavaBatch.begin();
 
@@ -119,7 +116,10 @@ public class MainClass extends ApplicationAdapter {
 		for (int i = 0; i < yLength; i++)
 			for (int j = 0; j < xLength; j++)
 				if (labyrinth.isWall(j, i)) {
-					lavaBatch.draw(lava, j * LAVA_SIZE, i * LAVA_SIZE, LAVA_SIZE, LAVA_SIZE);
+					lavaBatch.draw(lava,
+							j * BLOCK_SIZE,
+							i * BLOCK_SIZE,
+							BLOCK_SIZE, BLOCK_SIZE);
 				}
 		lavaBatch.end();
 	}

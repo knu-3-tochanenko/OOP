@@ -55,13 +55,11 @@ public class LabyrinthGenerator {
                 maximumValue = subMatrix[i][1];
                 yExit = i;
                 xExit = 0;
-//                System.out.println("1 END SET TO " + xExit + " " + yExit);
             }
             if (subMatrix[i][xLength - 2] > maximumValue) {
                 maximumValue = subMatrix[i][xLength - 2];
                 yExit = i;
                 xExit = xLength - 1;
-//                System.out.println("2 END SET TO " + xExit + " " + yExit);
             }
         }
 
@@ -70,13 +68,11 @@ public class LabyrinthGenerator {
                 maximumValue = subMatrix[1][i];
                 yExit = 0;
                 xExit = i;
-//                System.out.println("3 END SET TO " + xExit + " " + yExit);
             }
             if (subMatrix[yLength - 2][i] > maximumValue) {
                 maximumValue = subMatrix[yLength - 2][i];
                 yExit = yLength - 1;
                 xExit = i;
-//                System.out.println("4 END SET TO " + xExit + " " + yExit);
             }
         }
 
@@ -117,64 +113,44 @@ public class LabyrinthGenerator {
         return this.yExit;
     }
 
-    private ArrayList<MOVE> getPossiblePasses(int x, int y) {
+    private ArrayList<MOVE> getPassesTemplate(int x, int y, int equals, int[][] matrix) {
         ArrayList<MOVE> res = new ArrayList<>();
-        if (matrix[y - 1][x] == -1)
+        if (matrix[y - 1][x] == equals)
             res.add(MOVE.DOWN);
-        if (matrix[y + 1][x] == -1)
+        if (matrix[y + 1][x] == equals)
             res.add(MOVE.UP);
-        if (matrix[y][x - 1] == -1)
+        if (matrix[y][x - 1] == equals)
             res.add(MOVE.LEFT);
-        if (matrix[y][x + 1] == -1)
+        if (matrix[y][x + 1] == equals)
             res.add(MOVE.RIGHT);
         return res;
+    }
+
+
+    private ArrayList<MOVE> getPossiblePasses(int x, int y) {
+        return getPassesTemplate(x, y, -1, this.matrix);
     }
 
     private ArrayList<MOVE> getTemporaryWalls(int x, int y) {
-        ArrayList<MOVE> res = new ArrayList<>();
-        if (matrix[y - 1][x] == -2)
-            res.add(MOVE.DOWN);
-        if (matrix[y + 1][x] == -2)
-            res.add(MOVE.UP);
-        if (matrix[y][x - 1] == -2)
-            res.add(MOVE.LEFT);
-        if (matrix[y][x + 1] == -2)
-            res.add(MOVE.RIGHT);
-        return res;
+        return getPassesTemplate(x, y, -2, this.matrix);
     }
 
     private ArrayList<MOVE> getReadyPasses(int x, int y, int[][] subMatrix) {
-        ArrayList<MOVE> res = new ArrayList<>();
-//        printMatrix(subMatrix);
-//        System.out.println("AV PASS: " + x + " " + y);
-        if (subMatrix[y - 1][x] == 0)
-            res.add(MOVE.DOWN);
-        if (subMatrix[y + 1][x] == 0)
-            res.add(MOVE.UP);
-        if (subMatrix[y][x - 1] == 0)
-            res.add(MOVE.LEFT);
-        if (subMatrix[y][x + 1] == 0)
-            res.add(MOVE.RIGHT);
-        return res;
+        return getPassesTemplate(x, y, 0, subMatrix);
     }
 
     private void placeTemporaryWalls(int x, int y) {
-//        System.out.println("Placing walls for " + x + " --- " + y);
         if (matrix[y - 1][x] < 0) {
             matrix[y - 1][x] = -2;
-//            System.out.println("Wall down placed");
         }
         if (matrix[y + 1][x] < 0) {
             matrix[y + 1][x] = -2;
-//        System.out.println("Wall up placed");
     }
         if (matrix[y][x - 1] < 0) {
             matrix[y][x - 1] = -2;
-//            System.out.println("Wall left placed");
 }
         if (matrix[y][x + 1] < 0) {
             matrix[y][x + 1] = -2;
-//        System.out.println("Wall right placed");
         }
     }
 
@@ -186,14 +162,11 @@ public class LabyrinthGenerator {
     }
 
     ArrayList<Integer> getRandomPass(ArrayList<MOVE> passes, int x, int y) {
-//        System.out.println("Gets random path");
         ArrayList<Integer> res = new ArrayList<>();
         if (!passes.isEmpty()) {
             int rand = random.nextInt(passes.size());
             int value = rand % passes.size();
-//            System.out.print("Got " + value + " = " + rand + " % " + passes.size());
             MOVE pass = passes.get(value);
-//            System.out.println(" = " + pass);
             if (pass == MOVE.UP) {
                 res.add(x);
                 res.add(y + 1);
@@ -211,22 +184,15 @@ public class LabyrinthGenerator {
                 res.add(y);
             }
         }
-//        System.out.println("Will return res");
         return res;
     }
 
     private void passCell(int x, int y) {
         matrix[y][x] = 0;
-//        printMatrix();
-//        System.out.println(x + " --- " + y);
-        // Go to unvisited places
         ArrayList<MOVE> possiblePasses = getPossiblePasses(x, y);
         if (possiblePasses.size() > 0) {
-//            System.out.println("Here");
             ArrayList<Integer> randomPass = getRandomPass(possiblePasses, x, y);
-//            System.out.println("Before walls");
             placeTemporaryWalls(x, y);
-//            System.out.println("After walls");
             passCell(randomPass.get(0), randomPass.get(1));
         }
 
