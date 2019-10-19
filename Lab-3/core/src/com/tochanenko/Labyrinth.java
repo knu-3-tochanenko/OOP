@@ -1,19 +1,21 @@
 package com.tochanenko;
 
 public class Labyrinth {
-    private short [][] matrix;
+    private int [][] matrix;
 
-    private short endX = 5, endY = 0;
+    private int endX, endY;
 
     public enum MOVE {
         UP, LEFT, RIGHT, DOWN
     }
 
-    Labyrinth() {
+    Labyrinth(int xLength, int yLength) {
         LabyrinthGenerator generator = new LabyrinthGenerator();
-        generator.generate(40, 21);
+        generator.generate(xLength, yLength);
         this.matrix = generator.getMatrix();
-        endX = endY = 6;
+        endX = generator.getXExit();
+        endY = generator.getYExit();
+        System.out.println("EXIT AT : " + endX + " " + endY);
     }
 
     public boolean canMove(int posX, int posY, MOVE direction) {
@@ -28,11 +30,11 @@ public class Labyrinth {
     }
 
     public boolean isEnd(int posX, int posY) {
-        return (posY == endY && posX == endX);
+        return (posY == endY) && (posX == endX);
     }
 
     public boolean isWall(int posX, int posY) {
-        return matrix[posY][posX] == 1;
+        return matrix[posY][posX] != 0;
     }
 
     public int getXLength() {

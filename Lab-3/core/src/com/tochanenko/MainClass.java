@@ -12,11 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
 public class MainClass extends ApplicationAdapter {
-	Labyrinth labyrinth = new Labyrinth();
-
 	private static final int LAVA_SIZE = 32;
 	private static final int SMILE_SIZE = 28;
 	private static final int SIZE_DEIFF = (LAVA_SIZE - SMILE_SIZE) / 2;
+
+	Labyrinth labyrinth;
 
 	SpriteBatch batch;
 	SpriteBatch lavaBatch;
@@ -30,6 +30,7 @@ public class MainClass extends ApplicationAdapter {
 			posY++;
 		if (labyrinth.isEnd(posX, posY))
 			posX = posY = 0;
+		System.out.println(posX + " " + posY);
 	}
 
 	private void goRight() {
@@ -37,6 +38,7 @@ public class MainClass extends ApplicationAdapter {
 			posX++;
 		if (labyrinth.isEnd(posX, posY))
 			posX = posY = 0;
+		System.out.println(posX + " " + posY);
 	}
 
 	private void goLeft() {
@@ -44,6 +46,7 @@ public class MainClass extends ApplicationAdapter {
 			posX--;
 		if (labyrinth.isEnd(posX, posY))
 			posX = posY = 0;
+		System.out.println(posX + " " + posY);
 	}
 
 	private void goDown() {
@@ -51,14 +54,20 @@ public class MainClass extends ApplicationAdapter {
 			posY--;
 		if (labyrinth.isEnd(posX, posY))
 			posX = posY = 0;
+		System.out.println(posX + " " + posY);
 	}
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		lavaBatch = new SpriteBatch();
-		img = new Texture("smile.png");
+		img = new Texture("slime.png");
 		lava = new Texture("lava.png");
+
+		labyrinth = new Labyrinth(
+				Gdx.graphics.getWidth() / LAVA_SIZE,
+				Gdx.graphics.getHeight() / LAVA_SIZE
+		);
 
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))
 			goUp();

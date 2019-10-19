@@ -1,7 +1,8 @@
 package com.tochanenko;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class LabyrinthGenerator {
@@ -9,7 +10,7 @@ public class LabyrinthGenerator {
     //  1 - Wall
     // -1 - Not visited yet
     // -2 - Wall, but not permanent
-    private short[][] matrix = null;
+    private int[][] matrix = null;
     private int xLength, yLength;
     private int xExit, yExit;
     Random random = new Random(System.currentTimeMillis());
@@ -18,7 +19,7 @@ public class LabyrinthGenerator {
         UP, LEFT, RIGHT, DOWN
     }
 
-    private void printMatrix() {
+    private void printMatrix(int[][] matrix) {
         System.out.println("-----------------------\n");
         for (int i = yLength - 1; i >= 0; i--) {
             for (int j = 0; j < xLength; j++)
@@ -31,15 +32,80 @@ public class LabyrinthGenerator {
     }
 
     public void generate(int xLength, int yLength) {
-        matrix = new short[yLength][xLength];
+        matrix = new int[yLength][xLength];
         this.xLength = xLength;
         this.yLength = yLength;
 
         generateWalls();
         generatePasses();
+        generateExit();
     }
 
-    public short[][] getMatrix() {
+    private void generateExit() {
+        int[][] subMatrix = new int[yLength][xLength];
+        for (int i = 0; i < yLength; i++)
+            for (int j = 0; j < xLength; j++)
+                subMatrix[i][j] = matrix[i][j];
+        subMatrix[0][0] = subMatrix[1][0] = subMatrix[0][1] = 1;
+        dfsPass(1, 1, subMatrix);
+
+        int maximumValue = subMatrix[1][1];
+        for (int i = 1; i < yLength - 1; i++) {
+            if (subMatrix[i][1] > maximumValue) {
+                maximumValue = subMatrix[i][1];
+                yExit = i;
+                xExit = 0;
+//                System.out.println("1 END SET TO " + xExit + " " + yExit);
+            }
+            if (subMatrix[i][xLength - 2] > maximumValue) {
+                maximumValue = subMatrix[i][xLength - 2];
+                yExit = i;
+                xExit = xLength - 1;
+//                System.out.println("2 END SET TO " + xExit + " " + yExit);
+            }
+        }
+
+        for (int i = 1; i < xLength - 1; i++) {
+            if (subMatrix[1][i] > maximumValue) {
+                maximumValue = subMatrix[1][i];
+                yExit = 0;
+                xExit = i;
+//                System.out.println("3 END SET TO " + xExit + " " + yExit);
+            }
+            if (subMatrix[yLength - 2][i] > maximumValue) {
+                maximumValue = subMatrix[yLength - 2][i];
+                yExit = yLength - 1;
+                xExit = i;
+//                System.out.println("4 END SET TO " + xExit + " " + yExit);
+            }
+        }
+
+        matrix[yExit][xExit] = 0;
+
+    }
+
+    private void dfsPass(int x, int y, int[][] subMatrix) {
+        Queue<Triple> queue = new LinkedList<>();
+        queue.add(new Triple(1, 1, 100));
+
+        ArrayList<MOVE> availableMoves;
+        while (!queue.isEmpty()) {
+            Triple cur = queue.remove();
+            availableMoves = getReadyPasses(cur.a, cur.b, subMatrix);
+            subMatrix[cur.b][cur.a] = cur.c;
+
+            if (availableMoves.contains(MOVE.UP))
+                queue.add(new Triple(cur.a, cur.b + 1, cur.c + 1));
+            if (availableMoves.contains(MOVE.RIGHT))
+                queue.add(new Triple(cur.a + 1, cur.b, cur.c + 1));
+            if (availableMoves.contains(MOVE.LEFT))
+                queue.add(new Triple(cur.a - 1, cur.b, cur.c + 1));
+            if (availableMoves.contains(MOVE.DOWN))
+                queue.add(new Triple(cur.a, cur.b - 1, cur.c + 1));
+        }
+    }
+
+    public int[][] getMatrix() {
         return matrix;
     }
 
@@ -77,6 +143,21 @@ public class LabyrinthGenerator {
         return res;
     }
 
+    private ArrayList<MOVE> getReadyPasses(int x, int y, int[][] subMatrix) {
+        ArrayList<MOVE> res = new ArrayList<>();
+//        printMatrix(subMatrix);
+//        System.out.println("AV PASS: " + x + " " + y);
+        if (subMatrix[y - 1][x] == 0)
+            res.add(MOVE.DOWN);
+        if (subMatrix[y + 1][x] == 0)
+            res.add(MOVE.UP);
+        if (subMatrix[y][x - 1] == 0)
+            res.add(MOVE.LEFT);
+        if (subMatrix[y][x + 1] == 0)
+            res.add(MOVE.RIGHT);
+        return res;
+    }
+
     private void placeTemporaryWalls(int x, int y) {
 //        System.out.println("Placing walls for " + x + " --- " + y);
         if (matrix[y - 1][x] < 0) {
@@ -110,9 +191,9 @@ public class LabyrinthGenerator {
         if (!passes.isEmpty()) {
             int rand = random.nextInt(passes.size());
             int value = rand % passes.size();
-            System.out.print("Got " + value + " = " + rand + " % " + passes.size());
+//            System.out.print("Got " + value + " = " + rand + " % " + passes.size());
             MOVE pass = passes.get(value);
-            System.out.println(" = " + pass);
+//            System.out.println(" = " + pass);
             if (pass == MOVE.UP) {
                 res.add(x);
                 res.add(y + 1);
@@ -136,8 +217,8 @@ public class LabyrinthGenerator {
 
     private void passCell(int x, int y) {
         matrix[y][x] = 0;
-        printMatrix();
-        System.out.println(x + " --- " + y);
+//        printMatrix();
+//        System.out.println(x + " --- " + y);
         // Go to unvisited places
         ArrayList<MOVE> possiblePasses = getPossiblePasses(x, y);
         if (possiblePasses.size() > 0) {
