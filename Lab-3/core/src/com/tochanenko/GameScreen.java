@@ -1,14 +1,11 @@
 package com.tochanenko;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import sun.applet.Main;
 
 
 public class GameScreen implements Screen {
@@ -71,7 +68,6 @@ public class GameScreen implements Screen {
         }
         if (labyrinth.isEnd(posX, posY)) {
             gameCore.setScreen(new MainMenuScreen(gameCore));
-            dispose();
         }
     }
 
@@ -103,7 +99,6 @@ public class GameScreen implements Screen {
             goDown();
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             gameCore.setScreen(new MainMenuScreen(gameCore));
-            dispose();
         }
 
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);

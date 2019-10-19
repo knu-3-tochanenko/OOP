@@ -41,18 +41,16 @@ public class MainMenuScreen implements Screen {
 
         game.batch.begin();
         font.setColor(Color.YELLOW);
-        font.draw(game.batch, "Labyrinth", 100, Gdx.graphics.getHeight() / 2);
-        font.draw(game.batch, "game by Vladislav Tochanenko", 100, Gdx.graphics.getHeight() / 2 - 40);
-        font.draw(game.batch, "Tap or press G to start.", 100, Gdx.graphics.getHeight() / 2 - 120);
+        font.draw(game.batch, "Labyrinth", 100, 200);
+        font.draw(game.batch, "game by Vladislav Tochanenko", 100, 160);
+        font.draw(game.batch, "Tap or press G to start.", 100, 100);
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
             game.setScreen(new GameScreen(game));
-            dispose();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
             game.setScreen(new GameScreen(game));
-            dispose();
         }
     }
 

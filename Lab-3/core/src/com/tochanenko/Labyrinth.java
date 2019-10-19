@@ -11,7 +11,6 @@ public class Labyrinth {
         this.matrix = generator.getMatrix();
         endX = generator.getXExit();
         endY = generator.getYExit();
-        System.out.println("EXIT AT : " + endX + " " + endY);
     }
 
     public boolean canMove(int posX, int posY, Moves.Move direction) {
