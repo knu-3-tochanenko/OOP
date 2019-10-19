@@ -22,36 +22,29 @@ public class MainClass extends ApplicationAdapter {
 
 	private int posX = 0, posY = 0;
 
-	private void goUp() {
-		if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.UP))
-			posY++;
+	private void goIfPossible(Moves.Move moveTo, int changeX, int changeY) {
+		if (labyrinth.canMove(posX, posY, moveTo)) {
+			posX += changeX;
+			posY += changeY;
+		}
 		if (labyrinth.isEnd(posX, posY))
 			posX = posY = 0;
-		System.out.println(posX + " " + posY);
+	}
+
+	private void goUp() {
+		goIfPossible(Moves.Move.UP, 0, 1);
 	}
 
 	private void goRight() {
-		if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.RIGHT))
-			posX++;
-		if (labyrinth.isEnd(posX, posY))
-			posX = posY = 0;
-		System.out.println(posX + " " + posY);
+		goIfPossible(Moves.Move.RIGHT, 1, 0);
 	}
 
 	private void goLeft() {
-		if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.LEFT))
-			posX--;
-		if (labyrinth.isEnd(posX, posY))
-			posX = posY = 0;
-		System.out.println(posX + " " + posY);
+		goIfPossible(Moves.Move.LEFT, -1, 0);
 	}
 
 	private void goDown() {
-		if (labyrinth.canMove(posX, posY, Labyrinth.MOVE.DOWN))
-			posY--;
-		if (labyrinth.isEnd(posX, posY))
-			posX = posY = 0;
-		System.out.println(posX + " " + posY);
+		goIfPossible(Moves.Move.DOWN, 0, -1);
 	}
 	
 	@Override

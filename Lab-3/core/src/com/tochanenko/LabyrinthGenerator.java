@@ -15,8 +15,16 @@ public class LabyrinthGenerator {
     private int xExit, yExit;
     Random random = new Random(System.currentTimeMillis());
 
-    public enum MOVE {
-        UP, LEFT, RIGHT, DOWN
+    public int[][] getMatrix() {
+        return matrix;
+    }
+
+    public int getXExit() {
+        return this.xExit;
+    }
+
+    public int getYExit() {
+        return this.yExit;
     }
 
     private void printMatrix(int[][] matrix) {
@@ -84,58 +92,46 @@ public class LabyrinthGenerator {
         Queue<Triple> queue = new LinkedList<>();
         queue.add(new Triple(1, 1, 100));
 
-        ArrayList<MOVE> availableMoves;
+        ArrayList<Moves.Move> availableMoves;
         while (!queue.isEmpty()) {
             Triple cur = queue.remove();
             availableMoves = getReadyPasses(cur.a, cur.b, subMatrix);
             subMatrix[cur.b][cur.a] = cur.c;
 
-            if (availableMoves.contains(MOVE.UP))
+            if (availableMoves.contains(Moves.Move.UP))
                 queue.add(new Triple(cur.a, cur.b + 1, cur.c + 1));
-            if (availableMoves.contains(MOVE.RIGHT))
+            if (availableMoves.contains(Moves.Move.RIGHT))
                 queue.add(new Triple(cur.a + 1, cur.b, cur.c + 1));
-            if (availableMoves.contains(MOVE.LEFT))
+            if (availableMoves.contains(Moves.Move.LEFT))
                 queue.add(new Triple(cur.a - 1, cur.b, cur.c + 1));
-            if (availableMoves.contains(MOVE.DOWN))
+            if (availableMoves.contains(Moves.Move.DOWN))
                 queue.add(new Triple(cur.a, cur.b - 1, cur.c + 1));
         }
     }
 
-    public int[][] getMatrix() {
-        return matrix;
-    }
-
-    public int getXExit() {
-        return this.xExit;
-    }
-
-    public int getYExit() {
-        return this.yExit;
-    }
-
-    private ArrayList<MOVE> getPassesTemplate(int x, int y, int equals, int[][] matrix) {
-        ArrayList<MOVE> res = new ArrayList<>();
+    private ArrayList<Moves.Move> getPassesTemplate(int x, int y, int equals, int[][] matrix) {
+        ArrayList<Moves.Move> res = new ArrayList<>();
         if (matrix[y - 1][x] == equals)
-            res.add(MOVE.DOWN);
+            res.add(Moves.Move.DOWN);
         if (matrix[y + 1][x] == equals)
-            res.add(MOVE.UP);
+            res.add(Moves.Move.UP);
         if (matrix[y][x - 1] == equals)
-            res.add(MOVE.LEFT);
+            res.add(Moves.Move.LEFT);
         if (matrix[y][x + 1] == equals)
-            res.add(MOVE.RIGHT);
+            res.add(Moves.Move.RIGHT);
         return res;
     }
 
 
-    private ArrayList<MOVE> getPossiblePasses(int x, int y) {
+    private ArrayList<Moves.Move> getPossiblePasses(int x, int y) {
         return getPassesTemplate(x, y, -1, this.matrix);
     }
 
-    private ArrayList<MOVE> getTemporaryWalls(int x, int y) {
+    private ArrayList<Moves.Move> getTemporaryWalls(int x, int y) {
         return getPassesTemplate(x, y, -2, this.matrix);
     }
 
-    private ArrayList<MOVE> getReadyPasses(int x, int y, int[][] subMatrix) {
+    private ArrayList<Moves.Move> getReadyPasses(int x, int y, int[][] subMatrix) {
         return getPassesTemplate(x, y, 0, subMatrix);
     }
 
@@ -161,25 +157,25 @@ public class LabyrinthGenerator {
                     matrix[i][j] = 1;
     }
 
-    ArrayList<Integer> getRandomPass(ArrayList<MOVE> passes, int x, int y) {
+    ArrayList<Integer> getRandomPass(ArrayList<Moves.Move> passes, int x, int y) {
         ArrayList<Integer> res = new ArrayList<>();
         if (!passes.isEmpty()) {
             int rand = random.nextInt(passes.size());
             int value = rand % passes.size();
-            MOVE pass = passes.get(value);
-            if (pass == MOVE.UP) {
+            Moves.Move pass = passes.get(value);
+            if (pass == Moves.Move.UP) {
                 res.add(x);
                 res.add(y + 1);
             }
-            if (pass == MOVE.DOWN) {
+            if (pass == Moves.Move.DOWN) {
                 res.add(x);
                 res.add(y - 1);
             }
-            if (pass == MOVE.RIGHT) {
+            if (pass == Moves.Move.RIGHT) {
                 res.add(x + 1);
                 res.add(y);
             }
-            if (pass == MOVE.LEFT) {
+            if (pass == Moves.Move.LEFT) {
                 res.add(x - 1);
                 res.add(y);
             }
@@ -189,7 +185,7 @@ public class LabyrinthGenerator {
 
     private void passCell(int x, int y) {
         matrix[y][x] = 0;
-        ArrayList<MOVE> possiblePasses = getPossiblePasses(x, y);
+        ArrayList<Moves.Move> possiblePasses = getPossiblePasses(x, y);
         if (possiblePasses.size() > 0) {
             ArrayList<Integer> randomPass = getRandomPass(possiblePasses, x, y);
             placeTemporaryWalls(x, y);
@@ -197,11 +193,11 @@ public class LabyrinthGenerator {
         }
 
         // If temporary wall has unvisited cells
-        ArrayList<MOVE> possibleWalls = getTemporaryWalls(x, y);
+        ArrayList<Moves.Move> possibleWalls = getTemporaryWalls(x, y);
         if (!possibleWalls.isEmpty()) {
 
             ArrayList<Integer> randomWall = getRandomPass(possibleWalls, x, y);
-            ArrayList<MOVE> possiblePassesWall =
+            ArrayList<Moves.Move> possiblePassesWall =
                     getPossiblePasses(randomWall.get(0), randomWall.get(1));
 
             if (!possiblePassesWall.isEmpty()) {

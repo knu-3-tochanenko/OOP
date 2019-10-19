@@ -5,10 +5,6 @@ public class Labyrinth {
 
     private int endX, endY;
 
-    public enum MOVE {
-        UP, LEFT, RIGHT, DOWN
-    }
-
     Labyrinth(int xLength, int yLength) {
         LabyrinthGenerator generator = new LabyrinthGenerator();
         generator.generate(xLength, yLength);
@@ -18,12 +14,12 @@ public class Labyrinth {
         System.out.println("EXIT AT : " + endX + " " + endY);
     }
 
-    public boolean canMove(int posX, int posY, MOVE direction) {
-        if (direction == MOVE.UP)
+    public boolean canMove(int posX, int posY, Moves.Move direction) {
+        if (direction == Moves.Move.UP)
             return (posY < (matrix.length - 1) && matrix[posY + 1][posX] != 1);
-        if (direction == MOVE.RIGHT)
+        if (direction == Moves.Move.RIGHT)
             return (posX < (matrix[0].length - 1) && matrix[posY][posX + 1] != 1);
-        if (direction == MOVE.LEFT)
+        if (direction == Moves.Move.LEFT)
             return (posX > 0 && matrix[posY][posX - 1] != 1);
         else
             return (posY > 0 && matrix[posY - 1][posX] != 1);
