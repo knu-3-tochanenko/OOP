@@ -9,7 +9,9 @@ public class DesktopLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Labyrinth by Vladislav Tochanenko";
         config.width = 1184;
-        config.height = 800;
+        config.height = 640;
+        config.x = 64;
+        config.y = 64;
         new LwjglApplication(new GameCore(), config);
     }
 }
