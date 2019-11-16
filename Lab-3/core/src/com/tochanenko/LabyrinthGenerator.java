@@ -27,18 +27,6 @@ public class LabyrinthGenerator {
         return this.yExit;
     }
 
-    private void printMatrix(int[][] matrix) {
-        System.out.println("-----------------------\n");
-        for (int i = yLength - 1; i >= 0; i--) {
-            for (int j = 0; j < xLength; j++)
-                if (matrix[i][j] >= 0)
-                    System.out.print("  " + matrix[i][j]);
-                else
-                    System.out.print(" " + matrix[i][j]);
-            System.out.println();
-        }
-    }
-
     public void generate(int xLength, int yLength) {
         matrix = new int[yLength][xLength];
         this.xLength = xLength;

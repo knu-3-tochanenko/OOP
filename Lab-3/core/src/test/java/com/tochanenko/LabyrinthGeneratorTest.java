@@ -1,10 +1,12 @@
 package com.tochanenko;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LabyrinthGeneratorTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getMatrix() {
         LabyrinthGenerator generator = new LabyrinthGenerator();
         generator.generate(10, 10);
@@ -13,7 +15,7 @@ class LabyrinthGeneratorTest {
         assertEquals(matrix[0].length, 10);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getXExit() {
         LabyrinthGenerator generator = new LabyrinthGenerator();
         generator.generate(10, 10);
@@ -21,7 +23,7 @@ class LabyrinthGeneratorTest {
                 "X exit");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getYExit() {
         LabyrinthGenerator generator = new LabyrinthGenerator();
         generator.generate(10, 10);
