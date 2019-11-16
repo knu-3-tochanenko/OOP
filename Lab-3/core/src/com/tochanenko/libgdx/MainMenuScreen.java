@@ -8,16 +8,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.tochanenko.libgdx.GameCore;
-import com.tochanenko.libgdx.GameScreen;
 
 public class MainMenuScreen implements Screen {
     private BitmapFont font;
-    final GameCore game;
+    private final GameCore game;
 
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
-    public MainMenuScreen(final GameCore game) {
+    MainMenuScreen(final GameCore game) {
         this.game = game;
 
         FreeTypeFontGenerator generator =

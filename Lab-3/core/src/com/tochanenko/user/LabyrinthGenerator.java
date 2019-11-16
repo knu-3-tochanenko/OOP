@@ -13,8 +13,8 @@ public class LabyrinthGenerator {
     private int[][] matrix = null;
     private int xLength, yLength;
     private int xExit, yExit;
-    long seed = System.currentTimeMillis();
-    Random random;
+    private long seed = System.currentTimeMillis();
+    private Random random;
 
     LabyrinthGenerator(int xLength, int yLength) {
         generate(xLength, yLength);
@@ -37,25 +37,24 @@ public class LabyrinthGenerator {
         generateExit();
     }
 
-    public int[][] getMatrix() {
+    int[][] getMatrix() {
         return matrix;
     }
 
-    public int getXExit() {
+    int getXExit() {
         return this.xExit;
     }
 
-    public int getYExit() {
+    int getYExit() {
         return this.yExit;
     }
 
     private void generateExit() {
         int[][] subMatrix = new int[yLength][xLength];
         for (int i = 0; i < yLength; i++)
-            for (int j = 0; j < xLength; j++)
-                subMatrix[i][j] = matrix[i][j];
+            if (xLength >= 0) System.arraycopy(matrix[i], 0, subMatrix[i], 0, xLength);
         subMatrix[0][0] = subMatrix[1][0] = subMatrix[0][1] = 1;
-        dfsPass(1, 1, subMatrix);
+        dfsPass(subMatrix);
 
         int maximumValue = subMatrix[1][1];
         for (int i = 1; i < yLength - 1; i++) {
@@ -88,7 +87,7 @@ public class LabyrinthGenerator {
 
     }
 
-    private void dfsPass(int x, int y, int[][] subMatrix) {
+    private void dfsPass(int[][] subMatrix) {
         Queue<Triple> queue = new LinkedList<>();
         queue.add(new Triple(1, 1, 100));
 

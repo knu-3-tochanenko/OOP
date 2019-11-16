@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LabyrinthTest {
 
-    Labyrinth labyrinth;
-    Labyrinth randomLabyrinth;
+    private Labyrinth labyrinth;
+    private Labyrinth randomLabyrinth;
 
-    int x = 25;
-    int y = 25;
-    long SEED = 394785;
+    private int x = 25;
+    private int y = 25;
 
     {
+        long SEED = 394785;
         labyrinth = new Labyrinth(x, y, SEED);
         randomLabyrinth = new Labyrinth(x, y);
     }
@@ -85,10 +85,12 @@ class LabyrinthTest {
     @Test
     void getXLength() {
         assertEquals(labyrinth.getXLength(), x);
+        assertEquals(randomLabyrinth.getXLength(), x);
     }
 
     @Test
     void getYLength() {
+        assertEquals(labyrinth.getYLength(), y);
         assertEquals(labyrinth.getYLength(), y);
     }
 }

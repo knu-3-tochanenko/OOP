@@ -11,7 +11,7 @@ import com.tochanenko.user.Move;
 
 
 public class GameScreen implements Screen {
-    final GameCore gameCore;
+    private final GameCore gameCore;
 
     public GameScreen(GameCore gameCore) {
         this.gameCore = gameCore;

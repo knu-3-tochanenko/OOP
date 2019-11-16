@@ -3,27 +3,23 @@ package com.tochanenko.user;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LabyrinthGeneratorTest {
 
-    LabyrinthGenerator generatorSeeded0;
-    LabyrinthGenerator generatorSeeded1;
-    LabyrinthGenerator generatorSeeded2;
-    LabyrinthGenerator generatorSeeded3;
-    LabyrinthGenerator generatorSeeded4;
-
-    int x = 10;
-    int y = 10;
+    private LabyrinthGenerator generatorSeeded0;
+    private LabyrinthGenerator generatorSeeded1;
+    private LabyrinthGenerator generatorSeeded2;
+    private LabyrinthGenerator generatorSeeded3;
+    private LabyrinthGenerator generatorSeeded4;
 
     {
+        int x = 10;
+        int y = 10;
         generatorSeeded0 = new LabyrinthGenerator(x, y, 5555);
         generatorSeeded1 = new LabyrinthGenerator(x, y, 1000);
         generatorSeeded2 = new LabyrinthGenerator(x, y, 2000);
         generatorSeeded3 = new LabyrinthGenerator(x * 2, y * 2, 9999);
         generatorSeeded4 = new LabyrinthGenerator(x * 2, y * 2, 9);
-
-        System.out.println(generatorSeeded4.getXExit() + " - " + generatorSeeded4.getYExit());
     }
 
     @Test

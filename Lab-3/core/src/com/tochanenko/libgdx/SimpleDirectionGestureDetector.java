@@ -13,14 +13,14 @@ class SimpleDirectionGestureDetector extends GestureDetector {
         void onDown();
     }
 
-    public SimpleDirectionGestureDetector(DirectionListener directionListener) {
+    SimpleDirectionGestureDetector(DirectionListener directionListener) {
         super(new DirectionGestureListener(directionListener));
     }
 
     private static class DirectionGestureListener extends GestureAdapter {
         DirectionListener directionListener;
 
-        public DirectionGestureListener(DirectionListener directionListener) {
+        DirectionGestureListener(DirectionListener directionListener) {
             this.directionListener = directionListener;
         }
 

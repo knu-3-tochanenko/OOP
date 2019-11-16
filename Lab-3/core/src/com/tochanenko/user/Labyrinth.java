@@ -1,21 +1,21 @@
 package com.tochanenko.user;
 
 public class Labyrinth {
-    private int [][] matrix;
+    private int[][] matrix;
 
     private int endX, endY;
 
     public Labyrinth(int xLength, int yLength) {
         LabyrinthGenerator generator = new LabyrinthGenerator(xLength, yLength);
-        generate(xLength, yLength, generator);
+        generate(generator);
     }
 
-    public Labyrinth(int xLength, int yLength, long seed) {
+    Labyrinth(int xLength, int yLength, long seed) {
         LabyrinthGenerator generator = new LabyrinthGenerator(xLength, yLength, seed);
-        generate(xLength, yLength, generator);
+        generate(generator);
     }
 
-    private void generate(int xLength, int yLength, LabyrinthGenerator generator) {
+    private void generate(LabyrinthGenerator generator) {
         this.matrix = generator.getMatrix();
         endX = generator.getXExit();
         endY = generator.getYExit();
@@ -51,7 +51,11 @@ public class Labyrinth {
     }
 
     // For tests
-    public int getEndX() { return endX; }
+    int getEndX() {
+        return endX;
+    }
 
-    public int getEndY() { return endY; }
+    int getEndY() {
+        return endY;
+    }
 }
