@@ -74,7 +74,16 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+
+
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        testImplementation('org.junit.jupiter:junit-jupiter-api:5.3.0')
+        testImplementation('org.junit.jupiter:junit-jupiter-params:5.3.0')
+        testImplementation 'org.mockito:mockito-core:3.1.0'
+        testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.0')
     }
 }
 
