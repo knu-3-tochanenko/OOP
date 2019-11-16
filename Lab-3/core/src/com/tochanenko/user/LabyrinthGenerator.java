@@ -1,4 +1,4 @@
-package com.tochanenko;
+package com.tochanenko.user;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,7 +13,29 @@ public class LabyrinthGenerator {
     private int[][] matrix = null;
     private int xLength, yLength;
     private int xExit, yExit;
-    Random random = new Random(System.currentTimeMillis());
+    long seed = System.currentTimeMillis();
+    Random random;
+
+    LabyrinthGenerator(int xLength, int yLength) {
+        generate(xLength, yLength);
+    }
+
+    LabyrinthGenerator(int xLength, int yLength, long seed) {
+        this.seed = seed;
+        generate(xLength, yLength);
+    }
+
+    private void generate(int xLength, int yLength) {
+        random = new Random(seed);
+
+        matrix = new int[yLength][xLength];
+        this.xLength = xLength;
+        this.yLength = yLength;
+
+        generateWalls();
+        generatePasses();
+        generateExit();
+    }
 
     public int[][] getMatrix() {
         return matrix;
@@ -25,16 +47,6 @@ public class LabyrinthGenerator {
 
     public int getYExit() {
         return this.yExit;
-    }
-
-    public void generate(int xLength, int yLength) {
-        matrix = new int[yLength][xLength];
-        this.xLength = xLength;
-        this.yLength = yLength;
-
-        generateWalls();
-        generatePasses();
-        generateExit();
     }
 
     private void generateExit() {

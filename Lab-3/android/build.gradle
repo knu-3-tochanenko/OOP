@@ -44,6 +44,12 @@ android {
         sourceCompatibility = "1.8"
         targetCompatibility = 1.8
     }
+    packagingOptions {
+        // WHY THE HECK I SHOULD DO IT?????
+        exclude 'README.txt'
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
 }
 
 

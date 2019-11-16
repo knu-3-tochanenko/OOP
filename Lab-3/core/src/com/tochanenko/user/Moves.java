@@ -1,7 +1,7 @@
-package com.tochanenko;
+package com.tochanenko.user;
 
 public class Moves {
-    enum Move {
+    public enum Move {
         UP, LEFT, RIGHT, DOWN
     }
 }

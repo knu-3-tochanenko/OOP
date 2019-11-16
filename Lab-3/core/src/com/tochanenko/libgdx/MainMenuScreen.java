@@ -1,4 +1,4 @@
-package com.tochanenko;
+package com.tochanenko.libgdx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.tochanenko.libgdx.GameCore;
+import com.tochanenko.libgdx.GameScreen;
 
 public class MainMenuScreen implements Screen {
     private BitmapFont font;

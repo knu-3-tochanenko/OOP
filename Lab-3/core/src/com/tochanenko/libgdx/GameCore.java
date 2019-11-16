@@ -1,4 +1,4 @@
-package com.tochanenko;
+package com.tochanenko.libgdx;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

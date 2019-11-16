@@ -17,6 +17,8 @@ buildscript {
 
 allprojects {
 
+    apply plugin: "jacoco"
+
     version = '1.0'
     ext {
         appName = "Lab-3"
@@ -35,6 +37,11 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+
+    jacoco {
+        toolVersion = "0.7.7.201606060606"
+        reportsDir = file("$buildDir/reports/jacoco")
     }
 }
 
@@ -84,6 +91,7 @@ project(":core") {
         testImplementation('org.junit.jupiter:junit-jupiter-params:5.3.0')
         testImplementation 'org.mockito:mockito-core:3.1.0'
         testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.0')
+        testImplementation('org.hamcrest:hamcrest-library:2.1')
     }
 }
 

@@ -1,4 +1,4 @@
-package com.tochanenko;
+package com.tochanenko.user;
 
 public class Triple {
     public int a;

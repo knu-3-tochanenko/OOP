@@ -1,19 +1,20 @@
-package com.tochanenko;
+package com.tochanenko.user;
 
 public class Labyrinth {
     private int [][] matrix;
 
     private int endX, endY;
 
-    Labyrinth(int xLength, int yLength) {
-        LabyrinthGenerator generator = new LabyrinthGenerator();
-        generator.generate(xLength, yLength);
+    public Labyrinth(int xLength, int yLength) {
+        LabyrinthGenerator generator = new LabyrinthGenerator(xLength, yLength);
         this.matrix = generator.getMatrix();
         endX = generator.getXExit();
         endY = generator.getYExit();
     }
 
     public boolean canMove(int posX, int posY, Moves.Move direction) {
+        if (posX < 0 || posY < 0 || posX >= matrix[0].length || posY >= matrix.length)
+            return false;
         if (direction == Moves.Move.UP)
             return (posY < (matrix.length - 1) && matrix[posY + 1][posX] != 1);
         if (direction == Moves.Move.RIGHT)
@@ -39,4 +40,9 @@ public class Labyrinth {
     public int getYLength() {
         return matrix.length;
     }
+
+    // For tests
+    public int getEndX() { return endX; }
+
+    public int getEndY() { return endY; }
 }
