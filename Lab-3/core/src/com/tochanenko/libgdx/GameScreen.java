@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tochanenko.user.Labyrinth;
-import com.tochanenko.user.Moves;
+import com.tochanenko.user.Move;
 
 
 public class GameScreen implements Screen {
@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
 
     private int posX = 0, posY = 0;
 
-    private void goIfPossible(Moves.Move moveTo, int changeX, int changeY) {
+    private void goIfPossible(Move moveTo, int changeX, int changeY) {
         if (labyrinth.canMove(posX, posY, moveTo)) {
             posX += changeX;
             posY += changeY;
@@ -74,19 +74,19 @@ public class GameScreen implements Screen {
     }
 
     private void goUp() {
-        goIfPossible(Moves.Move.UP, 0, 1);
+        goIfPossible(Move.UP, 0, 1);
     }
 
     private void goRight() {
-        goIfPossible(Moves.Move.RIGHT, 1, 0);
+        goIfPossible(Move.RIGHT, 1, 0);
     }
 
     private void goLeft() {
-        goIfPossible(Moves.Move.LEFT, -1, 0);
+        goIfPossible(Move.LEFT, -1, 0);
     }
 
     private void goDown() {
-        goIfPossible(Moves.Move.DOWN, 0, -1);
+        goIfPossible(Move.DOWN, 0, -1);
     }
 
     @Override

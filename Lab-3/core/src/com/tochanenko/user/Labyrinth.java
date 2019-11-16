@@ -7,19 +7,28 @@ public class Labyrinth {
 
     public Labyrinth(int xLength, int yLength) {
         LabyrinthGenerator generator = new LabyrinthGenerator(xLength, yLength);
+        generate(xLength, yLength, generator);
+    }
+
+    public Labyrinth(int xLength, int yLength, long seed) {
+        LabyrinthGenerator generator = new LabyrinthGenerator(xLength, yLength, seed);
+        generate(xLength, yLength, generator);
+    }
+
+    private void generate(int xLength, int yLength, LabyrinthGenerator generator) {
         this.matrix = generator.getMatrix();
         endX = generator.getXExit();
         endY = generator.getYExit();
     }
 
-    public boolean canMove(int posX, int posY, Moves.Move direction) {
+    public boolean canMove(int posX, int posY, Move direction) {
         if (posX < 0 || posY < 0 || posX >= matrix[0].length || posY >= matrix.length)
             return false;
-        if (direction == Moves.Move.UP)
+        if (direction == Move.UP)
             return (posY < (matrix.length - 1) && matrix[posY + 1][posX] != 1);
-        if (direction == Moves.Move.RIGHT)
+        if (direction == Move.RIGHT)
             return (posX < (matrix[0].length - 1) && matrix[posY][posX + 1] != 1);
-        if (direction == Moves.Move.LEFT)
+        if (direction == Move.LEFT)
             return (posX > 0 && matrix[posY][posX - 1] != 1);
         else
             return (posY > 0 && matrix[posY - 1][posX] != 1);
