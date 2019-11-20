@@ -18,5 +18,18 @@ public enum Breeding {
         public String toString() {
             return "seeds";
         }
+    };
+
+    public static Breeding value(String string) throws Exception {
+        switch (string) {
+            case "flowers":
+                return FLOWERS;
+            case "stalk":
+                return STALK;
+            case "seeds":
+                return SEEDS;
+            default:
+                throw new Exception("Wrong argument");
+        }
     }
 }
