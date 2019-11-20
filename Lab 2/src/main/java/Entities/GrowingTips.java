@@ -11,7 +11,21 @@ public class GrowingTips {
         this.watering = watering;
     }
 
-    public int getTemperature() { return temperature; }
-    public int getWatering() { return watering; }
-    public boolean isNeedsLight() { return needsLight; }
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public int getWatering() {
+        return watering;
+    }
+
+    public boolean isNeedsLight() {
+        return needsLight;
+    }
+
+    public String toString() {
+        return "\t\t\ttemperature:\t" + temperature
+                + "\t\t\tneeds light:\t" + needsLight
+                + "\t\t\twatering:\t" + watering + "( ml)\n";
+    }
 }

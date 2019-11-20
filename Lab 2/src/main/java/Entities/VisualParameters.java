@@ -1,5 +1,7 @@
 package Entities;
 
+import java.text.DecimalFormat;
+
 public class VisualParameters {
     private Color stemColor;
     private Color leafColor;
@@ -11,7 +13,23 @@ public class VisualParameters {
         this.averageSize = averageSize;
     }
 
-    public Color getStemColor() { return stemColor; }
-    public Color getLeafColor() { return leafColor; }
-    public float getAverageSize() { return averageSize; }
+    public Color getStemColor() {
+        return stemColor;
+    }
+
+    public Color getLeafColor() {
+        return leafColor;
+    }
+
+    public float getAverageSize() {
+        return averageSize;
+    }
+
+    public String toString() {
+        return "\t\t\tStem color:\t" + stemColor.toString()
+                + "\t\t\tLeaf Color:\t" + leafColor.toString()
+                + "\t\t\tAverage size:\t"
+                + new DecimalFormat("#,##0.00").format(averageSize)
+                + '\n';
+    }
 }
