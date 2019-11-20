@@ -24,6 +24,6 @@ public class Color {
     }
 
     public String toString() {
-        return "R: " + red + " G: " + green + " B: " + blue;
+        return "R:" + red + " G:" + green + " B:" + blue;
     }
 }
