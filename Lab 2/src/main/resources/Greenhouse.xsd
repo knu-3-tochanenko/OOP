@@ -17,10 +17,9 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="colorPart">
-        <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0"/>
-            <xs:maxInclusive value="255"/>
+    <xs:simpleType name="color">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="#[\dA-F]{6}([\dA-F][\dA-F])?"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -46,61 +45,9 @@
                             <xs:element name="visual-parameters">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="stem-color">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="R">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="colorPart"/>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                    <xs:element name="G">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="colorPart"/>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                    <xs:element name="B">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="colorPart"/>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
+                                        <xs:element name="stem-color" type="color"/>
 
-                                        <xs:element name="leaf-color">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="R">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="colorPart"/>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                    <xs:element name="G">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="colorPart"/>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                    <xs:element name="B">
-                                                        <xs:complexType>
-                                                            <xs:simpleContent>
-                                                                <xs:extension base="colorPart"/>
-                                                            </xs:simpleContent>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
+                                        <xs:element name="leaf-color" type="color"/>
 
                                         <xs:element name="average-size" type="xs:float"/>
                                     </xs:sequence>

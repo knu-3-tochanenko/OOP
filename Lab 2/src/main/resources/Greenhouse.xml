@@ -7,16 +7,8 @@
         <soil>unpaved</soil>
         <origin>Ukraine</origin>
         <visual-parameters>
-            <stem-color>
-                <R>0</R>
-                <G>255</G>
-                <B>0</B>
-            </stem-color>
-            <leaf-color>
-                <R>255</R>
-                <G>0</G>
-                <B>0</B>
-            </leaf-color>
+            <stem-color>#00FF00</stem-color>
+            <leaf-color>#FF0000</leaf-color>
             <average-size>15.6</average-size>
         </visual-parameters>
         <growing-tips>
@@ -32,16 +24,8 @@
         <soil>podzolic</soil>
         <origin>Netherlands</origin>
         <visual-parameters>
-            <stem-color>
-                <R>128</R>
-                <G>255</G>
-                <B>0</B>
-            </stem-color>
-            <leaf-color>
-                <R>255</R>
-                <G>128</G>
-                <B>0</B>
-            </leaf-color>
+            <stem-color>#88FF00</stem-color>
+            <leaf-color>#FF8800</leaf-color>
             <average-size>12.3</average-size>
         </visual-parameters>
         <growing-tips>
@@ -57,16 +41,8 @@
     <soil>sod podzolic</soil>
     <origin>Germany</origin>
     <visual-parameters>
-        <stem-color>
-            <R>128</R>
-            <G>0</G>
-            <B>64</B>
-        </stem-color>
-        <leaf-color>
-            <R>255</R>
-            <G>0</G>
-            <B>255</B>
-        </leaf-color>
+        <stem-color>#880044</stem-color>
+        <leaf-color>#FF00FF</leaf-color>
         <average-size>5.0</average-size>
     </visual-parameters>
     <growing-tips>
