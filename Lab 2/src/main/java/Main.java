@@ -2,6 +2,7 @@ import Entities.Greenhouse;
 import Helpers.GreenhouseXMLBuilder;
 import Parsers.GreenhouseParser;
 import Parsers.ParserSAX;
+import Parsers.ParserStAX;
 
 public class Main {
 
@@ -10,7 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
         ParserSAX<Greenhouse> sax = new ParserSAX<>(new GreenhouseXMLBuilder());
-        GreenhouseParser parser = new GreenhouseParser(sax);
+        ParserStAX<Greenhouse> stax = new ParserStAX<>(new GreenhouseXMLBuilder());
+        GreenhouseParser parser = new GreenhouseParser(stax);
         Greenhouse greenhouse = parser.parse(XML, XSD);
 
         System.out.println(greenhouse);
