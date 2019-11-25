@@ -94,13 +94,13 @@ public class Plant implements Comparable<Plant> {
     }
 
     public String toString() {
-        return "\tPlant #" + id + ":\n"
-                + "\t\tname:\t" + name
-                + "\t\tsoil:\t" + soil.toString()
-                + "\t\torigin:\t" + origin
-                + "\t\tvisual parameters:\n" + visualParameters.toString()
-                + "\t\tgrowing tips:\n" + growingTips.toString()
-                + "\t\tbreeding:\t" + breeding.toString()
+        return "\u001b[35;1m\tPlant #" + id + ":\u001b[0m\n"
+                + "\u001b[32;1m\t\tname:\u001b[0m\t\t" + name
+                + "\u001b[32;1m\n\t\tsoil:\u001b[0m\t\t" + soil.toString()
+                + "\u001b[32;1m\n\t\torigin:\u001b[0m\t\t" + origin
+                + "\u001b[32;1m\n\t\tvisual parameters:\u001b[0m\n" + visualParameters.toString()
+                + "\u001b[32;1m\n\t\tgrowing tips:\u001b[0m\n" + growingTips.toString()
+                + "\u001b[32;1m\t\tbreeding:\u001b[0m\t" + breeding.toString()
                 + '\n';
     }
 }

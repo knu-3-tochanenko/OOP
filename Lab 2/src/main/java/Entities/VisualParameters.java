@@ -40,10 +40,9 @@ public class VisualParameters {
     }
 
     public String toString() {
-        return "\t\t\tStem color:\t" + stemColor
-                + "\t\t\tLeaf Color:\t" + leafColor
-                + "\t\t\tAverage size:\t"
-                + new DecimalFormat("#,##0.00").format(averageSize)
-                + '\n';
+        return "\u001b[36;1m\t\t\tstem color:\u001b[0m\t\t" + stemColor
+                + "\u001b[36;1m\n\t\t\tleaf color:\u001b[0m\t\t" + leafColor
+                + "\u001b[36;1m\n\t\t\taverage size:\u001b[0m\t"
+                + new DecimalFormat("#,##0.00").format(averageSize);
     }
 }

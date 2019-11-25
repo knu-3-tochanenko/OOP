@@ -40,8 +40,8 @@ public class GrowingTips {
     }
 
     public String toString() {
-        return "\t\t\ttemperature:\t" + temperature
-                + "\n\t\t\tneeds light:\t" + needsLight
-                + "\n\t\t\twatering:\t" + watering + " (ml)\n";
+        return "\u001b[36;1m\t\t\ttemperature:\u001b[0m\t" + temperature
+                + "\u001b[36;1m\n\t\t\tneeds light:\u001b[0m\t" + needsLight
+                + "\u001b[36;1m\n\t\t\twatering:\u001b[0m\t\t" + watering + " (ml)\n";
     }
 }

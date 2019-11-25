@@ -29,7 +29,7 @@ public class Greenhouse {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder("Greenhouse:\n");
+        StringBuilder res = new StringBuilder("\u001b[31;1mGreenhouse:\u001b[0m\n");
         for (Plant plant : plants) res.append(plant.toString()).append("\n");
         return res.toString();
     }
