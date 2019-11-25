@@ -7,11 +7,11 @@ import java.util.List;
 public class Greenhouse {
     private List<Plant> plants;
 
-    Greenhouse() {
+    public Greenhouse() {
         plants = new ArrayList<>();
     }
 
-    Greenhouse(List<Plant> plants) {
+    public Greenhouse(List<Plant> plants) {
         this.plants = plants;
     }
 

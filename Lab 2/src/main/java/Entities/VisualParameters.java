@@ -3,31 +3,45 @@ package Entities;
 import java.text.DecimalFormat;
 
 public class VisualParameters {
-    private Color stemColor;
-    private Color leafColor;
+    private String stemColor;
+    private String leafColor;
     private float averageSize;
 
-    VisualParameters(Color stemColor, Color leafColor, float averageSize) {
+    public VisualParameters(String stemColor, String leafColor, float averageSize) {
         this.stemColor = stemColor;
         this.leafColor = leafColor;
         this.averageSize = averageSize;
     }
 
-    public Color getStemColor() {
+    public VisualParameters() { }
+
+    public String getStemColor() {
         return stemColor;
     }
 
-    public Color getLeafColor() {
+    public void setStemColor(String stemColor) {
+        this.stemColor = stemColor;
+    }
+
+    public String getLeafColor() {
         return leafColor;
+    }
+
+    public void setLeafColor(String leafColor) {
+        this.leafColor = leafColor;
     }
 
     public float getAverageSize() {
         return averageSize;
     }
 
+    public void setAverageSize(float averageSize) {
+        this.averageSize = averageSize;
+    }
+
     public String toString() {
-        return "\t\t\tStem color:\t" + stemColor.toString()
-                + "\t\t\tLeaf Color:\t" + leafColor.toString()
+        return "\t\t\tStem color:\t" + stemColor
+                + "\t\t\tLeaf Color:\t" + leafColor
                 + "\t\t\tAverage size:\t"
                 + new DecimalFormat("#,##0.00").format(averageSize)
                 + '\n';

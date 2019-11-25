@@ -9,7 +9,7 @@ public class Plant implements Comparable<Plant> {
     private GrowingTips growingTips;
     private Breeding breeding;
 
-    Plant(
+    public Plant(
             int id,
             String name,
             Soil soil,
@@ -27,32 +27,63 @@ public class Plant implements Comparable<Plant> {
         this.breeding = breeding;
     }
 
+    public Plant() {
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Soil getSoil() {
         return soil;
+    }
+
+    public void setSoil(Soil soil) {
+        this.soil = soil;
     }
 
     public String getOrigin() {
         return origin;
     }
 
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
     public VisualParameters getVisualParameters() {
         return visualParameters;
+    }
+
+    public void setVisualParameters(VisualParameters visualParameters) {
+        this.visualParameters = visualParameters;
     }
 
     public GrowingTips getGrowingTips() {
         return growingTips;
     }
 
+    public void setGrowingTips(GrowingTips growingTips) {
+        this.growingTips = growingTips;
+    }
+
     public Breeding getBreeding() {
         return breeding;
+    }
+
+    public void setBreeding(Breeding breeding) {
+        this.breeding = breeding;
     }
 
     @Override
