@@ -1,6 +1,7 @@
 package com.tochanenko.user;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -91,7 +92,7 @@ public class LabyrinthGenerator {
         Queue<Triple> queue = new LinkedList<>();
         queue.add(new Triple(1, 1, 100));
 
-        ArrayList<Move> availableMoves;
+        List<Move> availableMoves;
         while (!queue.isEmpty()) {
             Triple cur = queue.remove();
             availableMoves = getReadyPasses(cur.a, cur.b, subMatrix);
@@ -108,8 +109,8 @@ public class LabyrinthGenerator {
         }
     }
 
-    private ArrayList<Move> getPassesTemplate(int x, int y, int equals, int[][] matrix) {
-        ArrayList<Move> res = new ArrayList<>();
+    private List<Move> getPassesTemplate(int x, int y, int equals, int[][] matrix) {
+        List<Move> res = new ArrayList<>();
         if (matrix[y - 1][x] == equals)
             res.add(Move.DOWN);
         if (matrix[y + 1][x] == equals)
@@ -122,15 +123,15 @@ public class LabyrinthGenerator {
     }
 
 
-    private ArrayList<Move> getPossiblePasses(int x, int y) {
+    private List<Move> getPossiblePasses(int x, int y) {
         return getPassesTemplate(x, y, -1, this.matrix);
     }
 
-    private ArrayList<Move> getTemporaryWalls(int x, int y) {
+    private List<Move> getTemporaryWalls(int x, int y) {
         return getPassesTemplate(x, y, -2, this.matrix);
     }
 
-    private ArrayList<Move> getReadyPasses(int x, int y, int[][] subMatrix) {
+    private List<Move> getReadyPasses(int x, int y, int[][] subMatrix) {
         return getPassesTemplate(x, y, 0, subMatrix);
     }
 
@@ -156,8 +157,8 @@ public class LabyrinthGenerator {
                     matrix[i][j] = 1;
     }
 
-    private ArrayList<Integer> getRandomPass(ArrayList<Move> passes, int x, int y) {
-        ArrayList<Integer> res = new ArrayList<>();
+    private List<Integer> getRandomPass(List<Move> passes, int x, int y) {
+        List<Integer> res = new ArrayList<>();
         int rand = random.nextInt(passes.size());
         int value = rand % passes.size();
         Move pass = passes.get(value);
@@ -182,23 +183,23 @@ public class LabyrinthGenerator {
 
     private void passCell(int x, int y) {
         matrix[y][x] = 0;
-        ArrayList<Move> possiblePasses = getPossiblePasses(x, y);
+        List<Move> possiblePasses = getPossiblePasses(x, y);
         if (possiblePasses.size() > 0) {
-            ArrayList<Integer> randomPass = getRandomPass(possiblePasses, x, y);
+            List<Integer> randomPass = getRandomPass(possiblePasses, x, y);
             placeTemporaryWalls(x, y);
             passCell(randomPass.get(0), randomPass.get(1));
         }
 
         // If temporary wall has unvisited cells
-        ArrayList<Move> possibleWalls = getTemporaryWalls(x, y);
+        List<Move> possibleWalls = getTemporaryWalls(x, y);
         if (!possibleWalls.isEmpty()) {
 
-            ArrayList<Integer> randomWall = getRandomPass(possibleWalls, x, y);
-            ArrayList<Move> possiblePassesWall =
+            List<Integer> randomWall = getRandomPass(possibleWalls, x, y);
+            List<Move> possiblePassesWall =
                     getPossiblePasses(randomWall.get(0), randomWall.get(1));
 
             if (!possiblePassesWall.isEmpty()) {
-                ArrayList<Integer> randomWallPass =
+                List<Integer> randomWallPass =
                         getRandomPass(possiblePassesWall, randomWall.get(0), randomWall.get(1));
                 placeTemporaryWalls(randomWall.get(0), randomWall.get(1));
                 matrix[randomWall.get(1)][randomWall.get(0)] = 0;
