@@ -17,8 +17,8 @@ class LabyrinthTest {
 
     {
         long SEED = 394785;
-        labyrinth = new Labyrinth(x, y, SEED);
-        randomLabyrinth = new Labyrinth(x, y);
+        labyrinth = new LabyrinthGenerator().generate(x, y, SEED);
+        randomLabyrinth = new LabyrinthGenerator().generate(x, y);
     }
 
     @Test

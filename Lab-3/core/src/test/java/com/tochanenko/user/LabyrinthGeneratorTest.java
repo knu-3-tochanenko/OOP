@@ -6,20 +6,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LabyrinthGeneratorTest {
 
-    private LabyrinthGenerator generatorSeeded0;
-    private LabyrinthGenerator generatorSeeded1;
-    private LabyrinthGenerator generatorSeeded2;
-    private LabyrinthGenerator generatorSeeded3;
-    private LabyrinthGenerator generatorSeeded4;
+    private LabyrinthGenerator generatorSeeded0 = new LabyrinthGenerator();
+    private LabyrinthGenerator generatorSeeded1 = new LabyrinthGenerator();
+    private LabyrinthGenerator generatorSeeded2 = new LabyrinthGenerator();
+    private LabyrinthGenerator generatorSeeded3 = new LabyrinthGenerator();
+    private LabyrinthGenerator generatorSeeded4 = new LabyrinthGenerator();
 
     {
         int x = 10;
         int y = 10;
-        generatorSeeded0 = new LabyrinthGenerator(x, y, 5555);
-        generatorSeeded1 = new LabyrinthGenerator(x, y, 1000);
-        generatorSeeded2 = new LabyrinthGenerator(x, y, 2000);
-        generatorSeeded3 = new LabyrinthGenerator(x * 2, y * 2, 9999);
-        generatorSeeded4 = new LabyrinthGenerator(x * 2, y * 2, 9);
+        generatorSeeded0.generate(x, y, 5555);
+        generatorSeeded1.generate(x, y, 1000);
+        generatorSeeded2.generate(x, y, 2000);
+        generatorSeeded3.generate(x * 2, y * 2, 9999);
+        generatorSeeded4.generate(x * 2, y * 2, 9);
     }
 
     @Test
