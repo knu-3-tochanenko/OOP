@@ -38,4 +38,24 @@ class VisualParametersTest {
         assertEquals(visualParameters.getLeafColor(), "#00FF00");
     }
 
+    @Test
+    void equalsTest() {
+        assertNotEquals(visualParameters, 2019);
+        assertEquals(visualParameters, visualParameters);
+        assertNotEquals(visualParameters, new VisualParameters(
+                "#112244",
+                "#00FF00",
+                12.3f
+        ));
+        assertNotEquals(visualParameters, new VisualParameters(
+                "#112233",
+                "#AAAAAA",
+                12.3f
+        ));
+        assertNotEquals(visualParameters, new VisualParameters(
+                "#112233",
+                "#00FF00",
+                5.3f
+        ));
+    }
 }

@@ -44,7 +44,7 @@ class GrowingTipsTest {
 
     @Test
     void equalsTest() {
-        assertNotEquals(growingTips, 1337);
+        assertNotEquals(growingTips, 2019);
         assertEquals(growingTips, growingTips);
         assertNotEquals(growingTips, new GrowingTips(30, true, 100));
         assertNotEquals(growingTips, new GrowingTips(25, false, 100));
