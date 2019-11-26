@@ -45,4 +45,13 @@ public class VisualParameters {
                 + "\u001b[36;1m\n\t\t\taverage size:\u001b[0m\t"
                 + new DecimalFormat("#,##0.00").format(averageSize);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof VisualParameters)
+            return ((((VisualParameters) obj).averageSize == this.averageSize)
+            && (((VisualParameters) obj).leafColor.equals(this.leafColor))
+            && (((VisualParameters) obj).stemColor.equals(this.stemColor)));
+        return false;
+    }
 }

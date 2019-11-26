@@ -44,4 +44,13 @@ public class GrowingTips {
                 + "\u001b[36;1m\n\t\t\tneeds light:\u001b[0m\t" + needsLight
                 + "\u001b[36;1m\n\t\t\twatering:\u001b[0m\t\t" + watering + " (ml)\n";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof GrowingTips)
+            return ((((GrowingTips) obj).watering == this.watering)
+            && (((GrowingTips) obj).isNeedsLight() == this.isNeedsLight())
+            && (((GrowingTips) obj).temperature == this.temperature));
+        return false;
+    }
 }
