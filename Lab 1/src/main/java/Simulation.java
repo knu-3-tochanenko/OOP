@@ -1,6 +1,6 @@
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.font.BitmapText;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
@@ -10,7 +10,7 @@ import com.jme3.util.SkyFactory;
 
 public class Simulation extends SimpleApplication {
     // Scene objects
-    private Voyager voyager = new Voyager("Voyager 2", 300.0f, 0.1f);
+    private Voyager voyager = new Voyager("Voyager 2", 500.0f, 0.1f);
     private Jupiter jupiter = new Jupiter("Jupiter", 5_000_000, 200);
 
     // Scene properties
@@ -29,20 +29,8 @@ public class Simulation extends SimpleApplication {
         stateManager.attach(bullet);
         bullet.getPhysicsSpace().setGravity(ZERO_GRAVITY);
 
-        // Jupiter attach block
-        jupiter.setMaterial(assetManager, "Textures/jupiter.jpg");
-        jupiter.setGeometry(new Vector3f(0, 2, -20), 1.3f, 0, 0);
-        jupiter.setPhysics(bullet, jupiter.getMass());
-        rootNode.attachChild(jupiter.getGeometry());
-
-        // Voyager attach block
-        voyager.setMaterial(
-                assetManager,
-                "Models/voyager.obj",
-                new Vector3f(-500, 0, 1000)
-        );
-        voyager.setPhysics(bullet, 1f);
-        rootNode.attachChild(voyager.getGeometry());
+        initJupiter(bullet);
+        initVoyajer(bullet);
 
         addLight(rootNode);
         cam.setLocation(jupiter.getGeometry().getLocalTranslation().add(-900, 400, 500));
@@ -59,6 +47,23 @@ public class Simulation extends SimpleApplication {
                         "Textures/sky.jpg",
                         SkyFactory.EnvMapType.SphereMap)
         );
+    }
+
+    private void initJupiter(BulletAppState bullet) {
+        jupiter.setMaterial(assetManager, "Textures/jupiter.jpg");
+        jupiter.setGeometry(new Vector3f(0, 2, -20), 1.3f, 0, 0);
+        jupiter.setPhysics(bullet, jupiter.getMass());
+        rootNode.attachChild(jupiter.getGeometry());
+    }
+
+    private void initVoyajer(BulletAppState bullet) {
+        voyager.setMaterial(
+                assetManager,
+                "Models/cat.obj",
+                new Vector3f(-500, 0, 1000)
+        );
+        voyager.setPhysics(bullet, 1f);
+        rootNode.attachChild(voyager.getGeometry());
     }
 
     void addLight(Node rootNode) {
@@ -106,5 +111,7 @@ public class Simulation extends SimpleApplication {
                         "\t Gravity : " + String.format("%.3f", gravity) +
                         "\t Distance : " + String.format("%.3f", length));
     }
+
+    public AssetManager getAssetManager() { return assetManager; }
 
 }
