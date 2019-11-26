@@ -8,8 +8,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ParserSAX<T> implements XMLParser {
 
@@ -20,15 +18,11 @@ public class ParserSAX<T> implements XMLParser {
     }
 
     @Override
-    public Object parseItem(String xmlFile) {
+    public Object parseItem(String xmlFile) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-        try {
-            SAXParser parser = saxParserFactory.newSAXParser();
-            HandlerSAX handler = new HandlerSAX<>(builder);
-            parser.parse(new File(xmlFile), handler);
-        } catch (IOException | SAXException | ParserConfigurationException e) {
-            Logger.getLogger(ParserSAX.class.getName()).log(Level.INFO, "Something went wrong.", e);
-        }
+        SAXParser parser = saxParserFactory.newSAXParser();
+        HandlerSAX handler = new HandlerSAX<>(builder);
+        parser.parse(new File(xmlFile), handler);
         return builder.getRoot();
     }
 }

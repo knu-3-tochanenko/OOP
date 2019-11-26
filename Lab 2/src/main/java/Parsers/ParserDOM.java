@@ -22,16 +22,12 @@ public class ParserDOM<T> implements XMLParser {
     }
 
     @Override
-    public T parseItem(String xmlPath) {
+    public T parseItem(String xmlPath) throws ParserConfigurationException, IOException, SAXException {
         File xmlFile = new File(xmlPath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document document = dBuilder.parse(xmlFile);
-            parseNodes(document.getChildNodes());
-        } catch (SAXException | ParserConfigurationException | IOException e) {
-            e.printStackTrace();
-        }
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document document = dBuilder.parse(xmlFile);
+        parseNodes(document.getChildNodes());
         return builder.getRoot();
     }
 

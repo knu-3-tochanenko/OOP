@@ -3,7 +3,7 @@ package Helpers;
 import Entities.*;
 
 public class GreenhouseXMLBuilder implements XMLBuilder<Greenhouse> {
-    public Tags currentTag = Tags.NONE;
+    private Tags currentTag = Tags.NONE;
 
     private Greenhouse greenhouse = new Greenhouse();
     private Plant plant = null;

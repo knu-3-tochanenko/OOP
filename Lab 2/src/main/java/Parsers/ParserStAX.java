@@ -19,15 +19,11 @@ public class ParserStAX<T> implements XMLParser {
     }
 
     @Override
-    public Object parseItem(String xmlPath) {
+    public Object parseItem(String xmlPath) throws FileNotFoundException, XMLStreamException {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-        try {
-            FileInputStream stream = new FileInputStream(xmlPath);
-            reader = xmlInputFactory.createXMLStreamReader(stream);
-            parse();
-        } catch (FileNotFoundException | XMLStreamException e) {
-            e.printStackTrace();
-        }
+        FileInputStream stream = new FileInputStream(xmlPath);
+        reader = xmlInputFactory.createXMLStreamReader(stream);
+        parse();
         return builder.getRoot();
     }
 
