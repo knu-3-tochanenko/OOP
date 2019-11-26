@@ -3,8 +3,11 @@ package Parsers;
 import Entities.Greenhouse;
 import Helpers.GreenhouseXMLBuilder;
 import org.junit.jupiter.api.Test;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,13 +32,15 @@ class ParserSAXTest {
     }
 
     @Test
-    void parseGemCorrect() throws Exception {
-        sax.parseItem(validXML);
+    void parseItemCorrect() throws Exception {
+        GreenhouseParser parser = new GreenhouseParser(new ParserSAX<>(new GreenhouseXMLBuilder()));
+        assertNotNull(parser.parse(validXML, xsd));
     }
 
     @Test
-    void parseGemInvalid() {
-        assertDoesNotThrow(() -> sax.parseItem(invalidXML));
+    void parseItemInvalid() throws IOException, SAXException, ParserConfigurationException {
+        GreenhouseParser parser = new GreenhouseParser(new ParserSAX<>(new GreenhouseXMLBuilder()));
+        assertNull(parser.parse(invalidXML, xsd));
     }
 
     @Test

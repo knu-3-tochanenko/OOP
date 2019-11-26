@@ -4,6 +4,9 @@ import Entities.Greenhouse;
 import Helpers.GreenhouseXMLBuilder;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParserStAXTest {
@@ -13,8 +16,8 @@ class ParserStAXTest {
 
     private final String xsd = "src\\main\\resources\\Greenhouse.xsd";
 
-    private ParserStAX<Greenhouse> sax = new ParserStAX<>(new GreenhouseXMLBuilder());
-    private GreenhouseParser parser = new GreenhouseParser(sax);
+    private ParserStAX<Greenhouse> stax = new ParserStAX<>(new GreenhouseXMLBuilder());
+    private GreenhouseParser parser = new GreenhouseParser(stax);
 
     @Test
     void parseCorrect() {
@@ -27,17 +30,19 @@ class ParserStAXTest {
     }
 
     @Test
-    void parseGemCorrect() throws Exception {
-        sax.parseItem(validXML);
+    void parseItemCorrect() throws Exception {
+        GreenhouseParser parser = new GreenhouseParser(new ParserStAX<>(new GreenhouseXMLBuilder()));
+        assertNotNull(parser.parse(validXML, xsd));
     }
 
     @Test
-    void parseGemInvalid() {
-        assertDoesNotThrow(() -> sax.parseItem(invalidXML));
+    void parseItemInvalid() throws FileNotFoundException, XMLStreamException {
+        GreenhouseParser parser = new GreenhouseParser(new ParserStAX<>(new GreenhouseXMLBuilder()));
+        assertNull(parser.parse(invalidXML, xsd));
     }
 
     @Test
     void wrongFile() {
-        assertThrows(Exception.class, () -> sax.parseItem(wrongXML));
+        assertThrows(Exception.class, () -> stax.parseItem(wrongXML));
     }
 }

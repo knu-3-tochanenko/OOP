@@ -2,7 +2,12 @@ package Parsers;
 
 import Entities.Greenhouse;
 import Helpers.GreenhouseXMLBuilder;
+import Helpers.ValidatorXML;
 import org.junit.jupiter.api.Test;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,8 +18,8 @@ class ParserDOMTest {
 
     private final String xsd = "src\\main\\resources\\Greenhouse.xsd";
 
-    private ParserDOM<Greenhouse> sax = new ParserDOM<>(new GreenhouseXMLBuilder());
-    private GreenhouseParser parser = new GreenhouseParser(sax);
+    private ParserDOM<Greenhouse> dom = new ParserDOM<>(new GreenhouseXMLBuilder());
+    private GreenhouseParser parser = new GreenhouseParser(dom);
 
     @Test
     void parseCorrect() {
@@ -27,17 +32,19 @@ class ParserDOMTest {
     }
 
     @Test
-    void parseGemCorrect() throws Exception {
-        sax.parseItem(validXML);
+    void parseItemCorrect() throws Exception {
+        GreenhouseParser parser = new GreenhouseParser(new ParserDOM<>(new GreenhouseXMLBuilder()));
+        assertNotNull(parser.parse(validXML, xsd));
     }
 
     @Test
-    void parseGemInvalid() {
-        assertDoesNotThrow(() -> sax.parseItem(invalidXML));
+    void parseItemInvalid() throws IOException, SAXException, ParserConfigurationException {
+        GreenhouseParser parser = new GreenhouseParser(new ParserDOM<>(new GreenhouseXMLBuilder()));
+        assertNull(parser.parse(invalidXML, xsd));
     }
 
     @Test
     void wrongFile() {
-        assertThrows(Exception.class, () -> sax.parseItem(wrongXML));
+        assertThrows(Exception.class, () -> dom.parseItem(wrongXML));
     }
 }
