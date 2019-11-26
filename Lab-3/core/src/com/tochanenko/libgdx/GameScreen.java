@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tochanenko.user.Labyrinth;
+import com.tochanenko.user.LabyrinthGenerator;
 import com.tochanenko.user.Move;
 
 
@@ -21,10 +22,9 @@ public class GameScreen implements Screen {
         img = new Texture("slime.png");
         lava = new Texture("lava.png");
 
-        labyrinth = new Labyrinth(
+        labyrinth = new LabyrinthGenerator().generate(
                 Gdx.graphics.getWidth() / BLOCK_SIZE,
-                Gdx.graphics.getHeight() / BLOCK_SIZE
-        );
+                Gdx.graphics.getHeight() / BLOCK_SIZE);
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
 

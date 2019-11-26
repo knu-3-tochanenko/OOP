@@ -5,20 +5,16 @@ public class Labyrinth {
 
     private int endX, endY;
 
-    public Labyrinth(int xLength, int yLength) {
-        LabyrinthGenerator generator = new LabyrinthGenerator(xLength, yLength);
-        generate(generator);
-    }
+    public Labyrinth(int[][] matrix, int endX, int endY) {
+        int xLength = matrix[0].length;
+        int yLength = matrix.length;
+        this.matrix = new int[yLength][xLength];
 
-    Labyrinth(int xLength, int yLength, long seed) {
-        LabyrinthGenerator generator = new LabyrinthGenerator(xLength, yLength, seed);
-        generate(generator);
-    }
+        for (int i = 0; i < yLength; i++)
+            System.arraycopy(matrix[i], 0, this.matrix[i], 0, xLength);
 
-    private void generate(LabyrinthGenerator generator) {
-        this.matrix = generator.getMatrix();
-        endX = generator.getXExit();
-        endY = generator.getYExit();
+        this.endX = endX;
+        this.endY = endY;
     }
 
     public boolean canMove(int posX, int posY, Move direction) {

@@ -17,21 +17,24 @@ public class LabyrinthGenerator {
     private long seed = System.currentTimeMillis();
     private Random random;
 
-    LabyrinthGenerator(int xLength, int yLength) {
-        generate(xLength, yLength);
-    }
-
-    LabyrinthGenerator(int xLength, int yLength, long seed) {
-        this.seed = seed;
-        generate(xLength, yLength);
-    }
-
-    private void generate(int xLength, int yLength) {
-        random = new Random(seed);
-
-        matrix = new int[yLength][xLength];
+    public Labyrinth generate(int xLength, int yLength) {
         this.xLength = xLength;
         this.yLength = yLength;
+        generateValues();
+        return new Labyrinth(matrix, getXExit(), getYExit());
+    }
+
+    public Labyrinth generate(int xLength, int yLength, long seed) {
+        this.seed = seed;
+        this.xLength = xLength;
+        this.yLength = yLength;
+        generateValues();
+        return new Labyrinth(matrix, getXExit(), getYExit());
+    }
+
+    private void generateValues() {
+        random = new Random(seed);
+        matrix = new int[yLength][xLength];
 
         generateWalls();
         generatePasses();
