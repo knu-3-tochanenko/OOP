@@ -18,9 +18,10 @@ public enum Soil {
         public String toString() {
             return "sod podzolic";
         }
-    };
+    },
+    NONE;
 
-    public static Soil value(String string) throws Exception {
+    public static Soil value(String string) {
         switch (string) {
             case "podzolic":
                 return PODZOLIC;
@@ -29,7 +30,7 @@ public enum Soil {
             case "sod podzolic":
                 return SOD_PODZOLIC;
             default:
-                throw new Exception("Wrong argument");
+                return NONE;
         }
     }
 }

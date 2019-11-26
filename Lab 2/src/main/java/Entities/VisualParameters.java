@@ -3,9 +3,9 @@ package Entities;
 import java.text.DecimalFormat;
 
 public class VisualParameters {
-    private String stemColor;
-    private String leafColor;
-    private float averageSize;
+    private String stemColor = "";
+    private String leafColor = "";
+    private float averageSize = 0.0f;
 
     public VisualParameters(String stemColor, String leafColor, float averageSize) {
         this.stemColor = stemColor;

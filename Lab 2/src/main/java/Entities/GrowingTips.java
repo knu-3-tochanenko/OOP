@@ -1,9 +1,9 @@
 package Entities;
 
 public class GrowingTips {
-    private int temperature;
-    private boolean needsLight;
-    private int watering;       // Per week
+    private int temperature = 0;
+    private boolean needsLight = false;
+    private int watering = 0;       // Per week
 
     public GrowingTips(int temperature, boolean needsLight, int watering) {
         this.temperature = temperature;

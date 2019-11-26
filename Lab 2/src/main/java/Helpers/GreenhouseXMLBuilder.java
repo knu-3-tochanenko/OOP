@@ -34,7 +34,7 @@ public class GreenhouseXMLBuilder implements XMLBuilder<Greenhouse> {
         if (name == null)
             return this;
         if (value == null)
-            value = "";
+            value = "0";
         if (name.equalsIgnoreCase("id"))
             plant.setId(Integer.parseInt(value));
         return this;
@@ -47,11 +47,7 @@ public class GreenhouseXMLBuilder implements XMLBuilder<Greenhouse> {
                 plant.setName(data);
                 break;
             case SOIL:
-                try {
-                    plant.setSoil(Soil.value(data));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                plant.setSoil(Soil.value(data));
                 break;
             case ORIGIN:
                 plant.setOrigin(data);
@@ -75,11 +71,8 @@ public class GreenhouseXMLBuilder implements XMLBuilder<Greenhouse> {
                 growingTips.setWatering(Integer.parseInt(data));
                 break;
             case BREEDING:
-                try {
-                    plant.setBreeding(Breeding.value(data));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                plant.setBreeding(Breeding.value(data));
+                break;
             default:
                 break;
         }

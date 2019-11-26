@@ -1,13 +1,13 @@
 package Entities;
 
 public class Plant implements Comparable<Plant> {
-    private int id;
-    private String name;
-    private Soil soil;
-    private String origin;
-    private VisualParameters visualParameters;
-    private GrowingTips growingTips;
-    private Breeding breeding;
+    private int id = 0;
+    private String name = "";
+    private Soil soil = null;
+    private String origin = "";
+    private VisualParameters visualParameters = new VisualParameters();
+    private GrowingTips growingTips = new GrowingTips();
+    private Breeding breeding = null;
 
     public Plant(
             int id,
@@ -102,5 +102,19 @@ public class Plant implements Comparable<Plant> {
                 + "\u001b[32;1m\n\t\tgrowing tips:\u001b[0m\n" + growingTips.toString()
                 + "\u001b[32;1m\t\tbreeding:\u001b[0m\t" + breeding.toString()
                 + '\n';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Plant) {
+            return (((Plant) obj).id == this.id
+                    && ((Plant) obj).name.equals(this.name)
+                    && ((Plant) obj).soil == this.soil
+                    && ((Plant) obj).origin.equals(this.origin)
+                    && ((Plant) obj).visualParameters.equals(this.visualParameters)
+                    && ((Plant) obj).growingTips.equals(this.growingTips)
+                    && ((Plant) obj).breeding == this.breeding);
+        }
+        return false;
     }
 }

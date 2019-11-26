@@ -64,4 +64,5 @@ public class ParserStAX<T> implements XMLParser {
         if (!data.equals(""))
             builder.addData(data);
     }
+
 }

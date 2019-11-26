@@ -11,7 +11,7 @@ class SoilTest {
         assertEquals(Soil.value("podzolic"), Soil.PODZOLIC);
         assertEquals(Soil.value("unpaved"), Soil.UNPAVED);
         assertEquals(Soil.value("sod podzolic"), Soil.SOD_PODZOLIC);
-        assertThrows(Exception.class, () -> Soil.value("different"));
+        assertEquals(Soil.value("something strange"), Soil.NONE);
     }
 
     @Test

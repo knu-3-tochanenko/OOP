@@ -85,4 +85,212 @@ class PlantTest {
         assertEquals(plant.compareTo(plant), 0);
     }
 
+    @Test
+    void equalsTest() {
+        assertNotEquals(plant, 2019);
+        assertNotEquals(plant, new Plant(
+                2,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "tulip",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.SOD_PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "France",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#445566",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#112233",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        10.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        10,
+                        true,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        10,
+                        false,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        true,
+                        50
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        100
+                ),
+                Breeding.FLOWERS
+        ));
+        assertNotEquals(plant, new Plant(
+                1,
+                "rose",
+                Soil.PODZOLIC,
+                "Germany",
+                new VisualParameters(
+                        "#00FF00",
+                        "#112233",
+                        5.5f
+                ),
+                new GrowingTips(
+                        21,
+                        false,
+                        50
+                ),
+                Breeding.SEEDS
+        ));
+    }
 }

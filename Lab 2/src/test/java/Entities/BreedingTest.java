@@ -11,7 +11,7 @@ class BreedingTest {
         assertEquals(Breeding.value("flowers"), Breeding.FLOWERS);
         assertEquals(Breeding.value("stalk"), Breeding.STALK);
         assertEquals(Breeding.value("seeds"), Breeding.SEEDS);
-        assertThrows(Exception.class, () -> Breeding.value("another"));
+        assertEquals(Breeding.value("another"), Breeding.NONE);
     }
 
     @Test
