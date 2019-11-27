@@ -10,6 +10,7 @@ class Config {
         static final int MASS = 5_000_000;
         static final int RADIUS = 200;
         static final float ROTATION = 1.3f;
+        static final float SCALE = 1f;
     }
 
     static class Voyager {
@@ -27,5 +28,7 @@ class Config {
         static final int CAM_SPEED = 200;
         static final String SKY_TEXTURE = "Textures/sky.jpg";
         static final Vector3f LIGHT_DIRECTION = new Vector3f(1, 0, -2);
+        static final float ACCURACY = 1f / 160f;
+        static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
     }
 }

@@ -18,7 +18,6 @@ public class Simulation extends SimpleApplication {
 
     // Scene properties
     private static final int G = Config.App.G;
-    private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
     private BitmapText footer;
 
@@ -42,8 +41,8 @@ public class Simulation extends SimpleApplication {
         // Disable standard gravity
         BulletAppState bullet = new BulletAppState();
         stateManager.attach(bullet);
-        bullet.getPhysicsSpace().setGravity(ZERO_GRAVITY);
-        bullet.getPhysicsSpace().setAccuracy(1f / 160f);
+        bullet.getPhysicsSpace().setGravity(Config.App.ZERO_GRAVITY);
+        bullet.getPhysicsSpace().setAccuracy(Config.App.ACCURACY);
 
         initJupiter(bullet);
         initVoyager(bullet);
