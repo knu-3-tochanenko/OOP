@@ -30,7 +30,7 @@ public class Simulation extends SimpleApplication {
         bullet.getPhysicsSpace().setGravity(ZERO_GRAVITY);
 
         initJupiter(bullet);
-        initVoyajer(bullet);
+        initVoyager(bullet);
 
         addLight(rootNode);
         cam.setLocation(jupiter.getGeometry().getLocalTranslation().add(-900, 400, 500));
@@ -56,7 +56,7 @@ public class Simulation extends SimpleApplication {
         rootNode.attachChild(jupiter.getGeometry());
     }
 
-    private void initVoyajer(BulletAppState bullet) {
+    private void initVoyager(BulletAppState bullet) {
         voyager.setMaterial(
                 assetManager,
                 "Models/cat.obj",
