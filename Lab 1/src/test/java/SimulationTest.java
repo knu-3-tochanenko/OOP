@@ -4,6 +4,7 @@ import com.jme3.light.Light;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
+import com.jme3.system.AppSettings;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +20,13 @@ class SimulationTest {
     private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
     static {
+        simulation.setShowSettings(false);
+        AppSettings settings = new AppSettings(true);
+        settings.setResolution(1280, 800);
+        settings.setVSync(true);
+        settings.setDepthBits(24);
+        settings.setGammaCorrection(false);
+        simulation.setSettings(settings);
         simulation.start();
         simulation.getStateManager().attach(bullet);
         bullet.getPhysicsSpace().setGravity(ZERO_GRAVITY);
@@ -115,7 +123,6 @@ class SimulationTest {
     @Test
     void settingsTest() {
         assertFalse(simulation.isPauseOnLostFocus());
-        assertTrue(simulation.isShowSettings());
     }
 
     @Test

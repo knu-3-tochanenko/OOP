@@ -1,5 +1,6 @@
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
+import com.jme3.system.AppSettings;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
@@ -12,6 +13,13 @@ class PhysicsTest {
     void physicsTest() throws InterruptedException {
         Simulation simulation = new Simulation(true, 10);
         BulletAppState bullet = new BulletAppState();
+        simulation.setShowSettings(false);
+        AppSettings settings = new AppSettings(true);
+        settings.setResolution(1280, 800);
+        settings.setVSync(true);
+        settings.setDepthBits(24);
+        settings.setGammaCorrection(false);
+        simulation.setSettings(settings);
         simulation.start();
         simulation.getStateManager().attach(bullet);
         bullet.getPhysicsSpace().setGravity(ZERO_GRAVITY);
