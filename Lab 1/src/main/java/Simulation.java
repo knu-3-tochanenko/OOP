@@ -8,6 +8,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.util.SkyFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Simulation extends SimpleApplication {
     // Scene objects
     private Voyager voyager = new Voyager("Voyager 2", 130.0f, 0.05f);
@@ -19,6 +22,19 @@ public class Simulation extends SimpleApplication {
     private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
     private BitmapText footer;
+
+    private List<Float> speeds = new ArrayList<>();
+    private List<Float> Gs = new ArrayList<>();
+    private boolean isSelfTerminated = false;
+    private int secondsTillTermination = 0;
+    private long startTime = 0l, endTime = 0l;
+
+    public Simulation(boolean isSelfTerminated, int secondsTillTermination) {
+        this.isSelfTerminated = isSelfTerminated;
+        this.secondsTillTermination = secondsTillTermination;
+    }
+
+    Simulation() {}
 
     @Override
     public void simpleInitApp() {
@@ -48,6 +64,8 @@ public class Simulation extends SimpleApplication {
                         "Textures/sky.jpg",
                         SkyFactory.EnvMapType.SphereMap)
         );
+
+        this.startTime = System.currentTimeMillis();
     }
 
     private void initJupiter(BulletAppState bullet) {
@@ -94,15 +112,16 @@ public class Simulation extends SimpleApplication {
 
         float length = (float) Math.sqrt(x * x + y * y + z * z);
         float gravity = jupiter.getMass() * G / (length * length);
-        Vector3f newGravity = new Vector3f(
+        Vector3f newPosition = new Vector3f(
                 gravity * x / length,
                 gravity * y / length,
                 gravity * z / length);
         voyager.getControl().setGravity(
-                newGravity
+                newPosition
         );
 
-        System.out.println(newGravity);
+        speeds.add(voyager.getControl().getLinearVelocity().length());
+        Gs.add(gravity);
 
         cam.setLocation(
                 voyagerPosition.add(
@@ -115,6 +134,21 @@ public class Simulation extends SimpleApplication {
                 "Speed : " + String.format("%.3f", voyager.getControl().getLinearVelocity().length()) +
                         "\t Gravity : " + String.format("%.3f", gravity) +
                         "\t Distance : " + String.format("%.3f", length));
+
+        if (isSelfTerminated) {
+            endTime = System.currentTimeMillis();
+            if (endTime - startTime >= secondsTillTermination * 1000l) {
+                stop();
+            }
+        }
+    }
+
+    public List getGs() {
+        return Gs;
+    }
+
+    public List getSpeeds() {
+        return speeds;
     }
 
     public AssetManager getAssetManager() {
