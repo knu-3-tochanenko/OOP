@@ -1,8 +1,8 @@
-import com.jme3.app.state.RootNodeAppState;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.light.Light;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ public class SimulationTest {
 
     private Jupiter jupiter;
     private Voyager voyager;
-    private static final float G = 3;
+    private static final float G = 10;
 
     private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
@@ -41,6 +41,7 @@ public class SimulationTest {
                 simulation.getRootNode().getChild("Jupiter").getLocalRotation(),
                 simulation.getRootNode().getChild("JupiterT").getLocalRotation()
         );
+        // Check if Jupiter stays in place
         assertEquals(
                 simulation.getRootNode().getChild("Jupiter").getLocalTranslation(),
                 simulation.getRootNode().getChild("JupiterT").getLocalTranslation()
@@ -71,18 +72,6 @@ public class SimulationTest {
         );
     }
 
-//    @Test
-//    void simulationTest() {
-//
-//        initJupiter();
-//        initVoyager(simulation.getAssetManager(), simulation.getRootNode());
-//
-//        assertEquals(simulation.getRootNode().getChild("Voyager 2").getName(),
-//                "Voyager 2");
-//        assertEquals(simulation.getRootNode().getChild("Voyager 2").getLocalScale(),
-//                new Vector3f(.1f, .1f, .1f));
-//    }
-
     @Test
     void jupiterCreatedTest() {
         assertEquals(simulation.getRootNode().getChild("Jupiter").getName(),
@@ -92,7 +81,7 @@ public class SimulationTest {
     @Test
     void voyagerCreatedTest() {
         assertEquals(simulation.getRootNode().getChild("Voyager 2").getLocalScale(),
-                new Vector3f(.1f, .1f, .1f));
+                new Vector3f(.05f, .05f, .05f));
     }
 
     @Test
@@ -107,8 +96,35 @@ public class SimulationTest {
     void voyagerTest() {
         assertEquals(
                 simulation.getRootNode().getChild("Voyager 2").getLocalScale(),
-                new Vector3f(.1f, .1f, .1f)
+                new Vector3f(.05f, .05f, .05f)
         );
+    }
+
+    @Test
+    void cameraTest() {
+        assertFalse(simulation.getCamera().isViewportChanged());
+    }
+
+    @Test
+    void flyCamTest() {
+        assertTrue(simulation.getFlyByCamera().isEnabled());
+        assertEquals(simulation.getFlyByCamera().getMoveSpeed(), 200);
+        assertTrue(simulation.getFlyByCamera().isEnabled());
+    }
+
+    @Test
+    void settingsTest() {
+        assertFalse(simulation.isPauseOnLostFocus());
+        assertTrue(simulation.isShowSettings());
+    }
+
+    @Test
+    void lightTest() {
+        assertTrue(simulation.getRootNode().getLocalLightList().size() > 0);
+        Light light = simulation.getRootNode().getLocalLightList().get(0);
+        assertEquals(light.getColor(), ColorRGBA.Yellow);
+        assertTrue(light.isEnabled());
+        assertEquals(light.getType(), Light.Type.Directional);
     }
 
     void initJupiter() {
@@ -118,7 +134,7 @@ public class SimulationTest {
     }
 
     void initVoyager(AssetManager assetManager, Node rootNode) {
-        voyager = new Voyager("Voyager 2T", 500.0f, .1f);
+        voyager = new Voyager("Voyager 2T", 130.0f, .05f);
         voyager.setMaterial(
                 assetManager,
                 "Models/satellite.obj",

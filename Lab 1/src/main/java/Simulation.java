@@ -10,12 +10,12 @@ import com.jme3.util.SkyFactory;
 
 public class Simulation extends SimpleApplication {
     // Scene objects
-    private Voyager voyager = new Voyager("Voyager 2", 500.0f, 0.1f);
+    private Voyager voyager = new Voyager("Voyager 2", 130.0f, 0.05f);
     private Jupiter jupiter = new Jupiter("Jupiter", 5_000_000, 200);
 
     // Scene properties
-    private static final int G = 100;
-    private static final int CAM_SPEED = 400;
+    private static final int G = 10;
+    private static final int CAM_SPEED = 200;
     private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
     private BitmapText footer;
@@ -28,6 +28,7 @@ public class Simulation extends SimpleApplication {
         BulletAppState bullet = new BulletAppState();
         stateManager.attach(bullet);
         bullet.getPhysicsSpace().setGravity(ZERO_GRAVITY);
+        bullet.getPhysicsSpace().setAccuracy(1f / 160f);
 
         initJupiter(bullet);
         initVoyager(bullet);
@@ -77,7 +78,7 @@ public class Simulation extends SimpleApplication {
         footer = new BitmapText(guiFont, false);
         footer.setText("");
         footer.setLocalTranslation(
-                settings.getWidth() / 2 - guiFont.getCharSet().getRenderedSize() / 2,
+                settings.getWidth() / 2.0f - guiFont.getCharSet().getRenderedSize() / 2.0f,
                 20, 0);
         guiNode.attachChild(footer);
     }
@@ -93,15 +94,19 @@ public class Simulation extends SimpleApplication {
 
         float length = (float) Math.sqrt(x * x + y * y + z * z);
         float gravity = jupiter.getMass() * G / (length * length);
+        Vector3f newGravity = new Vector3f(
+                gravity * x / length,
+                gravity * y / length,
+                gravity * z / length);
         voyager.getControl().setGravity(
-                new Vector3f(
-                        gravity * x / length,
-                        gravity * y / length,
-                        gravity * z / length)
+                newGravity
         );
+
+        System.out.println(newGravity);
+
         cam.setLocation(
                 voyagerPosition.add(
-                        new Vector3f(-x * 0.2f, 30, -z * 0.2f)
+                        new Vector3f(-x * .2f, 30, -z * .2f)
                 )
         );
         cam.lookAt(jupiterPosition, voyagerPosition);
@@ -112,6 +117,8 @@ public class Simulation extends SimpleApplication {
                         "\t Distance : " + String.format("%.3f", length));
     }
 
-    public AssetManager getAssetManager() { return assetManager; }
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
 
 }
