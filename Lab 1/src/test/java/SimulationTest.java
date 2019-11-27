@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SimulationTest {
-    static Simulation simulation = new Simulation(true, 10);
+class SimulationTest {
+    static Simulation simulation = new Simulation(true, 3);
     static BulletAppState bullet = new BulletAppState();
 
     private Jupiter jupiter;

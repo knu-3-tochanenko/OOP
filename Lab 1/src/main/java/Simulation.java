@@ -110,18 +110,15 @@ public class Simulation extends SimpleApplication {
         float y = jupiterPosition.y - voyagerPosition.y;
         float z = jupiterPosition.z - voyagerPosition.z;
 
-        float length = (float) Math.sqrt(x * x + y * y + z * z);
-        float gravity = jupiter.getMass() * G / (length * length);
+        float distance = (float) Math.sqrt(x * x + y * y + z * z);
+        float newGravity = jupiter.getMass() * G / (distance * distance);
         Vector3f newPosition = new Vector3f(
-                gravity * x / length,
-                gravity * y / length,
-                gravity * z / length);
+                newGravity * x / distance,
+                newGravity * y / distance,
+                newGravity * z / distance);
         voyager.getControl().setGravity(
                 newPosition
         );
-
-        speeds.add(voyager.getControl().getLinearVelocity().length());
-        Gs.add(gravity);
 
         cam.setLocation(
                 voyagerPosition.add(
@@ -132,22 +129,24 @@ public class Simulation extends SimpleApplication {
 
         footer.setText(
                 "Speed : " + String.format("%.3f", voyager.getControl().getLinearVelocity().length()) +
-                        "\t Gravity : " + String.format("%.3f", gravity) +
-                        "\t Distance : " + String.format("%.3f", length));
+                        "\t Gravity : " + String.format("%.3f", newGravity) +
+                        "\t Distance : " + String.format("%.3f", distance));
 
         if (isSelfTerminated) {
             endTime = System.currentTimeMillis();
+            speeds.add(voyager.getControl().getLinearVelocity().length());
+            Gs.add(newGravity);
             if (endTime - startTime >= secondsTillTermination * 1000l) {
                 stop();
             }
         }
     }
 
-    public List getGs() {
+    public List<Float> getGs() {
         return Gs;
     }
 
-    public List getSpeeds() {
+    public List<Float> getSpeeds() {
         return speeds;
     }
 

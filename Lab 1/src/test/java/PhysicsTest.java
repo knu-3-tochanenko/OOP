@@ -1,7 +1,6 @@
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,20 +15,29 @@ class PhysicsTest {
         simulation.start();
         simulation.getStateManager().attach(bullet);
         bullet.getPhysicsSpace().setGravity(ZERO_GRAVITY);
-        
+
         List<Float> Gs = simulation.getGs();
         List<Float> speeds = simulation.getSpeeds();
 
         int size = Math.min(Gs.size(), speeds.size());
 
-        boolean flewBy = false;
+        boolean flewByG = false;
+        boolean flewBySpeed = false;
         for (int i = 1; i < size; i++) {
+            if (Gs.get(i - 1) > Gs.get(i))
+                flewByG = true;
             if (speeds.get(i - 1) > speeds.get(i))
-                flewBy = true;
-            if (flewBy)
-                assertTrue(speeds.get(i - 1) > speeds.get(i));
+                flewBySpeed = true;
+
+            if (flewByG)
+                assertTrue(Gs.get(i - 1) >= Gs.get(i));
             else
-                assertTrue(speeds.get(i - 1) < speeds.get(i));
+                assertTrue(Gs.get(i - 1) <= Gs.get(i));
+
+            if (flewBySpeed)
+                assertTrue(speeds.get(i - 1) >= speeds.get(i));
+            else
+                assertTrue(speeds.get(i - 1) <= speeds.get(i));
         }
     }
 
