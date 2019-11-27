@@ -3,14 +3,14 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Spatial;
 
 public class SpaceObject {
-    protected RigidBodyControl control;
-    protected String name;
+    RigidBodyControl control;
+    String name;
 
-    public RigidBodyControl getControl() {
+    RigidBodyControl getControl() {
         return control;
     }
 
-    public void setControl(RigidBodyControl control) {
+    void setControl(RigidBodyControl control) {
         this.control = control;
     }
 

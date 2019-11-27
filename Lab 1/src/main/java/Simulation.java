@@ -27,7 +27,7 @@ public class Simulation extends SimpleApplication {
     private List<Float> Gs = new ArrayList<>();
     private boolean isSelfTerminated = false;
     private int secondsTillTermination = 0;
-    private long startTime = 0l, endTime = 0l;
+    private long startTime = 0L;
 
     public Simulation(boolean isSelfTerminated, int secondsTillTermination) {
         this.isSelfTerminated = isSelfTerminated;
@@ -85,7 +85,7 @@ public class Simulation extends SimpleApplication {
         rootNode.attachChild(voyager.getGeometry());
     }
 
-    void addLight(Node rootNode) {
+    private void addLight(Node rootNode) {
         DirectionalLight light = new DirectionalLight();
         light.setDirection(new Vector3f(1, 0, -2).normalizeLocal());
         light.setColor(ColorRGBA.Yellow);
@@ -133,10 +133,10 @@ public class Simulation extends SimpleApplication {
                         "\t Distance : " + String.format("%.3f", distance));
 
         if (isSelfTerminated) {
-            endTime = System.currentTimeMillis();
+            long endTime = System.currentTimeMillis();
             speeds.add(voyager.getControl().getLinearVelocity().length());
             Gs.add(newGravity);
-            if (endTime - startTime >= secondsTillTermination * 1000l) {
+            if (endTime - startTime >= secondsTillTermination * 1000L) {
                 stop();
             }
         }

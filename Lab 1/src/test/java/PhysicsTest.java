@@ -10,7 +10,7 @@ class PhysicsTest {
     private final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
     @Test
-    void physicsTest() throws InterruptedException {
+    void physicsTest() {
         Simulation simulation = new Simulation(true, 10);
         BulletAppState bullet = new BulletAppState();
         simulation.setShowSettings(false);

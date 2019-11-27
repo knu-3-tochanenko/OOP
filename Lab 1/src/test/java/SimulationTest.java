@@ -10,12 +10,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimulationTest {
-    static Simulation simulation = new Simulation(true, 3);
-    static BulletAppState bullet = new BulletAppState();
+    private static Simulation simulation = new Simulation(true, 3);
+    private static BulletAppState bullet = new BulletAppState();
 
     private Jupiter jupiter;
     private Voyager voyager;
-    private static final float G = 10;
 
     private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
@@ -144,7 +143,7 @@ class SimulationTest {
         voyager = new Voyager("Voyager 2T", 130.0f, .05f);
         voyager.setMaterial(
                 assetManager,
-                "Models/satellite.obj",
+                "Models/cat.obj",
                 new Vector3f(-500, 0, 1000)
         );
         voyager.setPhysics(bullet, 1f);

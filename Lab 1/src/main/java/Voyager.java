@@ -17,7 +17,7 @@ public class Voyager extends SpaceObject {
         this.scale = scale;
     }
 
-    public void start(){
+    void start(){
         control.setLinearVelocity(new Vector3f(speed, 0, 0));
     }
 
@@ -51,7 +51,7 @@ public class Voyager extends SpaceObject {
         return geometry;
     }
 
-    public void setGeometry(Spatial geometry) {
+    private void setGeometry(Spatial geometry) {
         this.geometry = geometry;
     }
 }

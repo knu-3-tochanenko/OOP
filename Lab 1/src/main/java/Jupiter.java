@@ -10,7 +10,6 @@ import com.jme3.texture.Texture;
 
 public class Jupiter extends SpaceObject {
     private int mass;
-    private float radius;
 
     private Material material;
     private Sphere sphere;
@@ -21,7 +20,6 @@ public class Jupiter extends SpaceObject {
     public Jupiter(String name, int mass, float radius) {
         this.name = name;
         this.mass = mass;
-        this.radius = radius;
 
         sphere = new Sphere(
                 SPHERE_SAMPLES,
@@ -41,7 +39,7 @@ public class Jupiter extends SpaceObject {
         this.setControl(control);
     }
 
-    public void setMaterial(AssetManager manager, String texturePath) {
+    void setMaterial(AssetManager manager, String texturePath) {
         Material newMaterial;
         newMaterial = new Material(
                 manager,
@@ -72,11 +70,11 @@ public class Jupiter extends SpaceObject {
 
     // Generated getters and setters
 
-    public Material getMaterial() {
+    private Material getMaterial() {
         return material;
     }
 
-    public Sphere getSphere() {
+    private Sphere getSphere() {
         return sphere;
     }
 
