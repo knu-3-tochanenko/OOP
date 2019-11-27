@@ -6,38 +6,36 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 
 public class Voyager extends SpaceObject {
-    private float speed;
     private float scale;
 
     private Spatial geometry;
 
-    public Voyager(String name, float speed, float scale) {
-        this.name = name;
-        this.speed = speed;
-        this.scale = scale;
+    public Voyager() {
+        this.name = Config.Voyager.NAME;
+        this.scale = Config.Voyager.SCALE;
     }
 
     void start(){
-        control.setLinearVelocity(new Vector3f(speed, 0, 0));
+        control.setLinearVelocity(new Vector3f(Config.Voyager.SPEED, 0, 0));
     }
 
-    void setPhysics(BulletAppState state, float mass) {
+    void setPhysics(BulletAppState state) {
         this.getGeometry().setLocalTranslation(-500, 0, 1000);
-        RigidBodyControl control = new RigidBodyControl(mass);
+        RigidBodyControl control = new RigidBodyControl(Config.Voyager.MASS);
         this.getGeometry().addControl(control);
         state.getPhysicsSpace().add(control);
         this.setControl(control);
     }
 
-    public void setMaterial(AssetManager manager, String modelPath, Vector3f position) {
+    public void setMaterial(AssetManager manager) {
         Material voyagerMaterial;
         Spatial newSpatial;
-        newSpatial = manager.loadModel(modelPath);
-        newSpatial.setLocalTranslation(position);
+        newSpatial = manager.loadModel(Config.Voyager.MODEL_PATH);
+        newSpatial.setLocalTranslation(Config.Voyager.POSITION);
         newSpatial.scale(scale);
         voyagerMaterial = new Material(
                 manager,
-                "Common/MatDefs/Misc/ShowNormals.j3md"
+                Config.Voyager.DEF_NAME
         );
 
         newSpatial.setMaterial(voyagerMaterial);

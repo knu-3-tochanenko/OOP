@@ -13,12 +13,11 @@ import java.util.List;
 
 public class Simulation extends SimpleApplication {
     // Scene objects
-    private Voyager voyager = new Voyager("Voyager 2", 130.0f, 0.05f);
-    private Jupiter jupiter = new Jupiter("Jupiter", 5_000_000, 200);
+    private Voyager voyager = new Voyager();
+    private Jupiter jupiter = new Jupiter();
 
     // Scene properties
-    private static final int G = 10;
-    private static final int CAM_SPEED = 200;
+    private static final int G = Config.App.G;
     private static final Vector3f ZERO_GRAVITY = new Vector3f(0, 0, 0);
 
     private BitmapText footer;
@@ -38,7 +37,7 @@ public class Simulation extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        flyCam.setMoveSpeed(CAM_SPEED);
+        flyCam.setMoveSpeed(Config.App.CAM_SPEED);
 
         // Disable standard gravity
         BulletAppState bullet = new BulletAppState();
@@ -61,7 +60,7 @@ public class Simulation extends SimpleApplication {
 
         getRootNode().attachChild(
                 SkyFactory.createSky(getAssetManager(),
-                        "Textures/sky.jpg",
+                        Config.App.SKY_TEXTURE,
                         SkyFactory.EnvMapType.SphereMap)
         );
 
@@ -69,25 +68,21 @@ public class Simulation extends SimpleApplication {
     }
 
     private void initJupiter(BulletAppState bullet) {
-        jupiter.setMaterial(assetManager, "Textures/jupiter.jpg");
-        jupiter.setGeometry(new Vector3f(0, 2, -20), 1.3f, 0, 0);
-        jupiter.setPhysics(bullet, jupiter.getMass());
+        jupiter.setMaterial(assetManager);
+        jupiter.setGeometry();
+        jupiter.setPhysics(bullet);
         rootNode.attachChild(jupiter.getGeometry());
     }
 
     private void initVoyager(BulletAppState bullet) {
-        voyager.setMaterial(
-                assetManager,
-                "Models/cat.obj",
-                new Vector3f(-500, 0, 1000)
-        );
-        voyager.setPhysics(bullet, 1f);
+        voyager.setMaterial(assetManager);
+        voyager.setPhysics(bullet);
         rootNode.attachChild(voyager.getGeometry());
     }
 
     private void addLight(Node rootNode) {
         DirectionalLight light = new DirectionalLight();
-        light.setDirection(new Vector3f(1, 0, -2).normalizeLocal());
+        light.setDirection(Config.App.LIGHT_DIRECTION.normalizeLocal());
         light.setColor(ColorRGBA.Yellow);
         rootNode.addLight(light);
     }

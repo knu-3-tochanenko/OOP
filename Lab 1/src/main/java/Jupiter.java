@@ -3,7 +3,6 @@ import com.jme3.asset.TextureKey;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
@@ -15,16 +14,14 @@ public class Jupiter extends SpaceObject {
     private Sphere sphere;
     private Geometry geometry;
 
-    private static final int SPHERE_SAMPLES = 32;
-
-    public Jupiter(String name, int mass, float radius) {
-        this.name = name;
-        this.mass = mass;
+    public Jupiter() {
+        this.name = Config.Jupiter.NAME;
+        this.mass = Config.Jupiter.MASS;
 
         sphere = new Sphere(
-                SPHERE_SAMPLES,
-                SPHERE_SAMPLES,
-                radius,
+                Config.Jupiter.SPHERE_SAMPLES,
+                Config.Jupiter.SPHERE_SAMPLES,
+                Config.Jupiter.RADIUS,
                 true,
                 false
         );
@@ -32,21 +29,21 @@ public class Jupiter extends SpaceObject {
         sphere.setTextureMode(Sphere.TextureMode.Projected);
     }
 
-    void setPhysics(BulletAppState state, float mass) {
+    void setPhysics(BulletAppState state) {
         RigidBodyControl control = new RigidBodyControl(mass);
         this.getGeometry().addControl(control);
         state.getPhysicsSpace().add(control);
         this.setControl(control);
     }
 
-    void setMaterial(AssetManager manager, String texturePath) {
+    void setMaterial(AssetManager manager) {
         Material newMaterial;
         newMaterial = new Material(
                 manager,
-                "Common/MatDefs/Misc/Unshaded.j3md"
+                Config.Jupiter.DEF_NAME
         );
 
-        TextureKey textureKey = new TextureKey(texturePath);
+        TextureKey textureKey = new TextureKey(Config.Jupiter.TEXTURE_PATH);
         textureKey.setGenerateMips(true);
         Texture texture = manager.loadTexture(textureKey);
         texture.setWrap(Texture.WrapMode.Repeat);
@@ -55,16 +52,12 @@ public class Jupiter extends SpaceObject {
         this.material = newMaterial;
     }
 
-    public void setGeometry(Vector3f translation,
-                            float xAngle,
-                            float yAngle,
-                            float zAngle
-    ) {
+    public void setGeometry() {
         Geometry newGeometry = new Geometry(this.name, this.getSphere());
         newGeometry.setName(this.name);
         newGeometry.setMaterial(this.getMaterial());
-        newGeometry.setLocalTranslation(translation);
-        newGeometry.rotate(xAngle, zAngle, yAngle);
+        newGeometry.setLocalTranslation(Config.Jupiter.POSITION);
+        newGeometry.rotate(Config.Jupiter.ROTATION, 0, 0);
         this.geometry = newGeometry;
     }
 
