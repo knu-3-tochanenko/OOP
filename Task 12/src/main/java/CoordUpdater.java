@@ -27,12 +27,14 @@ public class CoordUpdater implements Runnable {
     @Override
     public void run() {
         while(true) {
-//            if (step.get() == 360) {
-//                x = startX.clone();
-//                y = startY.clone();
-//                step.set(0);
-//                continue;
-//            }
+            if (step.get() == 360) {
+                for (int i = 0; i < 3; i++) {
+                    x[i] = startX[i];
+                    y[i] = startY[i];
+                }
+                step = new AtomicInteger(0);
+                continue;
+            }
 
             step.incrementAndGet();
             for (int i = 0; i < 3; i++)
