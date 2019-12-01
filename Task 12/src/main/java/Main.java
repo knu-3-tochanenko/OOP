@@ -49,7 +49,84 @@ public class Main {
         private int[] triangle1X = new int[]{250, 300, 350};
         private int[] triangle2X = new int[]{400, 450, 500};
 
-        Timer timer = new Timer(500, this);
+        private int[] trianglesStartY = new int[]{150, 63, 150};
+        private int[] triangle0StartX = new int[]{100, 150, 200};
+        private int[] triangle1StartX = new int[]{250, 300, 350};
+        private int[] triangle2StartX = new int[]{400, 450, 500};
+
+        private int iteration = 0;
+
+        private int rotateX(int x, int y, int x0, int y0, int angle) {
+            return (int) (x0 + (x - x0) * Math.cos(Math.toRadians(angle)) - (y - y0) * Math.sin(Math.toRadians(angle)));
+        }
+
+        private int rotateY(int x, int y, int x0, int y0, int angle) {
+            return (int) (y0 + (y - y0) * Math.cos(Math.toRadians(angle)) + (x - x0) * Math.sin(Math.toRadians(angle)));
+        }
+
+        private void updateCoords() {
+
+            if (iteration == 360) {
+                trianglesY = trianglesStartY.clone();
+                triangle0X = triangle0StartX.clone();
+                triangle1X = triangle1StartX.clone();
+                triangle2X = triangle2StartX.clone();
+                iteration = 0;
+                return;
+            }
+
+            for (int i = 0; i < 3; i++) {
+                triangle0X[i] = rotateX(
+                        triangle0StartX[i],
+                        trianglesStartY[i],
+                        centresX[0],
+                        centresY[0],
+                        iteration
+                );
+                triangle1X[i] = rotateX(
+                        triangle1StartX[i],
+                        trianglesStartY[i],
+                        centresX[1],
+                        centresY[1],
+                        iteration
+                );
+                triangle2X[i] = rotateX(
+                        triangle2StartX[i],
+                        trianglesStartY[i],
+                        centresX[2],
+                        centresY[2],
+                        iteration
+                );
+                trianglesY[i] = rotateY(
+                        triangle0StartX[i],
+                        trianglesStartY[i],
+                        centresX[0],
+                        centresY[0],
+                        iteration
+                );
+            }
+
+            iteration++;
+
+            triangle0 = new Polygon(
+                    triangle0X,
+                    trianglesY,
+                    3);
+
+            triangle1 = new Polygon(
+                    triangle1X,
+                    trianglesY,
+                    3
+            );
+
+            triangle2 = new Polygon(
+                    triangle2X,
+                    trianglesY,
+                    3
+            );
+        }
+
+        Timer timer = new Timer(5, this);
 
         public TestPane() {
             timer.start();
@@ -79,14 +156,15 @@ public class Main {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            updateCoords();
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setColor(Color.BLACK);
             g2d.fill(triangle0);
 
-            g2d.setColor(Color.BLACK);
+            g2d.setColor(Color.darkGray);
             g2d.fill(triangle1);
 
-            g2d.setColor(Color.BLACK);
+            g2d.setColor(Color.GRAY);
             g2d.fill(triangle2);
 
             g2d.setColor(Color.RED);
@@ -101,7 +179,7 @@ public class Main {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == timer) {
-                repaint();// this will call at every 1 second
+                repaint();
             }
         }
     }
