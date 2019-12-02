@@ -34,86 +34,39 @@ public class Main {
         });
     }
 
-    private int[] atomicIntegerToInt(AtomicInteger[] arr) {
-        int[] res = new int[arr.length];
-        for (int i = 0; i < arr.length; i++)
-            res[i] = arr[i].get();
-        return res;
-    }
-
     public class TestPane extends JPanel implements ActionListener {
         private Polygon triangle0;
         private Polygon triangle1;
         private Polygon triangle2;
 
-        private AtomicInteger[] centresX = new AtomicInteger[]{
-                new AtomicInteger(150),
-                new AtomicInteger(300),
-                new AtomicInteger(450)
-        };
-        private AtomicInteger[] centresY = new AtomicInteger[]{
-                new AtomicInteger(121),
-                new AtomicInteger(121),
-                new AtomicInteger(121)
-        };
+        private AtomicInteger[] centresX = Config.intToAtomicInteger(new int[]{150, 300, 450});
+        private AtomicInteger[] centresY = Config.intToAtomicInteger(new int[]{121, 121, 121});
 
-        private AtomicInteger[] trianglesY = new AtomicInteger[]{
-                new AtomicInteger(150),
-                new AtomicInteger(63),
-                new AtomicInteger(150)
-        };
-        private AtomicInteger[] triangle0X = new AtomicInteger[]{
-                new AtomicInteger(100),
-                new AtomicInteger(150),
-                new AtomicInteger(200)
-        };
-        private AtomicInteger[] triangle1X = new AtomicInteger[]{
-                new AtomicInteger(250),
-                new AtomicInteger(300),
-                new AtomicInteger(350)
-        };
-        private AtomicInteger[] triangle2X = new AtomicInteger[]{
-                new AtomicInteger(400),
-                new AtomicInteger(450),
-                new AtomicInteger(500)
-        };
+        private AtomicInteger[] trianglesY = Config.intToAtomicInteger(new int[]{150, 63, 150});
+        private AtomicInteger[] triangle0X = Config.intToAtomicInteger(new int[]{100, 150, 200});
+        private AtomicInteger[] triangle1X = Config.intToAtomicInteger(new int[]{250, 300, 350});
+        private AtomicInteger[] triangle2X = Config.intToAtomicInteger(new int[]{400, 450, 500});
 
-        private AtomicInteger[] trianglesStartY = new AtomicInteger[]{
-                new AtomicInteger(150),
-                new AtomicInteger(63),
-                new AtomicInteger(150)
-        };
-        private AtomicInteger[] triangle0StartX = new AtomicInteger[]{
-                new AtomicInteger(100),
-                new AtomicInteger(150),
-                new AtomicInteger(200)
-        };
-        private AtomicInteger[] triangle1StartX = new AtomicInteger[]{
-                new AtomicInteger(250),
-                new AtomicInteger(300),
-                new AtomicInteger(350)
-        };
-        private AtomicInteger[] triangle2StartX = new AtomicInteger[]{
-                new AtomicInteger(400),
-                new AtomicInteger(450),
-                new AtomicInteger(500)
-        };
+        private AtomicInteger[] trianglesStartY = Config.intToAtomicInteger(new int[]{150, 63, 150});
+        private AtomicInteger[] triangle0StartX = Config.intToAtomicInteger(new int[]{100, 150, 200});
+        private AtomicInteger[] triangle1StartX = Config.intToAtomicInteger(new int[]{250, 300, 350});
+        private AtomicInteger[] triangle2StartX = Config.intToAtomicInteger(new int[]{400, 450, 500});
 
         private void updateCoords() {
             triangle0 = new Polygon(
-                    atomicIntegerToInt(triangle0X),
-                    atomicIntegerToInt(trianglesY),
+                    Config.atomicIntegerToInt(triangle0X),
+                    Config.atomicIntegerToInt(trianglesY),
                     3);
 
             triangle1 = new Polygon(
-                    atomicIntegerToInt(triangle1X),
-                    atomicIntegerToInt(trianglesY),
+                    Config.atomicIntegerToInt(triangle1X),
+                    Config.atomicIntegerToInt(trianglesY),
                     3
             );
 
             triangle2 = new Polygon(
-                    atomicIntegerToInt(triangle2X),
-                    atomicIntegerToInt(trianglesY),
+                    Config.atomicIntegerToInt(triangle2X),
+                    Config.atomicIntegerToInt(trianglesY),
                     3
             );
         }
@@ -123,19 +76,19 @@ public class Main {
         public TestPane() {
             timer.start();
             triangle0 = new Polygon(
-                    atomicIntegerToInt(triangle0X),
-                            atomicIntegerToInt(trianglesY),
+                    Config.atomicIntegerToInt(triangle0X),
+                    Config.atomicIntegerToInt(trianglesY),
                     3);
 
             triangle1 = new Polygon(
-                    atomicIntegerToInt(triangle1X),
-                            atomicIntegerToInt(trianglesY),
+                    Config.atomicIntegerToInt(triangle1X),
+                    Config.atomicIntegerToInt(trianglesY),
                     3
             );
 
             triangle2 = new Polygon(
-                    atomicIntegerToInt(triangle2X),
-                            atomicIntegerToInt(trianglesY),
+                    Config.atomicIntegerToInt(triangle2X),
+                    Config.atomicIntegerToInt(trianglesY),
                     3
             );
             Thread triangle0Updater = new Thread(
