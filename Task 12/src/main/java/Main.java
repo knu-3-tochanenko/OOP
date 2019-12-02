@@ -103,6 +103,18 @@ public class Main {
             Thread triangleYUpdater = new Thread(
                     new CoordUpdater(triangle0X, trianglesY,
                             triangle0StartX, trianglesStartY, centresX[0], centresY[0], false));
+            Thread threadSynchroniser = new Thread(new ThreadSynchroniser(
+                    triangle0X,
+                    triangle1X,
+                    triangle2X,
+                    trianglesY,
+                    triangle0StartX,
+                    triangle1StartX,
+                    triangle2StartX,
+                    trianglesStartY,
+                    centresX,
+                    centresY
+            ));
             triangle0Updater.setPriority(8);
             triangle0Updater.start();
             triangle1Updater.setPriority(4);
@@ -111,6 +123,7 @@ public class Main {
             triangle2Updater.start();
             triangleYUpdater.setPriority(9);
             triangleYUpdater.start();
+            threadSynchroniser.start();
         }
 
         @Override
