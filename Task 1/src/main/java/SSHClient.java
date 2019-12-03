@@ -9,16 +9,14 @@ import java.util.logging.Logger;
 
 public class SSHClient {
     private InetSocketAddress address;
-    private SocketWriter writer;
-    private SocketReader reader;
+    private SocketIO io;
 
     private Logger logger;
 
     public SSHClient(String ip, int port) {
         address = new InetSocketAddress(ip, port);
 
-        writer = new SocketWriter();
-        reader = new SocketReader();
+        io = new SocketIO();
 
         logger = Logger.getLogger(SSHClient.class.getName());
     }
@@ -30,13 +28,13 @@ public class SSHClient {
             String userMessage;
             String response;
 
-            response = reader.read(channel);
+            response = io.read(channel);
             logger.info("Received response: " + response);
             while ((userMessage = in.readLine()) != null) {
                 logger.info("Message: " + userMessage);
-                ByteBuffer buffer = writer.write(channel, userMessage);
+                ByteBuffer buffer = io.write(channel, userMessage);
                 logger.info("Sending message: " + userMessage + "; buffer bytes: " + buffer.position());
-                response = reader.read(channel);
+                response = io.read(channel);
                 logger.info("Received response: " + response);
             }
         } catch (IOException e) {
