@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<greenhouse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="Greenhouse.xsd">
+
+    <plant id="0001">
+        <name>rose</name>
+        <soil>unpaved</soil>
+        <origin>Ukraine</origin>
+        <visual-parameters>
+            <stem-color>#00FF00</stem-color>
+            <leaf-color>#FF0000</leaf-color>
+            <average-size>15.6</average-size>
+        </visual-parameters>
+        <growing-tips>
+            <temperature>25</temperature>
+            <needs-light>true</needs-light>
+            <watering>100</watering>
+        </growing-tips>
+        <breeding>stalk</breeding>
+    </plant>
+
+    <plant id="0002">
+        <name>tulip</name>
+        <soil>podzolic</soil>
+        <origin>Netherlands</origin>
+        <visual-parameters>
+            <stem-color>#88FF00</stem-color>
+            <leaf-color>#FF8800</leaf-color>
+            <average-size>12.3</average-size>
+        </visual-parameters>
+        <growing-tips>
+            <temperature>30</temperature>
+            <needs-light>false</needs-light>
+            <watering>300</watering>
+        </growing-tips>
+        <breeding>seeds</breeding>
+    </plant>
+
+    <plant id="0003">
+    <name>dandilion</name>
+    <soil>sod podzolic</soil>
+    <origin>Germany</origin>
+    <visual-parameters>
+        <stem-color>#880044</stem-color>
+        <leaf-color>#FF00FF</leaf-color>
+        <average-size>5.0</average-size>
+    </visual-parameters>
+    <growing-tips>
+        <temperature>15</temperature>
+        <needs-light>true</needs-light>
+        <watering>50</watering>
+    </growing-tips>
+    <breeding>flowers</breeding>
+</plant>
+
+</greenhouse>
