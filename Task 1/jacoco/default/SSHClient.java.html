@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SSHClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SSH_Client$Tests_in__SSH_Client_.exec</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">SSHClient.java</span></div><h1>SSHClient.java</h1><pre class="source lang-java linenums">import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class SSHClient {
+    private InetSocketAddress address;
+    private SocketWriter writer;
+    private SocketReader reader;
+
+    private Logger logger;
+
+<span class="fc" id="L18">    public SSHClient(String ip, int port) {</span>
+<span class="fc" id="L19">        address = new InetSocketAddress(ip, port);</span>
+
+<span class="fc" id="L21">        writer = new SocketWriter();</span>
+<span class="fc" id="L22">        reader = new SocketReader();</span>
+
+<span class="fc" id="L24">        logger = Logger.getLogger(SSHClient.class.getName());</span>
+<span class="fc" id="L25">    }</span>
+
+    public void connect() {
+<span class="nc" id="L28">        try (SocketChannel channel = SocketChannel.open(this.address)) {</span>
+<span class="nc" id="L29">            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));</span>
+
+            String userMessage;
+            String response;
+
+<span class="nc" id="L34">            response = reader.read(channel);</span>
+<span class="nc" id="L35">            logger.info(&quot;Received response: &quot; + response);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            while ((userMessage = in.readLine()) != null) {</span>
+<span class="nc" id="L37">                logger.info(&quot;Message: &quot; + userMessage);</span>
+<span class="nc" id="L38">                ByteBuffer buffer = writer.write(channel, userMessage);</span>
+<span class="nc" id="L39">                logger.info(&quot;Sending message: &quot; + userMessage + &quot;; buffer bytes: &quot; + buffer.position());</span>
+<span class="nc" id="L40">                response = reader.read(channel);</span>
+<span class="nc" id="L41">                logger.info(&quot;Received response: &quot; + response);</span>
+<span class="nc" id="L42">            }</span>
+<span class="fc" id="L43">        } catch (IOException e) {</span>
+<span class="fc" id="L44">            logger.log(Level.INFO, &quot;Exception handled&quot; + e.getMessage());</span>
+<span class="nc" id="L45">        }</span>
+<span class="fc" id="L46">    }</span>
+
+    public InetSocketAddress getAddress() {
+<span class="fc" id="L49">        return address;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
