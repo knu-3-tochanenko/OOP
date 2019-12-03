@@ -76,4 +76,5 @@ node_modules/
 .rpt2_cache/
 libraries/tools/kotlin-test-nodejs-runner/lib/
 local.properties
+desktop.ini
 Lab 2/reports/
