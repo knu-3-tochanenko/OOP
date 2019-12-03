@@ -1,5 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("It works!");
+        Application frame = new Application();
+        frame.setTitle("Moving dots");
+        frame.setSize(500, 500);
+        frame.start();
     }
 }
