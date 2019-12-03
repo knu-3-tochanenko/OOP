@@ -1,0 +1,53 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = '0.8.5'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+sourceCompatibility = 12
+targetCompatibility = 12
+
+group ''
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+project.ext {
+    jmeVer = '3.2.4-stable'
+}
+
+dependencies {
+    testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    
+    implementation "org.jmonkeyengine:jme3-core:$jmeVer"
+    implementation "org.jmonkeyengine:jme3-desktop:$jmeVer"
+
+    // implementation "org.jmonkeyengine:jme3-lwjgl:$jmeVer"
+     implementation "org.jmonkeyengine:jme3-lwjgl3:$jmeVer"
+    // implementation "org.jmonkeyengine:jme3-effects:$jmeVer"
+    // implementation "org.jmonkeyengine:jme3-jogg:$jmeVer"
+    // implementation "org.jmonkeyengine:jme3-plugins:$jmeVer"
+
+     implementation "org.jmonkeyengine:jme3-bullet:$jmeVer"
+
+     implementation "org.jmonkeyengine:jme3-bullet-native:$jmeVer"
+    // implementation "org.jmonkeyengine:jme3-jbullet:$jmeVer"
+
+    testImplementation 'org.mockito:mockito-core:3.1.0'
+
+}
+
+mainClassName = 'Main'
