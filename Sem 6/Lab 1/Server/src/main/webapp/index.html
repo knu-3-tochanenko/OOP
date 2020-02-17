@@ -15,13 +15,13 @@
     let geometry, material, sphere_1, sphere_2;
 
     let position1 = [-0.5, 0.05];
-    let position2 = [0.5, 0.05];
+    let position2 = [0.5, -0.05];
 
     let mass1 = 10;
-    let mass2 = 100;
+    let mass2 = 10;
 
     let speed1 = new THREE.Vector2( 0.005, 0.0 );
-    let speed2 = new THREE.Vector2( -0.005, 0.0 );
+    let speed2 = new THREE.Vector2( -0.001, 0.0 );
 
     let collided = false;
 
@@ -43,38 +43,20 @@
         return s2;
     }
 
-    function newV(spee1, spee2, m1, m2) {
-        var s11 = new THREE.Vector2(spee1.x, spee1.y);
-        var s12 = new THREE.Vector2(spee1.x, spee1.y);
-        var s13;
-        var s14;
-        var s2 = new THREE.Vector2(spee2.x, spee2.y);
-
-
+    function newV(s1, s2, m1, m2) {
         var vect = new THREE.Vector2(sphere_2.position.x - sphere_1.position.x, sphere_2.position.y - sphere_1.position.y);
-
         var angleM = vect.angle() + (Math.PI / 2);
+        // if (angleM >= Math.PI) { angleM -= Math.PI; }
 
-        if (angleM > Math.PI) { angleM -= Math.PI; }
+        var sub = s1.length() * Math.cos(s1.angle() - angleM) * (m1 - m2)
+        + 2 * m2 * s2.length() * Math.cos(s2.angle() - angleM);
 
-        s11.multiplyScalar(Math.cos(spee1.angle() - angleM) * (m1 - m2));
-        s2.multiplyScalar(2 * m2 * Math.cos(spee2.angle() - angleM));
-        s11.add(s2);
-        s11.multiplyScalar(1 / (m1 + m2));
-        s14 = new THREE.Vector2(s11.x, s11.y);
-        s11.multiplyScalar(Math.cos(angleM));
-        s14.multiplyScalar(Math.sin(angleM));
+        var x = sub / (m1 + m2) * Math.cos(angleM) + s1.length()
+        * Math.sin(s1.angle() - angleM) * Math.cos(angleM + Math.PI / 2);
+        var y = sub / (m1 + m2) * Math.sin(angleM) + s1.length()
+            * Math.sin(s1.angle() - angleM) * Math.sin(angleM + Math.PI / 2);
 
-
-        s12.multiplyScalar(Math.sin(spee1.angle() - angleM));
-        s13 = new THREE.Vector2(s12.x, s12.y);
-        s12.multiplyScalar(Math.cos(angleM + Math.PI / 2));
-        s13.multiplyScalar(Math.sin(angleM + Math.PI / 2));
-
-        s11.add(s12);
-        s14.add(s13);
-
-        return new THREE.Vector2(s11.x, s14.y);
+        return new THREE.Vector2(x, y);
 
     }
 
@@ -116,14 +98,22 @@
         var value = Math.sqrt(
             Math.pow(sphere_2.position.x - sphere_1.position.x, 2)
             + Math.pow(sphere_2.position.y - sphere_1.position.y, 2));
-        // console.log(value);
+        console.log(value);
         if ( !collided && (value - 0.2 < 0.00001)) {
+            console.log("COLLLLLLLLLIIIIIIIIIDEEEEEEEEEED");
             collided = true;
-            let sp1 = speed1, sp2 = speed2;
+            var sp1 = speed1, sp2 = speed2;
+            console.log(sp1);
             sp1 = newV(speed1, speed2, mass1, mass2);
+            console.log(sp2);
             sp2 = newV(speed2, speed1, mass2, mass1);
-            speed1 = sp1;
-            speed2 = sp2;
+            speed1 = sp2;
+            speed2 = sp1;
+        }
+
+        if (collided) {
+            console.log(speed1);
+            console.log(speed2);
         }
 
         sphere_1.position.x += speed1.x;
