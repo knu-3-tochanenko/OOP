@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+<body>
+
+<style>
+    body {
+        margin: 0;
+    }
+</style>
+<script src="js/three.js"></script>
+<script>
+    var camera, scene, renderer;
+    var geometry, material, sphere_1, sphere_2;
+
+    var speed1 = [0.0, 0.005, 0.03];
+    var speed2 = [0.0, -0.005, -0.03];
+
+    init();
+    animate();
+
+    function init() {
+
+        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+        camera.position.z = 1;
+
+        scene = new THREE.Scene();
+
+        geometry = new THREE.SphereGeometry(0.1, 32, 32);
+        var texture = new THREE.TextureLoader().load( 'textures/sphere.jpg' );
+        material = new THREE.MeshBasicMaterial( { map: texture } );
+
+        sphere_1 = new THREE.Mesh(geometry, material);
+        scene.add(sphere_1);
+
+        sphere_2 = new THREE.Mesh(geometry, material);
+        scene.add(sphere_2);
+
+        sphere_1.position.x = -0.5;
+        sphere_1.position.y = 0.05;
+        sphere_2.position.x = 0.5;
+        sphere_2.position.y = -0.05;
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+    }
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+
+        var value = Math.sqrt(
+            Math.pow(sphere_2.position.x - sphere_1.position.x, 2) + Math.pow(sphere_2.position.y - sphere_1.position.y, 2))
+        console.log(value)
+        if ( value - 0.2 < 0.00001) {
+            speed1[0] = 0.001;
+            speed2[0] = -0.001;
+            speed1[1] = -0.0005;
+            speed2[1] = 0.0005;
+            speed1[2] = 0;
+            speed2[2] = 0;
+        }
+
+        sphere_1.position.x += speed1[1];
+        sphere_1.position.y += speed1[0];
+        sphere_1.rotation.y += speed1[2];
+
+        sphere_2.position.x += speed2[1];
+        sphere_2.position.y += speed2[0];
+        sphere_2.rotation.y += speed2[2];
+
+
+        renderer.render(scene, camera);
+
+    }
+</script>
+</body>
+
+</html>
