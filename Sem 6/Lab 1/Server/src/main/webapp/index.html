@@ -10,18 +10,78 @@
 </style>
 <script src="js/three.js"></script>
 <script>
-    var camera, scene, renderer;
-    var geometry, material, sphere_1, sphere_2;
 
-    var speed1 = [0.0, 0.005, 0.03];
-    var speed2 = [0.0, -0.005, -0.03];
+    let camera, scene, renderer;
+    let geometry, material, sphere_1, sphere_2;
+
+    let position1 = [-0.5, 0.05];
+    let position2 = [0.5, 0.05];
+
+    let mass1 = 10;
+    let mass2 = 100;
+
+    let speed1 = new THREE.Vector2( 0.005, 0.0 );
+    let speed2 = new THREE.Vector2( -0.005, 0.0 );
+
+    let collided = false;
 
     init();
     animate();
 
+    function newVO(spee1, spee2, m1, m2) {
+        var s1 = new THREE.Vector2(spee1.x, spee1.y);
+        var s2 = new THREE.Vector2(spee2.x, spee2.y);
+        console.log("--------------------------------");
+        s2.multiplyScalar(2 * m2);
+        console.log(s2.x + " - " + s2.y);
+        s1.multiplyScalar(m1 - m2);
+        console.log(s1.x + " - " + s1.y);
+        s2.add(s1);
+        console.log(s2.x + " - " + s2.y);
+        s2.multiplyScalar(1 / (m1 + m2));
+        console.log(s2.x + " - " + s2.y);
+        return s2;
+    }
+
+    function newV(spee1, spee2, m1, m2) {
+        var s11 = new THREE.Vector2(spee1.x, spee1.y);
+        var s12 = new THREE.Vector2(spee1.x, spee1.y);
+        var s13;
+        var s14;
+        var s2 = new THREE.Vector2(spee2.x, spee2.y);
+
+
+        var vect = new THREE.Vector2(sphere_2.position.x - sphere_1.position.x, sphere_2.position.y - sphere_1.position.y);
+
+        var angleM = vect.angle() + (Math.PI / 2);
+
+        if (angleM > Math.PI) { angleM -= Math.PI; }
+
+        s11.multiplyScalar(Math.cos(spee1.angle() - angleM) * (m1 - m2));
+        s2.multiplyScalar(2 * m2 * Math.cos(spee2.angle() - angleM));
+        s11.add(s2);
+        s11.multiplyScalar(1 / (m1 + m2));
+        s14 = new THREE.Vector2(s11.x, s11.y);
+        s11.multiplyScalar(Math.cos(angleM));
+        s14.multiplyScalar(Math.sin(angleM));
+
+
+        s12.multiplyScalar(Math.sin(spee1.angle() - angleM));
+        s13 = new THREE.Vector2(s12.x, s12.y);
+        s12.multiplyScalar(Math.cos(angleM + Math.PI / 2));
+        s13.multiplyScalar(Math.sin(angleM + Math.PI / 2));
+
+        s11.add(s12);
+        s14.add(s13);
+
+        return new THREE.Vector2(s11.x, s14.y);
+
+    }
+
     function init() {
 
-        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+        camera = new THREE.PerspectiveCamera(
+            70, window.innerWidth / window.innerHeight, 0.01, 10);
         camera.position.z = 1;
 
         scene = new THREE.Scene();
@@ -36,15 +96,17 @@
         sphere_2 = new THREE.Mesh(geometry, material);
         scene.add(sphere_2);
 
-        sphere_1.position.x = -0.5;
-        sphere_1.position.y = 0.05;
-        sphere_2.position.x = 0.5;
-        sphere_2.position.y = -0.05;
+        sphere_1.position.x = position1[0];
+        sphere_1.position.y = position1[1];
+        sphere_2.position.x = position2[0];
+        sphere_2.position.y = position2[1];
 
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
+        // speed1 = THREE.Vector2( 0.005, 0.0 );
+        // speed2 = THREE.Vector2( -0.005, 0.0 );
     }
 
     function animate() {
@@ -52,24 +114,23 @@
         requestAnimationFrame(animate);
 
         var value = Math.sqrt(
-            Math.pow(sphere_2.position.x - sphere_1.position.x, 2) + Math.pow(sphere_2.position.y - sphere_1.position.y, 2))
-        console.log(value)
-        if ( value - 0.2 < 0.00001) {
-            speed1[0] = 0.001;
-            speed2[0] = -0.001;
-            speed1[1] = -0.0005;
-            speed2[1] = 0.0005;
-            speed1[2] = 0;
-            speed2[2] = 0;
+            Math.pow(sphere_2.position.x - sphere_1.position.x, 2)
+            + Math.pow(sphere_2.position.y - sphere_1.position.y, 2));
+        // console.log(value);
+        if ( !collided && (value - 0.2 < 0.00001)) {
+            collided = true;
+            let sp1 = speed1, sp2 = speed2;
+            sp1 = newV(speed1, speed2, mass1, mass2);
+            sp2 = newV(speed2, speed1, mass2, mass1);
+            speed1 = sp1;
+            speed2 = sp2;
         }
 
-        sphere_1.position.x += speed1[1];
-        sphere_1.position.y += speed1[0];
-        sphere_1.rotation.y += speed1[2];
+        sphere_1.position.x += speed1.x;
+        sphere_1.position.y += speed1.y;
 
-        sphere_2.position.x += speed2[1];
-        sphere_2.position.y += speed2[0];
-        sphere_2.rotation.y += speed2[2];
+        sphere_2.position.x += speed2.x;
+        sphere_2.position.y += speed2.y;
 
 
         renderer.render(scene, camera);
