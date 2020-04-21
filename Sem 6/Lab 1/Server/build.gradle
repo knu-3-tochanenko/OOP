@@ -19,6 +19,6 @@ dependencies {
 }
 
 gretty {
-    servletContainer = 'tomcat8'
+    servletContainer = 'tomcat9'
     contextPath = '/'
 }

@@ -17,13 +17,17 @@ public class BallsPhysics implements Runnable {
     private Ball first = new Ball(new Pair<>(S.A_X_POS, S.A_Y_POS), S.A_RADIUS, S.A_MASS, new Pair<>(S.A_X_SPEED, S.A_Y_SPEED));
     private Ball second = new Ball(new Pair<>(S.B_X_POS, S.B_Y_POS), S.B_RADIUS, S.B_MASS, new Pair<>(S.B_X_SPEED, S.B_Y_SPEED));
 
+    private boolean wasCollided = false;
+
     public void iterate() {
-        if (collided(first, second)) {
+        if (collided(first, second) && !wasCollided) {
+            System.out.println("Collided!");
             Pair<Double, Double> newASpeed = getNewSpeed(first, second);
             Pair<Double, Double> newBSpeed = getNewSpeed(second, first);
 
             first.setSpeed(newASpeed);
             second.setSpeed(newBSpeed);
+            wasCollided = true;
         }
 
         first.iterate();
@@ -56,11 +60,13 @@ public class BallsPhysics implements Runnable {
     }
 
     private Pair<Double, Double> getNewSpeed(Ball a, Ball b) {
-        double angleM = Math.atan2(a.getX() * b.getY() - a.getY() * b.getX(), a.getX() * b.getX() - a.getY() - b.getY());
+        double angleM = Math.atan2(b.getX() - a.getX(), b.getY() - a.getY());
+        if ( angleM < 0 ) { angleM += 2 * Math.PI; }
+        angleM += (Math.PI / 2);
 
-        if (angleM >= Math.PI) {
-            angleM -= Math.PI;
-        }
+//        if (angleM >= Math.PI) {
+//            angleM -= Math.PI;
+//        }
 
         double sub = len(a.getVX(), a.getVY()) * Math.cos(angle(a.getVX(), a.getVY()) - angleM) * (a.getMass() - b.getMass())
                 + 2 * b.getMass() * len(b.getVX(), b.getVY()) * Math.cos(angle(b.getVX(), b.getVY()) - angleM);
@@ -71,7 +77,7 @@ public class BallsPhysics implements Runnable {
         double y = sub / (a.getMass() + b.getMass()) * Math.sin(angleM) + len(a.getVX(), a.getVY())
                 * Math.sin(angle(a.getVX(), b.getVY()) - angleM) * Math.sin(angleM + Math.PI / 2);
 
-        return new Pair<>(x, y);
+        return new Pair<>(x, -y);
     }
 
     @Override
