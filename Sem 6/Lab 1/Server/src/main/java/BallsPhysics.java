@@ -50,27 +50,28 @@ public class BallsPhysics implements Runnable {
         return Math.sqrt(Math.pow(bX - aX, 2.0) + Math.pow(bY - aY, 2.0));
     }
 
-    private double len(double x, double y) {
-        return Math.sqrt(x * x + y * y);
+    private double len(Pair<Double, Double> v) {
+        return Math.sqrt(v.getX() * v.getX() + v.getY() * v.getY());
     }
 
-    private double angle(double x, double y) {
-        return Math.atan(y / x);
+    private double angle(Pair<Double, Double> v) {
+        return Math.atan2(v.getY(), v.getX());
     }
 
     private Pair<Double, Double> getNewSpeed(Ball a, Ball b) {
-        double angleM = Math.atan2(b.getX() - a.getX(), b.getY() - a.getY());
+        double angleM = Math.atan2(a.getY(), a.getX()) - Math.atan2(b.getY(), b.getX());
         if ( angleM < 0 ) { angleM += 2 * Math.PI; }
-        angleM += (Math.PI / 2);
+        if ( angleM > 2 * Math.PI ) angleM -= 2 * Math.PI;
+//        angleM += (Math.PI / 2);
 
-        double sub = len(a.getVX(), a.getVY()) * Math.cos(angle(a.getVX(), a.getVY()) - angleM) * (a.getMass() - b.getMass())
-                + 2 * b.getMass() * len(b.getVX(), b.getVY()) * Math.cos(angle(b.getVX(), b.getVY()) - angleM);
+        double sub = len(a.getSpeed()) * Math.cos(angle(a.getSpeed()) - angleM) * (a.getMass() - b.getMass())
+                + 2 * b.getMass() * len(b.getSpeed()) * Math.cos(angle(b.getSpeed()) - angleM);
 
-        double x = sub / (a.getMass() + b.getMass()) * Math.cos(angleM) + len(a.getVX(), a.getVY())
-                * Math.sin(angle(a.getVX(), a.getVY()) - angleM) * Math.cos(angleM + Math.PI / 2);
+        double x = sub / (a.getMass() + b.getMass()) * Math.cos(angleM) + len(a.getSpeed())
+                * Math.sin(angle(a.getSpeed()) - angleM) * Math.cos(angleM + Math.PI / 2);
 
-        double y = sub / (a.getMass() + b.getMass()) * Math.sin(angleM) + len(a.getVX(), a.getVY())
-                * Math.sin(angle(a.getVX(), a.getVY()) - angleM) * Math.sin(angleM + Math.PI / 2);
+        double y = sub / (a.getMass() + b.getMass()) * Math.sin(angleM) + len(a.getSpeed())
+                * Math.sin(angle(a.getSpeed()) - angleM) * Math.sin(angleM + Math.PI / 2);
 
         return new Pair<>(x, y);
     }

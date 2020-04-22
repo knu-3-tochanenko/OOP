@@ -62,7 +62,7 @@
 <script>
 
     let camera, scene, renderer;
-    let geometry, material, sphere_1, sphere_2;
+    let geometry, material_1, material_2, sphere_1, sphere_2;
 
     let a_x_pos, a_y_pos, a_radius, b_x_pos, b_y_pos, b_radius;
 
@@ -139,13 +139,15 @@
         scene = new THREE.Scene();
 
         geometry = new THREE.SphereGeometry(0.15, 32, 32);
-        let texture = new THREE.TextureLoader().load('textures/sphere.jpg');
-        material = new THREE.MeshBasicMaterial( { map: texture } );
+        let texture_1 = new THREE.TextureLoader().load('textures/sphere-1.jpg');
+        let texture_2 = new THREE.TextureLoader().load('textures/sphere-2.jpg')
+        material_1 = new THREE.MeshBasicMaterial( { map: texture_1 } );
+        material_2 = new THREE.MeshBasicMaterial( { map: texture_2 } );
 
-        sphere_1 = new THREE.Mesh(geometry, material);
+        sphere_1 = new THREE.Mesh(geometry, material_1);
         scene.add(sphere_1);
 
-        sphere_2 = new THREE.Mesh(geometry, material);
+        sphere_2 = new THREE.Mesh(geometry, material_2);
         scene.add(sphere_2);
 
         sphere_1.position.x = a_x_pos;
