@@ -1,7 +1,7 @@
 public class Ball {
     private Pair<Double, Double> position;
-    private double radius;
-    private double mass;
+    private final double radius;
+    private final double mass;
 
     private Pair<Double, Double> speed;
 
@@ -9,10 +9,6 @@ public class Ball {
         this.position = position;
         this.radius = radius;
         this.mass = mass;
-        this.speed = speed;
-    }
-
-    public void changeSpeed(Pair<Double, Double> speed) {
         this.speed = speed;
     }
 

@@ -1,19 +1,21 @@
-<html>
+<html lang="en">
 <head>
     <style>
         body {
             margin: 0;
         }
 
-        #start_button, #stop_button {
-            background-color: #3289b6;
-            padding: 8px 16px;
-            border-radius: 8px;
+        .button {
+            background-color: #1DE9B6;
+            padding: 0 2rem;
+            border-radius: 6px;
 
             font-family: "IBM Plex Mono",monospace;
             font-stretch: expanded;
             font-weight: bold;
-            color: #fff;
+            font-size: 1rem;
+            line-height: 36px;
+            color: #009688;
 
             position: absolute;
             left: 50%;
@@ -21,10 +23,25 @@
             bottom: 50px;
 
             cursor: pointer;
+
+            box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
+            -webkit-box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
+
+            transition: box-shadow, filter 300ms;
+            -webkit-transition: -webkit-box-shadow 300ms, filter 300ms;
+            transition: -webkit-box-shadow 300ms, filter 300ms;
+            transition: box-shadow 300ms, -webkit-box-shadow 300ms, filter 300ms;
         }
 
-        #start_button:hover, #stop_button:hover {
-            background-color: #45aae0;
+        .button:hover {
+            box-shadow: 0 8px 10px 1px rgba(100, 255, 218, 0.5), 0 3px 14px 2px rgba(100, 255, 218, 0.48), 0 5px 5px -3px rgba(100, 255, 218, 0.56);
+            -webkit-box-shadow: 0 8px 10px 1px rgba(100, 255, 218, 0.5), 0 3px 14px 2px rgba(100, 255, 218, 0.48), 0 5px 5px -3px rgba(100, 255, 218, 0.56);
+        }
+
+        .button:active {
+            filter: brightness(90%);
+            box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
+            -webkit-box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
         }
 
         #start_button {
@@ -39,8 +56,8 @@
     <script src="js/three.js"></script>
 </head>
 <body>
-    <div id="start_button">START</div>
-    <div id="stop_button">STOP</div>
+    <div id="start_button" class="button">START</div>
+    <div id="stop_button" class="button">STOP</div>
 </body>
 <script>
 
@@ -52,28 +69,24 @@
     // Server communication
     const startButton = document.getElementById("start_button");
     const stopButton = document.getElementById("stop_button");
-
-    const coordinatesList = document.getElementById("coordinates_list");
-
     const socket = new WebSocket("ws://localhost:8080/socket");
 
-    socket.onopen = function (event) {
+    socket.onopen = function () {
         socket.send("Connected");
         init();
-        // animate();
     };
 
     socket.onmessage = function (event) {
         receiveCoordinates(event.data);
     };
 
-    startButton.onclick = function (event) {
+    startButton.onclick = function () {
         startButton.style.display = "none";
         stopButton.style.display = "block";
         socket.send("Start");
     }
 
-    stopButton.onclick = function (event) {
+    stopButton.onclick = function () {
         startButton.style.display = "block";
         stopButton.style.display = "none";
         socket.send("Stop");
@@ -81,8 +94,9 @@
 
     function receiveCoordinates(data) {
         if (data[0] === 'Z') {
-            // Init block
 
+            // Init block
+            
             let res = data.split(" ");
             a_x_pos = parseFloat(res[1]);
             a_y_pos = parseFloat(res[2]);
@@ -111,7 +125,6 @@
 
             renderer.render(scene, camera);
         }
-        // coordinatesList.innerHTML += `<p>${data}</p>`;
     }
 
     // Visualisation
@@ -125,7 +138,7 @@
 
         scene = new THREE.Scene();
 
-        geometry = new THREE.SphereGeometry(0.1, 32, 32);
+        geometry = new THREE.SphereGeometry(0.15, 32, 32);
         let texture = new THREE.TextureLoader().load('textures/sphere.jpg');
         material = new THREE.MeshBasicMaterial( { map: texture } );
 
@@ -144,10 +157,5 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
     }
-
-    // function animate() {
-    //     requestAnimationFrame(animate);
-    //     renderer.render(scene, camera);
-    // }
 </script>
 </html>

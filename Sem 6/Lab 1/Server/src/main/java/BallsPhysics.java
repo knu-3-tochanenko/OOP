@@ -10,18 +10,17 @@ public class BallsPhysics implements Runnable {
         this.sleepTime = sleepTime;
     }
 
-    private AtomicBoolean isAlive;
-    private int sleepTime = 100;
-    private Session session;
+    private final AtomicBoolean isAlive;
+    private final int sleepTime;
+    private final Session session;
 
-    private Ball first = new Ball(new Pair<>(S.A_X_POS, S.A_Y_POS), S.A_RADIUS, S.A_MASS, new Pair<>(S.A_X_SPEED, S.A_Y_SPEED));
-    private Ball second = new Ball(new Pair<>(S.B_X_POS, S.B_Y_POS), S.B_RADIUS, S.B_MASS, new Pair<>(S.B_X_SPEED, S.B_Y_SPEED));
+    private final Ball first = new Ball(new Pair<>(S.A_X_POS, S.A_Y_POS), S.A_RADIUS, S.A_MASS, new Pair<>(S.A_X_SPEED, S.A_Y_SPEED));
+    private final Ball second = new Ball(new Pair<>(S.B_X_POS, S.B_Y_POS), S.B_RADIUS, S.B_MASS, new Pair<>(S.B_X_SPEED, S.B_Y_SPEED));
 
     private boolean wasCollided = false;
 
     public void iterate() {
         if (collided(first, second) && !wasCollided) {
-            System.out.println("Collided!");
             Pair<Double, Double> newASpeed = getNewSpeed(first, second);
             Pair<Double, Double> newBSpeed = getNewSpeed(second, first);
 
@@ -64,20 +63,16 @@ public class BallsPhysics implements Runnable {
         if ( angleM < 0 ) { angleM += 2 * Math.PI; }
         angleM += (Math.PI / 2);
 
-//        if (angleM >= Math.PI) {
-//            angleM -= Math.PI;
-//        }
-
         double sub = len(a.getVX(), a.getVY()) * Math.cos(angle(a.getVX(), a.getVY()) - angleM) * (a.getMass() - b.getMass())
                 + 2 * b.getMass() * len(b.getVX(), b.getVY()) * Math.cos(angle(b.getVX(), b.getVY()) - angleM);
 
         double x = sub / (a.getMass() + b.getMass()) * Math.cos(angleM) + len(a.getVX(), a.getVY())
-                * Math.sin(angle(a.getVX(), b.getVY()) - angleM) * Math.cos(angleM + Math.PI / 2);
+                * Math.sin(angle(a.getVX(), a.getVY()) - angleM) * Math.cos(angleM + Math.PI / 2);
 
         double y = sub / (a.getMass() + b.getMass()) * Math.sin(angleM) + len(a.getVX(), a.getVY())
-                * Math.sin(angle(a.getVX(), b.getVY()) - angleM) * Math.sin(angleM + Math.PI / 2);
+                * Math.sin(angle(a.getVX(), a.getVY()) - angleM) * Math.sin(angleM + Math.PI / 2);
 
-        return new Pair<>(x, -y);
+        return new Pair<>(x, y);
     }
 
     @Override
