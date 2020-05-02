@@ -9,12 +9,6 @@ public class WebSocketEndpoint {
     private Thread coordinatesUpdater = null;
     private final AtomicBoolean isAlive = new AtomicBoolean(false);
 
-    @OnMessage(maxMessageSize = 1024000)
-    public byte[] handleBinaryMessage(byte[] buffer) {
-        System.out.println("New Binary Message Received");
-        return buffer;
-    }
-
     @OnMessage
     public void onMessage(Session session, String msg) {
         System.out.println("Received message " + msg);
