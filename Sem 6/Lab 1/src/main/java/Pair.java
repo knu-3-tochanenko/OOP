@@ -27,11 +27,10 @@ public class Pair<T extends Number, R extends Number> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pair<?, ?> pair = (Pair<?, ?>) o;
-        return Objects.equals(x, pair.x) &&
-                Objects.equals(y, pair.y);
+        if (getClass() != o.getClass())
+            return false;
+        Pair<Number, Number> sub = (Pair<Number,Number>)o;
+        return sub.x.equals(this.x) && sub.y.equals(this.y);
     }
 
     @Override
