@@ -11,7 +11,7 @@ public class BookingDao {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM bookings WHERE id=" + id;
+        String query = "SELECT * FROM Bookings WHERE id=" + id;
 
         ResultSet resultSet = statement.executeQuery(query);
 
