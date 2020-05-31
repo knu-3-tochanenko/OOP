@@ -4,7 +4,7 @@ CREATE TYPE RIDE_STATUS AS ENUM ('WAITING', 'COMPLETED', 'REJECTED');
 
 CREATE TYPE USER_ROLE AS ENUM ('DRIVER', 'ADMIN', 'USER');
 
-CREATE TABLE Automobile
+CREATE TABLE Automobiles
 (
     id                   SERIAL PRIMARY KEY,
     seats                INTEGER DEFAULT 4,
@@ -12,24 +12,26 @@ CREATE TABLE Automobile
     class                AUTO_CLASS NOT NULL
 );
 
-CREATE TABLE Driver
+CREATE TABLE Users
 (
-    id      SERIAL PRIMARY KEY,
-    car_id  INTEGER REFERENCES Automobile (id),
-    name    VARCHAR(50) NOT NULL,
-    surname VARCHAR(50) NOT NULL,
-    role    USER_ROLE DEFAULT 'DRIVER'
+    id       SERIAL PRIMARY KEY,
+    email    VARCHAR(32) NOT NULL,
+    password VARCHAR(32) NOT NULL,
+    car_id   INTEGER REFERENCES Automobiles (id),
+    name     VARCHAR(50) NOT NULL,
+    surname  VARCHAR(50) NOT NULL,
+    role     USER_ROLE DEFAULT 'DRIVER'
 );
 
-CREATE TABLE Ride
+CREATE TABLE Rides
 (
     id         SERIAL PRIMARY KEY,
-    car_id     INTEGER REFERENCES Automobile (id),
-    booking_id INTEGER REFERENCES Booking (id),
+    car_id     INTEGER REFERENCES Automobiles (id),
+    booking_id INTEGER REFERENCES Bookings (id),
     cost       INTEGER NOT NULL
 );
 
-CREATE TABLE Booking
+CREATE TABLE Bookings
 (
     id          SERIAL PRIMARY KEY,
     min_class   AUTO_CLASS  DEFAULT 'D',
@@ -38,4 +40,3 @@ CREATE TABLE Booking
     min_seats   INTEGER     DEFAULT 1,
     status      RIDE_STATUS DEFAULT 'WAITING'
 );
-
