@@ -62,16 +62,15 @@ public class UserDao {
     public void insert(User user) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
-        String query = "INSERT INTO Users (id, email, password, car_id, name, surname, role) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Users (id, email, password, car_id, name, surname, role) VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, user.getId());
-        statement.setString(2, user.getEmail());
-        statement.setString(3, user.getPassword());
-        statement.setInt(4, user.getCarId());
-        statement.setString(5, user.getName());
-        statement.setString(6, user.getSurname());
-        statement.setString(7, user.getRole().toString());
+        statement.setString(1, user.getEmail());
+        statement.setString(2, user.getPassword());
+        statement.setInt(3, user.getCarId());
+        statement.setString(4, user.getName());
+        statement.setString(5, user.getSurname());
+        statement.setString(6, user.getRole().toString());
 
         statement.executeUpdate(query);
         connection.close();

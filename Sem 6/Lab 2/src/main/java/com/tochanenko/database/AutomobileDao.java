@@ -33,14 +33,13 @@ public class AutomobileDao {
     public void insert(Automobile automobile) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
-        String query = "INSERT INTO Automobiles (id, name, seats, last_inspection_date, class) VALUES(?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Automobiles (id, name, seats, last_inspection_date, class) VALUES(DEFAULT, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, automobile.getId());
-        statement.setString(2, automobile.getName());
-        statement.setInt(3, automobile.getSeats());
-        statement.setObject(4, automobile.getLastInspectionDate());
-        statement.setString(5, automobile.getAutoClass().toString());
+        statement.setString(1, automobile.getName());
+        statement.setInt(2, automobile.getSeats());
+        statement.setObject(3, automobile.getLastInspectionDate());
+        statement.setString(4, automobile.getAutoClass().toString());
 
         statement.executeUpdate();
         connection.close();
