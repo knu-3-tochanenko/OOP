@@ -15,13 +15,15 @@ CREATE TABLE Automobiles
 CREATE TABLE Users
 (
     id       SERIAL PRIMARY KEY,
-    email    VARCHAR(32) NOT NULL,
+    email    VARCHAR(32) UNIQUE NOT NULL,
     password VARCHAR(32) NOT NULL,
     car_id   INTEGER REFERENCES Automobiles (id),
     name     VARCHAR(50) NOT NULL,
     surname  VARCHAR(50) NOT NULL,
     role     USER_ROLE DEFAULT 'DRIVER'
 );
+
+drop table users;
 
 CREATE TABLE Rides
 (
