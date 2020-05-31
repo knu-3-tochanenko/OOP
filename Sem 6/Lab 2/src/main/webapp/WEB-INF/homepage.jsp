@@ -5,11 +5,28 @@
 </head>
 <body>
 
-If you don't see "It woks!", them you are fucked up.
+<h1>Login</h1>
 
-<%
-    System.out.println("<h1>It works!</h1>");
-%>
+<form action="/home" method="post">
+    <table>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td><input type="text" name="email" id="email"></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td><input type="password" name="password" id="password"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Create">
+            </td>
+            <td>
+                <input type="reset" value="Clear">
+            </td>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>

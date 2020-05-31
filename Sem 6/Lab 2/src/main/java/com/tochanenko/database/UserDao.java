@@ -6,7 +6,7 @@ import com.tochanenko.entities.UserRole;
 import java.sql.*;
 
 public class UserDao {
-    public User getById(int id) throws SQLException, ClassNotFoundException {
+    public static User getById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
@@ -32,7 +32,7 @@ public class UserDao {
         return user;
     }
 
-    public User getByLogin(String email, String password) throws SQLException, ClassNotFoundException {
+    public static User getByLogin(String email, String password) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
         String query = "SELECT * FROM Users WHERE email=? and password=?";

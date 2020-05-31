@@ -6,10 +6,11 @@ import java.sql.SQLException;
 
 public class DBConnection {
     public static Connection initDB() throws SQLException, ClassNotFoundException {
-        String dbURL = "jdbc:postgresql://licalhost:5432/motor_depot";
-        String dbUsername = "postgres";
-        String dbPassword = "root";
-
-        return DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+        Class.forName("org.postgresql.Driver");
+        return DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/motor_depot",
+                "postgres",
+                "root"
+        );
     }
 }
