@@ -65,11 +65,34 @@ public class BookingDao {
         return bookings;
     }
 
+    public static int getBookingsByStatusForUser(int userId, RideStatus status) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+
+        String query = SqlFileLoader.load("get_booking_completed_for_user.sql");
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, UserDao.getById(userId).getCarId());
+        statement.setString(2, status.name());
+
+        ResultSet resultSet = statement.executeQuery();
+
+        int res = 0;
+
+        while (resultSet.next()) {
+            res = resultSet.getInt("counted");
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return res;
+    }
+
     public static List<Booking> getBookings() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM Bookings";
+        String query = "SELECT * FROM Bookings ORDER BY id";
 
         ResultSet resultSet = statement.executeQuery(query);
 
@@ -96,7 +119,7 @@ public class BookingDao {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM Bookings WHERE status='WAITING'";
+        String query = SqlFileLoader.load("get_not_assigned_bookings.sql");
 
         ResultSet resultSet = statement.executeQuery(query);
 
@@ -117,6 +140,30 @@ public class BookingDao {
         connection.close();
 
         return bookings;
+    }
+
+    public static int getForStatus(RideStatus status) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT COUNT(id) AS counted FROM Bookings WHERE status='" + status.name() + "'";
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        int res = 0;
+
+        while (resultSet.next()) {
+            res = resultSet.getInt("counted");
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return res;
+    }
+
+    public static int getUnassignedCount() throws SQLException, ClassNotFoundException {
+        return SqlFileLoader.getCountedFromScript("get_unassigned_count.sql");
     }
 
     public static void insert(Booking booking) throws SQLException, ClassNotFoundException {
@@ -141,5 +188,7 @@ public class BookingDao {
 
         Statement statement = connection.createStatement();
         statement.executeQuery(query);
+
+        connection.close();
     }
 }

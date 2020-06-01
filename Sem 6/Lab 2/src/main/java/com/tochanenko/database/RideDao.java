@@ -13,7 +13,7 @@ public class RideDao {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM Rides";
+        String query = "SELECT * FROM Rides ORDER BY id";
 
         ResultSet resultSet = statement.executeQuery(query);
 
@@ -91,6 +91,26 @@ public class RideDao {
         statement.setInt(1, user.getCarId());
 
         ResultSet resultSet = statement.executeQuery();
+
+        int res = 0;
+
+        if (resultSet.next()) {
+            res = resultSet.getInt("earnings");
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return res;
+    }
+
+    public static int getTotalEarnings() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = SqlFileLoader.load("get_total_earnings.sql");
+
+        ResultSet resultSet = statement.executeQuery(query);
 
         int res = 0;
 

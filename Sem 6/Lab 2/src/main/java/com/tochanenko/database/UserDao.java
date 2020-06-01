@@ -2,6 +2,7 @@ package com.tochanenko.database;
 
 import com.tochanenko.entities.User;
 import com.tochanenko.entities.UserRole;
+import com.tochanenko.utils.SqlFileLoader;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,11 +35,31 @@ public class UserDao {
         return user;
     }
 
+    public static int getBest() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = SqlFileLoader.load("get_best.sql");
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        int res = 0;
+
+        while (resultSet.next()) {
+            res = resultSet.getInt("id");
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return res;
+    }
+
     public static List<User> getUsers() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM Users";
+        String query = "SELECT * FROM Users ORDER BY id";
 
         ResultSet resultSet = statement.executeQuery(query);
 

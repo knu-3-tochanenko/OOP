@@ -63,7 +63,7 @@ public class AutomobileDao {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM Automobiles";
+        String query = "SELECT * FROM Automobiles ORDER BY id";
 
         ResultSet resultSet = statement.executeQuery(query);
 

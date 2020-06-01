@@ -23,16 +23,6 @@ CREATE TABLE Users
     role     USER_ROLE DEFAULT 'DRIVER'
 );
 
-drop table users;
-
-CREATE TABLE Rides
-(
-    id         SERIAL PRIMARY KEY,
-    car_id     INTEGER REFERENCES Automobiles (id),
-    booking_id INTEGER REFERENCES Bookings (id),
-    cost       INTEGER NOT NULL
-);
-
 CREATE TABLE Bookings
 (
     id          SERIAL PRIMARY KEY,
@@ -41,4 +31,13 @@ CREATE TABLE Bookings
     destination VARCHAR(255) NOT NULL,
     min_seats   INTEGER     DEFAULT 1,
     status      RIDE_STATUS DEFAULT 'WAITING'
+);
+
+
+CREATE TABLE Rides
+(
+    id         SERIAL PRIMARY KEY,
+    car_id     INTEGER REFERENCES Automobiles (id),
+    booking_id INTEGER REFERENCES Bookings (id),
+    cost       INTEGER NOT NULL
 );
