@@ -92,6 +92,33 @@ public class BookingDao {
         return bookings;
     }
 
+    public static List<Booking> getWaiting() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT * FROM Bookings WHERE status='WAITING'";
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        List<Booking> bookings = new ArrayList<>();
+
+        while (resultSet.next()) {
+            bookings.add(new Booking(
+                    resultSet.getInt("id"),
+                    AutoClass.valueOf(resultSet.getString("min_class")),
+                    resultSet.getString("depart"),
+                    resultSet.getString("destination"),
+                    resultSet.getInt("min_seats"),
+                    RideStatus.valueOf(resultSet.getString("status"))
+            ));
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return bookings;
+    }
+
     public static void insert(Booking booking) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 

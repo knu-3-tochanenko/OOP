@@ -1,9 +1,7 @@
 package com.tochanenko.servlet;
 
-import com.tochanenko.database.AutomobileDao;
 import com.tochanenko.database.BookingDao;
 import com.tochanenko.entities.AutoClass;
-import com.tochanenko.entities.Automobile;
 import com.tochanenko.entities.Booking;
 import com.tochanenko.entities.RideStatus;
 
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 
 @WebServlet("/add_booking")
@@ -42,6 +39,5 @@ public class AddBookingServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/add-booking.jsp").forward(request, response);
-
     }
 }
