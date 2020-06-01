@@ -2,6 +2,7 @@ package com.tochanenko.database;
 
 import com.tochanenko.entities.AutoClass;
 import com.tochanenko.entities.Automobile;
+import com.tochanenko.utils.SqlFileLoader;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,18 +33,18 @@ public class AutomobileDao {
         return automobile;
     }
 
-    public static List<Automobile> getAutomobiles() throws SQLException, ClassNotFoundException {
+    public static List<Automobile> getFree() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM Automobiles";
+        String query = SqlFileLoader.load("get_free_automobiles.sql");
 
         ResultSet resultSet = statement.executeQuery(query);
 
-        List<Automobile> users = new ArrayList<>();
+        List<Automobile> automobiles = new ArrayList<>();
 
         while (resultSet.next()) {
-            users.add(new Automobile(
+            automobiles.add(new Automobile(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getInt("seats"),
@@ -55,7 +56,33 @@ public class AutomobileDao {
         resultSet.close();
         connection.close();
 
-        return users;
+        return automobiles;
+    }
+
+    public static List<Automobile> getAutomobiles() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT * FROM Automobiles";
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        List<Automobile> automobiles = new ArrayList<>();
+
+        while (resultSet.next()) {
+            automobiles.add(new Automobile(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getInt("seats"),
+                    resultSet.getDate("last_inspection_date"),
+                    AutoClass.valueOf(resultSet.getString("class"))
+            ));
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return automobiles;
     }
 
     public static void insert(Automobile automobile) throws SQLException, ClassNotFoundException {

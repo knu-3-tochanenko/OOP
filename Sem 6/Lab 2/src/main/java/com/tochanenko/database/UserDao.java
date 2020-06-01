@@ -87,10 +87,10 @@ public class UserDao {
         return user;
     }
 
-    public void insert(User user) throws SQLException, ClassNotFoundException {
+    public static void insert(User user) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
-        String query = "INSERT INTO Users (id, email, password, car_id, name, surname, role) VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Users (id, email, password, car_id, name, surname, role) VALUES(DEFAULT, ?, ?, ?, ?, ?, ?::user_role)";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, user.getEmail());
@@ -98,9 +98,9 @@ public class UserDao {
         statement.setInt(3, user.getCarId());
         statement.setString(4, user.getName());
         statement.setString(5, user.getSurname());
-        statement.setString(6, user.getRole().toString());
+        statement.setString(6, user.getRole().name());
 
-        statement.executeUpdate(query);
+        statement.executeUpdate();
         connection.close();
     }
 }
