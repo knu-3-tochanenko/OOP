@@ -52,7 +52,7 @@
             // USERS ----------------------------------------------------------------------------------
 
             if (users != null) { %>
-<h1>Users <a href="/users/add">add</a></h1>
+<h1>Users <a href="/add_user">add</a></h1>
 <table>
     <tr>
         <th>id</th>
@@ -98,7 +98,7 @@
     // Automobiles ---------------------------------------------------------------------------
 
     if (automobiles != null) { %>
-<h1>Automobiles <a href="/automobiles/add">add</a></h1>
+<h1>Automobiles <a href="/add_automobile">add</a></h1>
 <table>
     <tr>
         <th>id</th>
@@ -138,7 +138,7 @@
     // Rides ---------------------------------------------------------------------------
 
     if (rides != null) { %>
-<h1>Rides <a href="/rides/add">add</a></h1>
+<h1>Rides <a href="/add_ride">add</a></h1>
 <table>
     <tr>
         <th>id</th>
@@ -174,7 +174,7 @@
     // Booking ---------------------------------------------------------------------------
 
     if (bookings != null) { %>
-<h1>Bookings <a href="/bookings/add">add</a></h1>
+<h1>Bookings <a href="/add_booking">add</a></h1>
 <table>
     <tr>
         <th>id</th>
@@ -243,10 +243,14 @@
     %>
 
     <tr>
-        <td><%=booking.getDepart()%></td>
-        <td><%=booking.getDestination()%></td>
-        <td><%=RideDao.getCostForBooking(booking.getId())%></td>
-        <td><%=booking.getStatus()%></td>
+        <td><%=booking.getDepart()%>
+        </td>
+        <td><%=booking.getDestination()%>
+        </td>
+        <td><%=RideDao.getCostForBooking(booking.getId())%>
+        </td>
+        <td><%=booking.getStatus()%>
+        </td>
 
         <%
             if (booking.getStatus().toString().equals("WAITING")) {
@@ -256,7 +260,7 @@
         <td><a href="/booking?id=<%=booking.getId()%>&status=REJECTED">REJECT</a></td>
 
         <%
-            } else {
+        } else {
         %>
 
         <td></td>

@@ -2,8 +2,6 @@ package com.tochanenko.database;
 
 import com.tochanenko.entities.AutoClass;
 import com.tochanenko.entities.Automobile;
-import com.tochanenko.entities.Booking;
-import com.tochanenko.entities.RideStatus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -63,13 +61,15 @@ public class AutomobileDao {
     public static void insert(Automobile automobile) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
-        String query = "INSERT INTO Automobiles (id, name, seats, last_inspection_date, class) VALUES(DEFAULT, ?, ?, ?, ?)";
+        String query = "INSERT INTO Automobiles (id, name, seats, last_inspection_date, class) VALUES(DEFAULT, ?, ?, ?, ?::auto_class)";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, automobile.getName());
         statement.setInt(2, automobile.getSeats());
         statement.setObject(3, automobile.getLastInspectionDate());
-        statement.setString(4, automobile.getAutoClass().toString());
+        statement.setString(4, automobile.getAutoClass().name());
+
+        System.out.println("AUTOMOBILE ADDING...\n" + query);
 
         statement.executeUpdate();
         connection.close();
