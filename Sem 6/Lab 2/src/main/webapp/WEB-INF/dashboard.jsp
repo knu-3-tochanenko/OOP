@@ -106,6 +106,7 @@
         <th>seats</th>
         <th>last insp. date</th>
         <th>class</th>
+        <th>Action</th>
     </tr>
 
     <%
@@ -124,6 +125,7 @@
         </td>
         <td><%=automobile.getAutoClass().toString()%>
         </td>
+        <td><a href="/inspect_automobile?id=<%=automobile.getId()%>">Inspect</a></td>
     </tr>
 
     <%

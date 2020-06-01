@@ -85,6 +85,20 @@ public class AutomobileDao {
         return automobiles;
     }
 
+    public static void inspect(int id) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+
+        Date currentDate = new Date(new java.util.Date().getTime());
+
+        String query = "UPDATE Automobiles SET last_inspection_date=? WHERE id=?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setDate(1, currentDate);
+        statement.setInt(2, id);
+
+        statement.executeUpdate();
+        connection.close();
+    }
+
     public static void insert(Automobile automobile) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
