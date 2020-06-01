@@ -2,8 +2,31 @@
 <html>
 <head>
     <title>Homepage</title>
+    <style>
+        <%@include file="styles/style.css"%>
+    </style>
 </head>
+
+<%@include file="header.html" %>
+
 <body>
+
+<script>
+    function setCookie(cname, cvalue, exMins) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exMins*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+
+        console.log('removed cookie ' + cname)
+    }
+
+    function clearCookies() {
+        setCookie('toch-user-id', '', 0)
+        setCookie('toch-user-role', '', 0)
+    }
+</script>
+
 
 <h1>Login</h1>
 
@@ -19,10 +42,10 @@
         </tr>
         <tr>
             <td>
-                <input type="submit" value="Create">
+                <input type="submit" value="Log In">
             </td>
             <td>
-                <input type="reset" value="Clear">
+                <input type="button" id="rcook" value="Forget me please" onclick="clearCookies()">
             </td>
         </tr>
     </table>

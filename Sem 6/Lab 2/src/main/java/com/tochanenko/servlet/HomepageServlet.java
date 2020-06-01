@@ -3,6 +3,7 @@ package com.tochanenko.servlet;
 import com.tochanenko.database.UserDao;
 import com.tochanenko.entities.User;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,8 @@ public class HomepageServlet extends HttpServlet {
             if (user == null) {
                 response.sendRedirect("/error?message=\"Invalid email or password!\"");
             } else {
+                System.out.println("Prepared to send user data: " + user.getId() + " and " + user.getRole());
+                response.sendRedirect("/config?role=" + user.getRole() + "&id=" + user.getId());
                 System.out.println(user.getId() + " : " + user.getRole());
             }
         } catch (SQLException | ClassNotFoundException e) {

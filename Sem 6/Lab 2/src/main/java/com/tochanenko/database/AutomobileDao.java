@@ -2,11 +2,15 @@ package com.tochanenko.database;
 
 import com.tochanenko.entities.AutoClass;
 import com.tochanenko.entities.Automobile;
+import com.tochanenko.entities.Booking;
+import com.tochanenko.entities.RideStatus;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AutomobileDao {
-    public Automobile getById(int id) throws SQLException, ClassNotFoundException {
+    public static Automobile getById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
@@ -30,7 +34,33 @@ public class AutomobileDao {
         return automobile;
     }
 
-    public void insert(Automobile automobile) throws SQLException, ClassNotFoundException {
+    public static List<Automobile> getAutomobiles() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT * FROM Automobiles";
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        List<Automobile> users = new ArrayList<>();
+
+        while (resultSet.next()) {
+            users.add(new Automobile(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getInt("seats"),
+                    resultSet.getDate("last_inspection_date"),
+                    AutoClass.valueOf(resultSet.getString("class"))
+            ));
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return users;
+    }
+
+    public static void insert(Automobile automobile) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
         String query = "INSERT INTO Automobiles (id, name, seats, last_inspection_date, class) VALUES(DEFAULT, ?, ?, ?, ?)";

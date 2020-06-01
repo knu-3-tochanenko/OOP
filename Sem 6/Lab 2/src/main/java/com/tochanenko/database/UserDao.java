@@ -4,6 +4,8 @@ import com.tochanenko.entities.User;
 import com.tochanenko.entities.UserRole;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao {
     public static User getById(int id) throws SQLException, ClassNotFoundException {
@@ -17,19 +19,45 @@ public class UserDao {
         User user = null;
 
         if (resultSet.next()) {
-            int carId = resultSet.getInt("car_id");
-            String email = resultSet.getString("email");
-            String password = resultSet.getString("password");
-            String name = resultSet.getString("name");
-            String surname = resultSet.getString("surname");
-            UserRole role = UserRole.valueOf(resultSet.getString("role"));
-            user = new User(id, email, password, carId, name, surname, role);
+            user = new User(id,
+                    resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    resultSet.getInt("car_id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("surname"),
+                    UserRole.valueOf(resultSet.getString("role")));
         }
 
         resultSet.close();
         connection.close();
 
         return user;
+    }
+
+    public static List<User> getUsers() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT * FROM Users";
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        List<User> users = new ArrayList<>();
+
+        while (resultSet.next()) {
+            users.add(new User(resultSet.getInt("id"),
+                    resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    resultSet.getInt("car_id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("surname"),
+                    UserRole.valueOf(resultSet.getString("role"))));
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return users;
     }
 
     public static User getByLogin(String email, String password) throws SQLException, ClassNotFoundException {

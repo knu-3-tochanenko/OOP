@@ -5,9 +5,11 @@ import com.tochanenko.entities.Booking;
 import com.tochanenko.entities.RideStatus;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookingDao {
-    public Booking getById(int id) throws SQLException, ClassNotFoundException {
+    public static Booking getById(int id) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
         Statement statement = connection.createStatement();
 
@@ -32,7 +34,34 @@ public class BookingDao {
         return booking;
     }
 
-    public void insert(Booking booking) throws SQLException, ClassNotFoundException {
+    public static List<Booking> getBookings() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT * FROM Bookings";
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        List<Booking> users = new ArrayList<>();
+
+        while (resultSet.next()) {
+            users.add(new Booking(
+                    resultSet.getInt("id"),
+                    AutoClass.valueOf(resultSet.getString("min_class")),
+                    resultSet.getString("depart"),
+                    resultSet.getString("destination"),
+                    resultSet.getInt("min_seats"),
+                    RideStatus.valueOf(resultSet.getString("status"))
+            ));
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return users;
+    }
+
+    public static void insert(Booking booking) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
         String query = "INSERT INTO Bookings (id, min_class, depart, destination, min_seats, status) VALUES(DEFAULT, ?, ?, ?, ?, ?)";
