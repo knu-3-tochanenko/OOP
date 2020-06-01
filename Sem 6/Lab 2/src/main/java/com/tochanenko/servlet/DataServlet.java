@@ -4,6 +4,7 @@ import com.tochanenko.database.AutomobileDao;
 import com.tochanenko.database.BookingDao;
 import com.tochanenko.database.RideDao;
 import com.tochanenko.database.UserDao;
+import com.tochanenko.entities.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,7 +38,16 @@ public class DataServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/dashboard.jsp");
                 requestDispatcher.forward(request, response);
             } else {
+                User user = UserDao.getById(id);
+                request.setAttribute("got_param", "true");
+                request.setAttribute("user-role", "DRIVER");
+                request.setAttribute("user-id", id);
+                request.setAttribute("user-automobile", AutomobileDao.getById(user.getCarId()));
+                request.setAttribute("user-bookings", BookingDao.getBookingsForUser(user.getId()));
+                request.setAttribute("user-earnings", RideDao.getEarningsForUser(user.getId()));
 
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/dashboard.jsp");
+                requestDispatcher.forward(request, response);
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package com.tochanenko.database;
 import com.tochanenko.entities.AutoClass;
 import com.tochanenko.entities.Booking;
 import com.tochanenko.entities.RideStatus;
+import com.tochanenko.utils.SqlFileLoader;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,18 +35,21 @@ public class BookingDao {
         return booking;
     }
 
-    public static List<Booking> getBookings() throws SQLException, ClassNotFoundException {
+    public static List<Booking> getBookingsForUser(int userId) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
-        Statement statement = connection.createStatement();
 
-        String query = "SELECT * FROM Bookings";
+        String query = SqlFileLoader.load("get_booking_for_user.sql");
+        System.out.println("BOOKING QUERY :\n" + query);
 
-        ResultSet resultSet = statement.executeQuery(query);
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, UserDao.getById(userId).getCarId());
 
-        List<Booking> users = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Booking> bookings = new ArrayList<>();
 
         while (resultSet.next()) {
-            users.add(new Booking(
+            bookings.add(new Booking(
                     resultSet.getInt("id"),
                     AutoClass.valueOf(resultSet.getString("min_class")),
                     resultSet.getString("depart"),
@@ -58,7 +62,34 @@ public class BookingDao {
         resultSet.close();
         connection.close();
 
-        return users;
+        return bookings;
+    }
+
+    public static List<Booking> getBookings() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT * FROM Bookings";
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        List<Booking> bookings = new ArrayList<>();
+
+        while (resultSet.next()) {
+            bookings.add(new Booking(
+                    resultSet.getInt("id"),
+                    AutoClass.valueOf(resultSet.getString("min_class")),
+                    resultSet.getString("depart"),
+                    resultSet.getString("destination"),
+                    resultSet.getInt("min_seats"),
+                    RideStatus.valueOf(resultSet.getString("status"))
+            ));
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return bookings;
     }
 
     public static void insert(Booking booking) throws SQLException, ClassNotFoundException {
@@ -77,7 +108,7 @@ public class BookingDao {
         connection.close();
     }
 
-    public void setStatus(int id, RideStatus status) throws SQLException, ClassNotFoundException {
+    public static void setStatus(int id, RideStatus status) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
         String query = "UPDATE Bookings SET status='" + status.toString() + "' WHERE id=" + id;

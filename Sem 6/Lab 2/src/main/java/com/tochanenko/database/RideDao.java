@@ -1,6 +1,8 @@
 package com.tochanenko.database;
 
 import com.tochanenko.entities.Ride;
+import com.tochanenko.entities.User;
+import com.tochanenko.utils.SqlFileLoader;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -53,6 +55,53 @@ public class RideDao {
         connection.close();
 
         return ride;
+    }
+
+    public static int getCostForBooking(int bookingId) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.initDB();
+        Statement statement = connection.createStatement();
+
+        String query = "SELECT * FROM Rides WHERE booking_id=" + bookingId;
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        Ride ride = null;
+
+        if (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            int carId = resultSet.getInt("car_id");
+            int cost = resultSet.getInt("cost");
+            ride = new Ride(id, carId, bookingId, cost);
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return ride != null ? ride.getCost() : -1;
+    }
+
+    public static int getEarningsForUser(int userId) throws SQLException, ClassNotFoundException {
+        User user = UserDao.getById(userId);
+        Connection connection = DBConnection.initDB();
+
+        String query = SqlFileLoader.load("get_earnings_for_user.sql");
+        System.out.println("EARNING QUERY :\n" + query);
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, user.getCarId());
+
+        ResultSet resultSet = statement.executeQuery();
+
+        int res = 0;
+
+        if (resultSet.next()) {
+            res = resultSet.getInt("earnings");
+        }
+
+        resultSet.close();
+        connection.close();
+
+        return res;
     }
 
     public static void insert(Ride ride) throws SQLException, ClassNotFoundException {

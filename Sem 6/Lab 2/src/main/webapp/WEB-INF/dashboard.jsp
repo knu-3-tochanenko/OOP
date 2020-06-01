@@ -3,6 +3,7 @@
 <%@ page import="com.tochanenko.entities.Automobile" %>
 <%@ page import="com.tochanenko.entities.Ride" %>
 <%@ page import="com.tochanenko.entities.Booking" %>
+<%@ page import="com.tochanenko.database.RideDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -131,8 +132,7 @@
     %>
 </table>
 <%
-            }
-
+    }
 
 
     // Rides ---------------------------------------------------------------------------
@@ -169,7 +169,7 @@
     %>
 </table>
 <%
-            }
+    }
 
     // Booking ---------------------------------------------------------------------------
 
@@ -191,12 +191,18 @@
     %>
 
     <tr>
-        <td><%=booking.getId()%></td>
-        <td><%=booking.getMinClass()%></td>
-        <td><%=booking.getDepart()%></td>
-        <td><%=booking.getDestination()%></td>
-        <td><%=booking.getMinSeats()%></td>
-        <td><%=booking.getStatus()%></td>
+        <td><%=booking.getId()%>
+        </td>
+        <td><%=booking.getMinClass()%>
+        </td>
+        <td><%=booking.getDepart()%>
+        </td>
+        <td><%=booking.getDestination()%>
+        </td>
+        <td><%=booking.getMinSeats()%>
+        </td>
+        <td><%=booking.getStatus()%>
+        </td>
     </tr>
 
     <%
@@ -205,7 +211,70 @@
     %>
 </table>
 <%
+    }
+} else if (userRole.equals("DRIVER")) {
+    List<Booking> bookings = (List<Booking>) request.getAttribute("user-bookings");
+    Automobile userAutomobile = (Automobile) request.getAttribute("user-automobile");
+    int earnings = (int) request.getAttribute("user-earnings");
+
+%>
+
+<h3>Total earnings: $<%=earnings%>
+</h3>
+<h5>Your auto: <%=userAutomobile.getName()%> of class <%=userAutomobile.getAutoClass()%>. Last inspection date was
+    on <%=userAutomobile.getLastInspectionDate().toString()%>
+</h5>
+
+<h3>Your bookings:</h3>
+
+<table>
+    <tr>
+        <th>Departure</th>
+        <th>Destination</th>
+        <th>Total cost</th>
+        <th>Status</th>
+        <th colspan="2">Change status</th>
+    </tr>
+
+    <%
+
+        for (Booking booking : bookings) {
+
+    %>
+
+    <tr>
+        <td><%=booking.getDepart()%></td>
+        <td><%=booking.getDestination()%></td>
+        <td><%=RideDao.getCostForBooking(booking.getId())%></td>
+        <td><%=booking.getStatus()%></td>
+
+        <%
+            if (booking.getStatus().toString().equals("WAITING")) {
+        %>
+
+        <td><a href="/booking?id=<%=booking.getId()%>&status=COMPLETED">COMPLETE</a></td>
+        <td><a href="/booking?id=<%=booking.getId()%>&status=REJECTED">REJECT</a></td>
+
+        <%
+            } else {
+        %>
+
+        <td></td>
+        <td></td>
+
+        <%
             }
+        %>
+    </tr>
+
+    <%
+
+        }
+
+    %>
+
+</table>
+<%
         }
     }
 
