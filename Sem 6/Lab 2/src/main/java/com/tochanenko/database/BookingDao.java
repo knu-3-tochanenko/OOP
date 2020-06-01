@@ -95,14 +95,13 @@ public class BookingDao {
     public static void insert(Booking booking) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.initDB();
 
-        String query = "INSERT INTO Bookings (id, min_class, depart, destination, min_seats, status) VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Bookings (id, depart, destination, min_seats, min_class, status) VALUES(DEFAULT, ?, ?, ?, ?::auto_class, DEFAULT)";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, booking.getMinClass().toString());
-        statement.setString(2, booking.getDepart());
-        statement.setString(3, booking.getDestination());
-        statement.setInt(4, booking.getMinSeats());
-        statement.setString(5, booking.getStatus().toString());
+        statement.setString(1, booking.getDepart());
+        statement.setString(2, booking.getDestination());
+        statement.setInt(3, booking.getMinSeats());
+        statement.setString(4, booking.getMinClass().name());
 
         statement.executeUpdate();
         connection.close();
