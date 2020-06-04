@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="1" author="postgres">
+        <sql>CREATE TYPE car_class AS ENUM ('A', 'B', 'C', 'D')</sql>
+
+        <createTable tableName="cars">
+            <column name="id" autoIncrement="true" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="seats_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="class" type="car_class">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_inspection" type="DATE"/>
+        </createTable>
+
+        <sql>CREATE TYPE ride_status AS ENUM ('WAITING', 'COMPLETED', 'REJECTED')</sql>
+
+        <createTable tableName="bookings">
+            <column name="id" autoIncrement="true" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="min_class" type="car_class"/>
+            <column name="depart" type="TEXT"/>
+            <column name="destination" type="TEXT"/>
+            <column name="min_seats" type="INT"/>
+            <column name="status" type="ride_status"/>
+        </createTable>
+
+        <createTable tableName="rides">
+            <column name="id" autoIncrement="true" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="card_id" type="INTEGER">
+                <constraints foreignKeyName="fk_cad_id" referencedTableName="cars" referencedColumnNames="id"/>
+            </column>
+            <column name="booking_id" type="INTEGER">
+                <constraints foreignKeyName="fk_booking_id" referencedTableName="bookings" referencedColumnNames="id"/>
+            </column>
+            <column name="price" type="INTEGER"/>
+        </createTable>
+
+        <createTable tableName="users">
+            <column name="id" autoIncrement="true" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email" type="VARCHAR(20)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(20)"/>
+            <column name="surname" type="VARCHAR(20)"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="cars" cascadeConstraints="true"/>
+            <dropTable tableName="users" cascadeConstraints="true"/>
+            <sql>DROP TYPE race_state CASCADE</sql>
+            <dropTable tableName="races" cascadeConstraints="true"/>
+            <dropTable tableName="applications" cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
