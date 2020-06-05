@@ -1,10 +1,10 @@
-package com.knu.lab3;
+package com.knu.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Lab3ApplicationTests {
+class ServerApplicationTests {
 
     @Test
     void contextLoads() {

@@ -46,7 +46,7 @@
             <column name="price" type="INTEGER"/>
         </createTable>
 
-        <createTable tableName="users">
+        <createTable tableName="drivers">
             <column name="id" autoIncrement="true" type="INTEGER">
                 <constraints primaryKey="true"/>
             </column>
@@ -55,6 +55,9 @@
             </column>
             <column name="name" type="VARCHAR(20)"/>
             <column name="surname" type="VARCHAR(20)"/>
+            <column name="car_id" type="INTEGER">
+                <constraints foreignKeyName="fk_car_id" referencedTableName="cars" referencedColumnNames="id"/>
+            </column>
         </createTable>
 
         <rollback>
