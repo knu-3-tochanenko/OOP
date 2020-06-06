@@ -2,13 +2,12 @@ package com.knu.demo.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(appliesTo = "rides")
+@Table(name = "rides")
 @NoArgsConstructor
 public class Ride {
     @Id

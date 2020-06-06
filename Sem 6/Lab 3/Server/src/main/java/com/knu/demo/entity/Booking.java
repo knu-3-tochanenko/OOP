@@ -2,13 +2,12 @@ package com.knu.demo.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(appliesTo = "bookings")
+@Table(name = "bookings")
 @NoArgsConstructor
 public class Booking {
     @Id
@@ -33,4 +32,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private RideStatus rideStatus;
+//
+//    @ManyToOne
+//    private User user;
 }

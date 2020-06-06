@@ -18,6 +18,24 @@
                 <constraints nullable="false"/>
             </column>
             <column name="last_inspection" type="DATE"/>
+            <column name="serviceable" type="BOOLEAN" defaultValue="true"/>
+        </createTable>
+
+        <sql>CREATE TYPE user_role AS ENUM('DRIVER', 'CLIENT')</sql>
+
+        <createTable tableName="users">
+            <column name="id" autoIncrement="true" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email" type="VARCHAR(20)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(20)"/>
+            <column name="surname" type="VARCHAR(20)"/>
+            <column name="car_id" type="INTEGER">
+                <constraints foreignKeyName="fk_car_id" referencedTableName="cars" referencedColumnNames="id"/>
+            </column>
+            <column name="role" type="user_role"/>
         </createTable>
 
         <sql>CREATE TYPE ride_status AS ENUM ('WAITING', 'COMPLETED', 'REJECTED')</sql>
@@ -31,6 +49,9 @@
             <column name="destination" type="TEXT"/>
             <column name="min_seats" type="INT"/>
             <column name="status" type="ride_status"/>
+            <column name="user_id" type="INTEGER">
+                <constraints foreignKeyName="fk_user_id" referencedTableName="users" referencedColumnNames="id"/>
+            </column>
         </createTable>
 
         <createTable tableName="rides">
@@ -44,20 +65,6 @@
                 <constraints foreignKeyName="fk_booking_id" referencedTableName="bookings" referencedColumnNames="id"/>
             </column>
             <column name="price" type="INTEGER"/>
-        </createTable>
-
-        <createTable tableName="drivers">
-            <column name="id" autoIncrement="true" type="INTEGER">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="email" type="VARCHAR(20)">
-                <constraints unique="true" nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(20)"/>
-            <column name="surname" type="VARCHAR(20)"/>
-            <column name="car_id" type="INTEGER">
-                <constraints foreignKeyName="fk_car_id" referencedTableName="cars" referencedColumnNames="id"/>
-            </column>
         </createTable>
 
         <rollback>

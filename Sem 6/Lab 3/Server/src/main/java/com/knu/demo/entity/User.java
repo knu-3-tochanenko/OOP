@@ -2,18 +2,17 @@ package com.knu.demo.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(appliesTo = "drivers")
+@Table(name = "users")
 @NoArgsConstructor
-public class Driver {
+public class User {
     @Id
-    @GeneratedValue(generator = "drivers_id_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "drivers_id_seq", sequenceName = "drivers_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -28,5 +27,4 @@ public class Driver {
 
     @OneToOne
     private Car car;
-
 }

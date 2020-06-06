@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class BookingDTO {
+    private Long id;
+
     @NotNull(message = "Car min class required")
     private String minClass;
 
@@ -16,7 +18,7 @@ public class BookingDTO {
     private String destination;
 
     @NotNull(message = "Min number of seats is required")
-    private String minSeats;
+    private Integer minSeats;
 
     @NotNull(message = "Min number of seats is required")
     private String status;

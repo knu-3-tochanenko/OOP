@@ -2,14 +2,13 @@ package com.knu.demo.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Data
 @Entity
-@Table(appliesTo = "cars")
+@Table(name = "cars")
 @NoArgsConstructor
 public class Car {
     @Id
@@ -27,4 +26,7 @@ public class Car {
 
     @Column(name = "last_inspection")
     private Date lastInspection;
+
+    @Column(name = "serviceable")
+    private Boolean serviceable;
 }

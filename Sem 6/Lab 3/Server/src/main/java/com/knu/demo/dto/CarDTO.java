@@ -18,4 +18,6 @@ public class CarDTO {
     private String carClass;
 
     private Date lastInspection;
+
+    private Boolean serviceable;
 }
