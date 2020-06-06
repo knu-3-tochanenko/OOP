@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'com.tochanenko'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+mainClassName = 'com.tochanenko.Main'
+
+def mpjHome = System.getenv('MPJ_HOME')
+def mpjStarter = files("$mpjHome/lib/starter.jar")
+def mpjJar = files("$mpjHome/lib/mpj.jar")
+def mpjClasspath = sourceSets.main.runtimeClasspath - mpjJar
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+dependencies {
+    compile mpjJar
+    testImplementation('org.junit.jupiter:junit-jupiter:5.4.2')
+}
+
+run {
+    main = 'runtime.starter.MPJRun'
+    classpath = mpjStarter
+    args '-np', 10, mainClassName, '-cp', mpjClasspath.asPath
+    dependsOn classes
+}
