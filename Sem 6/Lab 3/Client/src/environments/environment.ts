@@ -18,7 +18,10 @@ export const environment = {
   envName: 'local',
   keycloak: keycloakConfig,
   registerService: 'http://localhost:8180/registration',
-  logoutService: 'http://localhost:8180/sso/logout'
+  logoutService: 'http://localhost:8180/sso/logout',
+  bookingService: 'http://localhost:8180/booking',
+  rideStatusService: 'http://localhost:8180/rideStatus',
+  carClassStatusService: 'http://localhost:8180/carClass'
 };
 
 /*

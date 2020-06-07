@@ -1,7 +1,6 @@
 package com.knu.demo.converter;
 
 import com.knu.demo.dto.UserDTO;
-import com.knu.demo.entity.Booking;
 import com.knu.demo.entity.Car;
 import com.knu.demo.entity.User;
 import org.springframework.stereotype.Component;

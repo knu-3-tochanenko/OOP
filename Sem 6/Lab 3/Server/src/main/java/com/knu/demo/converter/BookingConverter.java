@@ -4,10 +4,12 @@ import com.knu.demo.dto.BookingDTO;
 import com.knu.demo.entity.Booking;
 import com.knu.demo.entity.CarClass;
 import com.knu.demo.entity.RideStatus;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class BookingConverter {
     public BookingDTO convertToDTO(Booking booking) {
         BookingDTO bookingDTO = new BookingDTO();

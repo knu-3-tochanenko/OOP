@@ -6,6 +6,8 @@ import {KeycloakService} from 'keycloak-angular';
 import {UserService} from '../../service/userService/user.service';
 import {map} from 'rxjs/operators';
 import {RegistrationService} from '../../service/registrationService/registration.service';
+import {MatDialog} from '@angular/material/dialog';
+import {AddBookingComponent} from '../add-booking/add-booking.component';
 
 @Component({
   selector: 'app-client-profile',
@@ -18,7 +20,8 @@ export class ClientProfileComponent implements OnInit {
   constructor(private router: Router,
               private keycloakAngular: KeycloakService,
               private userService: UserService,
-              private registrationService: RegistrationService) {
+              private registrationService: RegistrationService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -48,4 +51,20 @@ export class ClientProfileComponent implements OnInit {
     }
   }
 
+  loadBookings() {
+
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(
+      AddBookingComponent,
+      {
+        width: '30em'
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(
+      _ => this.loadBookings()
+    );
+  }
 }

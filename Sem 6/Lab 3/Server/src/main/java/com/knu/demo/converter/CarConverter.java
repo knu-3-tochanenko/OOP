@@ -3,6 +3,7 @@ package com.knu.demo.converter;
 import com.knu.demo.dto.CarDTO;
 import com.knu.demo.entity.Car;
 import com.knu.demo.entity.CarClass;
+import com.knu.demo.entity.PostgreSQLEnumType;
 import org.springframework.stereotype.Component;
 
 @Component

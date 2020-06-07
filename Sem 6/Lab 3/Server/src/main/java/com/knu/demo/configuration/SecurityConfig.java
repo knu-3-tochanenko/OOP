@@ -99,8 +99,10 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/booking").hasRole("CLIENT")
+                .antMatchers(HttpMethod.POST, "/booking").permitAll()
                 .antMatchers(HttpMethod.GET, "/booking").permitAll()
+                .antMatchers(HttpMethod.GET, "/rideStatus").permitAll()
+                .antMatchers(HttpMethod.GET, "/carClass").permitAll()
                 .antMatchers(HttpMethod.POST, "/registration").permitAll()
                 .and()
                 .logout()

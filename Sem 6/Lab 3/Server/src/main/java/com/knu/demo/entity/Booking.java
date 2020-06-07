@@ -2,12 +2,22 @@ package com.knu.demo.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "bookings")
+@TypeDef(
+        name = "car_class",
+        typeClass = PostgreSQLEnumType.class
+)
+@TypeDef(
+        name = "ride_status",
+        typeClass = PostgreSQLEnumType.class
+)
 @NoArgsConstructor
 public class Booking {
     @Id
@@ -18,6 +28,7 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "min_class")
+    @Type(type = "car_class")
     private CarClass minClass;
 
     @Column(name = "depart")
@@ -31,6 +42,7 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @Type(type = "ride_status")
     private RideStatus rideStatus;
 
     @ManyToOne

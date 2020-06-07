@@ -3,7 +3,6 @@ package com.knu.demo.service;
 import com.knu.demo.converter.UserConverter;
 import com.knu.demo.dto.UserDTO;
 import com.knu.demo.entity.User;
-import com.knu.demo.exception.NullPasswordException;
 import com.knu.demo.service.data.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -16,10 +15,9 @@ public class RegistrationControllerService {
     private final RegistrationService registrationService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public UserDTO save(UserDTO userDTO) {
+    public void save(UserDTO userDTO) {
         User currentUser = userConverter.convertToEntity(userDTO, null);
         UserDTO savedUserDto = userConverter.convertToDto(registrationService.save(currentUser));
         applicationEventPublisher.publishEvent(savedUserDto);
-        return savedUserDto;
     }
 }

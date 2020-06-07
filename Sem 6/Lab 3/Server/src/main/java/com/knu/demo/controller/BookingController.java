@@ -21,7 +21,12 @@ public class BookingController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping(value = "/booking/{status}")
+    @GetMapping(value = "/booking/user/{userId}")
+    public List<BookingDTO> getBookingsByUser(@PathVariable Long userId) {
+        return bookingService.findBookingsByUser(userId);
+    }
+
+    @GetMapping(value = "/booking/status/{status}")
     public List<BookingDTO> getBookingsByStatus(@PathVariable String status) {
         return bookingService.findBookingsByStatus(status);
     }

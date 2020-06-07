@@ -22,4 +22,6 @@ public class BookingDTO {
 
     @NotNull(message = "Min number of seats is required")
     private String status;
+
+    private String userEmail;
 }

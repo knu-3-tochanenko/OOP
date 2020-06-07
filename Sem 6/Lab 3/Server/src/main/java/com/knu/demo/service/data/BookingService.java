@@ -2,6 +2,7 @@ package com.knu.demo.service.data;
 
 import com.knu.demo.entity.Booking;
 import com.knu.demo.entity.RideStatus;
+import com.knu.demo.entity.User;
 import com.knu.demo.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

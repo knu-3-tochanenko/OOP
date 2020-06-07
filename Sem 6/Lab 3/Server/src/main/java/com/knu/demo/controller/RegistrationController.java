@@ -2,7 +2,6 @@ package com.knu.demo.controller;
 
 import com.knu.demo.dto.UserDTO;
 import com.knu.demo.service.RegistrationControllerService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
