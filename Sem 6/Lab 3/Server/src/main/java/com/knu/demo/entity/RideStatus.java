@@ -1,5 +1,5 @@
 package com.knu.demo.entity;
 
 public enum RideStatus {
-    WAITING, COMPLETED, REJECTED
+    PENDING, WAITING, COMPLETED, REJECTED
 }

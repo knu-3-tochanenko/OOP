@@ -32,7 +32,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private RideStatus rideStatus;
-//
-//    @ManyToOne
-//    private User user;
+
+    @ManyToOne
+    private User user;
 }

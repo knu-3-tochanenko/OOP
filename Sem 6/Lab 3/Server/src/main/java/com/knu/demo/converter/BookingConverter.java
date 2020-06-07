@@ -5,6 +5,9 @@ import com.knu.demo.entity.Booking;
 import com.knu.demo.entity.CarClass;
 import com.knu.demo.entity.RideStatus;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BookingConverter {
     public BookingDTO convertToDTO(Booking booking) {
         BookingDTO bookingDTO = new BookingDTO();
@@ -30,23 +33,7 @@ public class BookingConverter {
         return booking;
     }
 
-    //public CarDTO convertToDTO(Car car) {
-    //        CarDTO carDTO = new CarDTO();
-    //        carDTO.setCarClass(car.getCarClass().toString());
-    //        carDTO.setSeatsNumber(car.getSeatsNumber());
-    //        carDTO.setLastInspection(car.getLastInspection());
-    //        carDTO.setServiceable(car.getServiceable());
-    //
-    //        return carDTO;
-    //    }
-    //
-    //    public Car convertToEntiry(CarDTO carDTO) {
-    //        Car car = new Car();
-    //        car.setCarClass(CarClass.valueOf(carDTO.getCarClass()));
-    //        car.setSeatsNumber(carDTO.getSeatsNumber());
-    //        car.setLastInspection(carDTO.getLastInspection());
-    //        car.setServiceable(carDTO.getServiceable());
-    //
-    //        return car;
-    //    }
+    public List<BookingDTO> convertToListDTO(List<Booking> bookings) {
+        return bookings.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
 }

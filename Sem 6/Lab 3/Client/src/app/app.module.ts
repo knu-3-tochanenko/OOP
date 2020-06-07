@@ -23,12 +23,14 @@ import {RouterModule} from '@angular/router';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {initializer} from '../utils/app-init';
 import {AppAuthGuard} from './service/AppAuthGuard';
+import { AddBookingComponent } from './add-booking/add-booking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    ClientProfileComponent
+    ClientProfileComponent,
+    AddBookingComponent
   ],
   imports: [
     BrowserModule,
