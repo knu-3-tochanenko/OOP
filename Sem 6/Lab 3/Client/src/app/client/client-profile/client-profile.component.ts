@@ -8,6 +8,8 @@ import {map} from 'rxjs/operators';
 import {RegistrationService} from '../../service/registrationService/registration.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddBookingComponent} from '../add-booking/add-booking.component';
+import {Booking} from '../../models/booking.model';
+import {BookingService} from '../../service/bookingService/booking.service';
 
 @Component({
   selector: 'app-client-profile',
@@ -16,11 +18,13 @@ import {AddBookingComponent} from '../add-booking/add-booking.component';
 })
 export class ClientProfileComponent implements OnInit {
   userData: Observable<User>;
+  bookings: Observable<Booking[]>;
 
   constructor(private router: Router,
               private keycloakAngular: KeycloakService,
               private userService: UserService,
               private registrationService: RegistrationService,
+              private bookingService: BookingService,
               public dialog: MatDialog) {
   }
 
@@ -49,10 +53,12 @@ export class ClientProfileComponent implements OnInit {
     } catch (e) {
       console.log('Failed to load user details');
     }
+
+    this.bookings = this.bookingService.getBookingsByUser(this.userService.getCurrentUser().email);
   }
 
   loadBookings() {
-
+    this.bookings = this.bookingService.getBookingsByUser(this.userService.getCurrentUser().email);
   }
 
   openDialog() {

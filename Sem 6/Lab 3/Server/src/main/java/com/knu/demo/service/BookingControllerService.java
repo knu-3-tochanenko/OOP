@@ -37,8 +37,8 @@ public class BookingControllerService {
         applicationEventPublisher.publishEvent(savedUserDto);
     }
 
-    public List<BookingDTO> findBookingsByUser(Long userId) {
-        return bookingConverter.convertToListDTO(bookingService.findUserBookings(userId));
+    public List<BookingDTO> findBookingsByUser(String userEmail) {
+        return bookingConverter.convertToListDTO(bookingService.findUserBookings(userEmail));
     }
 
     public List<BookingDTO> findBookingsByStatus(String bookingStatus) {

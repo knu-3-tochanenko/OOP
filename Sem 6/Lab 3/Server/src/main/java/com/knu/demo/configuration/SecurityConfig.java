@@ -26,7 +26,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -77,7 +76,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -99,10 +98,10 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/booking").permitAll()
-                .antMatchers(HttpMethod.GET, "/booking").permitAll()
+                .antMatchers(HttpMethod.GET, "/booking/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/rideStatus").permitAll()
                 .antMatchers(HttpMethod.GET, "/carClass").permitAll()
+                .antMatchers(HttpMethod.POST, "/booking").permitAll()
                 .antMatchers(HttpMethod.POST, "/registration").permitAll()
                 .and()
                 .logout()

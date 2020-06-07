@@ -2,6 +2,8 @@ package com.knu.demo.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -9,6 +11,10 @@ import java.sql.Date;
 @Data
 @Entity
 @Table(name = "cars")
+@TypeDef(
+        name = "car_class",
+        typeClass = PostgreSQLEnumType.class
+)
 @NoArgsConstructor
 public class Car {
     @Id
@@ -21,7 +27,8 @@ public class Car {
     private Integer seatsNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "сlass")
+    @Column(name = "class")
+    @Type(type = "car_class")
     private CarClass carClass;
 
     @Column(name = "last_inspection")

@@ -2,7 +2,6 @@ package com.knu.demo.service.data;
 
 import com.knu.demo.entity.Booking;
 import com.knu.demo.entity.RideStatus;
-import com.knu.demo.entity.User;
 import com.knu.demo.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,8 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public List<Booking> findUserBookings(Long userId) {
-        return bookingRepository.findByUserId(userId);
+    public List<Booking> findUserBookings(String email) {
+        return bookingRepository.findByUserEmail(email);
     }
 
     public List<Booking> findBookingByStatus(RideStatus status) {

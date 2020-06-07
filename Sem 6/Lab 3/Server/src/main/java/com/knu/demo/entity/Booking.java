@@ -27,7 +27,7 @@ public class Booking {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "min_class")
+    @Column(columnDefinition = "min_class")
     @Type(type = "car_class")
     private CarClass minClass;
 
@@ -41,10 +41,12 @@ public class Booking {
     private Integer minSeats;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(columnDefinition = "status", name = "status")
     @Type(type = "ride_status")
     private RideStatus rideStatus;
 
     @ManyToOne
     private User user;
 }
+
+

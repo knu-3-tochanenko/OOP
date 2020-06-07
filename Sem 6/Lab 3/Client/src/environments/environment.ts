@@ -7,9 +7,9 @@ import {KeycloakConfig} from 'keycloak-angular';
 const keycloakConfig: KeycloakConfig = {
   url: 'http://localhost:8080/auth',
   realm: 'Autobase',
-  clientId: 'Client',
+  clientId: 'autobase-frontend',
   credentials: {
-    secret: '752c60e5-3608-4531-8c98-d814ed1b643b',
+    secret: '32791008-1f83-42dc-810b-bfe5d4c72d03',
   }
 };
 

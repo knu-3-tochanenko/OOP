@@ -16,11 +16,11 @@ export class BookingService {
     return this.http.post<Booking>(environment.bookingService, booking);
   }
 
-  getBookingsByUser(userId: number): Observable<Booking[]> {
-    return this.http.get<Booking[]>(environment.bookingService + '/' + userId);
+  getBookingsByUser(userEmail: string): Observable<Booking[]> {
+    return this.http.get<Booking[]>(environment.bookingService + '/user/' + userEmail);
   }
 
   getBookingsBuStatus(status: string): Observable<Booking[]> {
-    return this.http.get<Booking[]>(environment.bookingService + '/' + status);
+    return this.http.get<Booking[]>(environment.bookingService + '/status/' + status);
   }
 }

@@ -24,13 +24,19 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {initializer} from '../utils/app-init';
 import {AppAuthGuard} from './service/AppAuthGuard';
 import { AddBookingComponent } from './client/add-booking/add-booking.component';
+import { BookingSimpleItemComponent } from './client/booking-simple-item/booking-simple-item.component';
+import { DispatcherProfileComponent } from './dispatcher/dispatcher-profile/dispatcher-profile.component';
+import { DriverProfileComponent } from './driver-profile/driver-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     ClientProfileComponent,
-    AddBookingComponent
+    AddBookingComponent,
+    BookingSimpleItemComponent,
+    DispatcherProfileComponent,
+    DriverProfileComponent
   ],
   imports: [
     BrowserModule,

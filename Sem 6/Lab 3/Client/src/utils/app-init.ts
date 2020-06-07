@@ -11,11 +11,8 @@ export function initializer(keycloak: KeycloakService) {
             realm: environment.keycloak.realm,
             clientId: environment.keycloak.clientId
           },
-          initOptions: {
-            onLoad: 'login-required',
-            checkLoginIframe: false
-          },
-          enableBearerInterceptor: false
+          enableBearerInterceptor: true,
+          bearerExcludedUrls: ['/*']
         });
         resolve();
       } catch (error) {
