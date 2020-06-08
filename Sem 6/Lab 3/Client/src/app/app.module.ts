@@ -26,7 +26,9 @@ import {AppAuthGuard} from './service/AppAuthGuard';
 import { AddBookingComponent } from './client/add-booking/add-booking.component';
 import { BookingSimpleItemComponent } from './client/booking-simple-item/booking-simple-item.component';
 import { DispatcherProfileComponent } from './dispatcher/dispatcher-profile/dispatcher-profile.component';
-import { DriverProfileComponent } from './driver-profile/driver-profile.component';
+import { DriverProfileComponent } from './driver/driver-profile/driver-profile.component';
+import { BookingDispatcherItemComponent } from './dispatcher/booking-dispatcher-item/booking-dispatcher-item.component';
+import { BookingDispatcherDialogComponent } from './dispatcher/booking-dispatcher-dialog/booking-dispatcher-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { DriverProfileComponent } from './driver-profile/driver-profile.componen
     AddBookingComponent,
     BookingSimpleItemComponent,
     DispatcherProfileComponent,
-    DriverProfileComponent
+    DriverProfileComponent,
+    BookingDispatcherItemComponent,
+    BookingDispatcherDialogComponent
   ],
   imports: [
     BrowserModule,

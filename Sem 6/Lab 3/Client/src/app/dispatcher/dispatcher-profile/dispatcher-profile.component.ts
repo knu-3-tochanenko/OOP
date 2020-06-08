@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Booking} from '../../models/booking.model';
+import {BookingService} from '../../service/bookingService/booking.service';
 
 @Component({
   selector: 'app-dispatcher-profile',
@@ -6,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dispatcher-profile.component.css']
 })
 export class DispatcherProfileComponent implements OnInit {
+  pendingBookings: Observable<Booking[]>;
 
-  constructor() { }
+  constructor(private bookingService: BookingService) {
+  }
 
   ngOnInit(): void {
+    this.loadBookings();
+  }
+
+  loadBookings() {
+    this.pendingBookings = this.bookingService.getBookingsBuStatus('PENDING');
   }
 
 }

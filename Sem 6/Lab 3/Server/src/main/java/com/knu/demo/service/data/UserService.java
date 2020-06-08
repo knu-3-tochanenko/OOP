@@ -15,4 +15,9 @@ public class UserService {
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public User update(User currentUser) {
+        Optional<User> oldUser = userRepository.findByEmail(currentUser.getEmail());
+        return oldUser.orElseGet(() -> userRepository.save(currentUser));
+    }
 }

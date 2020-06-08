@@ -23,4 +23,8 @@ export class BookingService {
   getBookingsBuStatus(status: string): Observable<Booking[]> {
     return this.http.get<Booking[]>(environment.bookingService + '/status/' + status);
   }
+
+  updateBooking(booking: Booking): Observable<Booking> {
+    return this.http.patch<Booking>(environment.bookingService, booking);
+  }
 }

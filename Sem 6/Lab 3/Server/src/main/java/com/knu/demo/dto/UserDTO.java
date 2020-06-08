@@ -18,5 +18,5 @@ public class UserDTO {
 
     private String surname;
 
-    private Long carId;
+    private CarDTO car;
 }

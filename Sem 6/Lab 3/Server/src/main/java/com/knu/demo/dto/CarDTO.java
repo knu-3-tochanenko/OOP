@@ -11,6 +11,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarDTO {
+    private Long id;
+
     @NotNull(message = "Seats number is required")
     private int seatsNumber;
 

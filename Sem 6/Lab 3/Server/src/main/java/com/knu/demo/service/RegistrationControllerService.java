@@ -16,7 +16,7 @@ public class RegistrationControllerService {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public void save(UserDTO userDTO) {
-        User currentUser = userConverter.convertToEntity(userDTO, null);
+        User currentUser = userConverter.convertToEntity(userDTO);
         UserDTO savedUserDto = userConverter.convertToDto(registrationService.save(currentUser));
         applicationEventPublisher.publishEvent(savedUserDto);
     }

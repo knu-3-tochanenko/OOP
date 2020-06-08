@@ -33,7 +33,6 @@ export class ClientProfileComponent implements OnInit {
       console.log(this.keycloakAngular.getKeycloakInstance().loadUserInfo());
       this.keycloakAngular.loadUserProfile(true).then(
         data => {
-          console.log('here');
           const user = getUser(Number(data.id), data.email, data.firstName, data.lastName, 'CLIENT', '');
           this.userData = this.registrationService.registerUser(user).pipe(
             map(_ => {
@@ -54,7 +53,7 @@ export class ClientProfileComponent implements OnInit {
       console.log('Failed to load user details');
     }
 
-    this.bookings = this.bookingService.getBookingsByUser(this.userService.getCurrentUser().email);
+    this.loadBookings();
   }
 
   loadBookings() {
