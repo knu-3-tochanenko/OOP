@@ -27,11 +27,11 @@
             <column name="id" autoIncrement="true" type="INTEGER">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="email" type="VARCHAR(20)">
+            <column name="email" type="VARCHAR(30)">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(20)"/>
-            <column name="surname" type="VARCHAR(20)"/>
+            <column name="name" type="VARCHAR(30)"/>
+            <column name="surname" type="VARCHAR(30)"/>
             <column name="car_id" type="INTEGER">
                 <constraints foreignKeyName="fk_car_id" referencedTableName="cars" referencedColumnNames="id"/>
             </column>

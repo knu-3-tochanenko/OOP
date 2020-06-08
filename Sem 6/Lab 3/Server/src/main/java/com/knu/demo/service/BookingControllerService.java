@@ -44,4 +44,8 @@ public class BookingControllerService {
     public List<BookingDTO> findBookingsByStatus(String bookingStatus) {
         return bookingConverter.convertToListDTO(bookingService.findBookingByStatus(RideStatus.valueOf(bookingStatus)));
     }
+
+    public BookingDTO updateBookingStatus(Long bookingId, String status) {
+        return bookingConverter.convertToDTO(this.bookingService.updateBooking(bookingId, RideStatus.valueOf(status)));
+    }
 }

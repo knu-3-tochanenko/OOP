@@ -29,7 +29,11 @@ public class UserConverter {
         user.setEmail(userDTO.getEmail());
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
-        user.setCar(carConverter.convertToEntiry(userDTO.getCar()));
+        if (userDTO.getCar() != null) {
+            user.setCar(carConverter.convertToEntity(userDTO.getCar()));
+        } else {
+            user.setCar(null);
+        }
         return user;
     }
 }

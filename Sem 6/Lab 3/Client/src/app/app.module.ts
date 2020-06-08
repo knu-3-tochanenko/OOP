@@ -29,6 +29,8 @@ import { DispatcherProfileComponent } from './dispatcher/dispatcher-profile/disp
 import { DriverProfileComponent } from './driver/driver-profile/driver-profile.component';
 import { BookingDispatcherItemComponent } from './dispatcher/booking-dispatcher-item/booking-dispatcher-item.component';
 import { BookingDispatcherDialogComponent } from './dispatcher/booking-dispatcher-dialog/booking-dispatcher-dialog.component';
+import { RideDriverItemComponent } from './driver/ride-driver-item/ride-driver-item.component';
+import { CarDialogComponent } from './driver/car-dialog/car-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { BookingDispatcherDialogComponent } from './dispatcher/booking-dispatche
     DispatcherProfileComponent,
     DriverProfileComponent,
     BookingDispatcherItemComponent,
-    BookingDispatcherDialogComponent
+    BookingDispatcherDialogComponent,
+    RideDriverItemComponent,
+    CarDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ public class UserControllerService {
     private final CarConverter carConverter;
 
     public UserDTO update(UserDTO userDTO) {
-        Car car = carService.save(carConverter.convertToEntiry(userDTO.getCar()));
+        Car car = carService.save(carConverter.convertToEntity(userDTO.getCar()));
         userDTO.setCar(carConverter.convertToDTO(car));
         return userConverter.convertToDto(userService.update(userConverter.convertToEntity(userDTO)));
     }

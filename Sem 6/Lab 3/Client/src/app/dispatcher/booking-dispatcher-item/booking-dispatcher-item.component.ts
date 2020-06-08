@@ -22,7 +22,8 @@ export class BookingDispatcherItemComponent implements OnInit {
     const dialogRef = this.dialog.open(
       BookingDispatcherDialogComponent,
       {
-        width: '30em'
+        width: '30em',
+        data: this.booking,
       }
     );
 

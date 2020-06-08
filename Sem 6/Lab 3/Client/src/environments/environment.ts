@@ -23,7 +23,8 @@ export const environment = {
   rideStatusService: 'http://localhost:8180/rideStatus',
   carClassStatusService: 'http://localhost:8180/carClass',
   carService: 'http://localhost:8180/car',
-  userService: 'http://localhost:8180/user'
+  userService: 'http://localhost:8180/user',
+  rideService: 'http://localhost:8180/ride'
 };
 
 /*

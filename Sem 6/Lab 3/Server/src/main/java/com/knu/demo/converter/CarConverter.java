@@ -21,7 +21,7 @@ public class CarConverter {
         return carDTO;
     }
 
-    public Car convertToEntiry(CarDTO carDTO) {
+    public Car convertToEntity(CarDTO carDTO) {
         Car car = new Car();
         car.setId(carDTO.getId());
         car.setCarClass(CarClass.valueOf(carDTO.getCarClass()));

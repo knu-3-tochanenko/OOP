@@ -6,8 +6,9 @@
   <p>Destination: {{booking.destination}}</p>
   <p>Min car seats: {{booking.minSeats}}</p>
   <mat-select>
-<!--    <mat-option *ngFor="let car of cars">-->
-    <!--    </mat-option>-->
+    <mat-option *ngFor="let car of cars | async" [value]="car">
+      Car class: {{car.carClass}}  Car seats number: {{car.seatsNumber}}  Last inspection: {{car.lastInspection}}
+    </mat-option>
   </mat-select>
 </mat-dialog-content>
 

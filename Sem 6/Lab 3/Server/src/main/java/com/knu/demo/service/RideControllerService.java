@@ -4,6 +4,7 @@ import com.knu.demo.converter.RideConverter;
 import com.knu.demo.dto.RideDTO;
 import com.knu.demo.entity.Booking;
 import com.knu.demo.entity.Car;
+import com.knu.demo.entity.RideStatus;
 import com.knu.demo.exception.BookingNotFoundException;
 import com.knu.demo.exception.CarNotFoundException;
 import com.knu.demo.service.data.BookingService;
@@ -29,6 +30,7 @@ public class RideControllerService {
         if (!booking.isPresent()) {
             throw new BookingNotFoundException("Booking with id " + rideDTO.getBookingId() + " not found");
         }
+        booking.get().setRideStatus(RideStatus.WAITING);
         Optional<Car> car = carService.findCarById(rideDTO.getCarId());
         if (!car.isPresent()) {
             throw new CarNotFoundException("Car with id " + rideDTO.getCarId() + " not found");
