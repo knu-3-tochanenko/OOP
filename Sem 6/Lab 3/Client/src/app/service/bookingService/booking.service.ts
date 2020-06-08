@@ -20,7 +20,7 @@ export class BookingService {
     return this.http.get<Booking[]>(environment.bookingService + '/user/' + userEmail);
   }
 
-  getBookingsBuStatus(status: string): Observable<Booking[]> {
+  getBookingsByStatus(status: string): Observable<Booking[]> {
     return this.http.get<Booking[]>(environment.bookingService + '/status/' + status);
   }
 

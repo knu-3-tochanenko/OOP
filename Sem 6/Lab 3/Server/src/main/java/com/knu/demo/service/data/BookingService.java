@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,10 @@ public class BookingService {
 
     public Booking save(Booking booking) {
         return bookingRepository.save(booking);
+    }
+
+    public Optional<Booking> findBookingById(Long bookingId) {
+        return bookingRepository.findById(bookingId);
     }
 
     public List<Booking> findUserBookings(String email) {

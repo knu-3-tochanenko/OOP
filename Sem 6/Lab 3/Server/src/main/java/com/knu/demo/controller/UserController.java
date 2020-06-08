@@ -18,7 +18,7 @@ public class UserController {
     private final UserControllerService userService;
 
     @PatchMapping(value = "/user")
-    public ResponseEntity<String> registration(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> updateUser(@Valid @RequestBody UserDTO userDTO) {
         userService.update(userDTO);
         return ResponseEntity.accepted().build();
     }

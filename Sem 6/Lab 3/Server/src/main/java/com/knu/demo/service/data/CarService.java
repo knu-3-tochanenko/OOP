@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,10 @@ public class CarService {
 
     public List<Car> findCarByBooking(Booking booking) {
         return carRepository.findCarsByCarClassGreaterThanAndSeatsNumberGreaterThanAndServiceable(booking.getMinClass(), booking.getMinSeats(), true);
+    }
+
+    public Optional<Car> findCarById(Long carId){
+        return carRepository.findCarById(carId);
     }
 
     public Car save(Car car) {

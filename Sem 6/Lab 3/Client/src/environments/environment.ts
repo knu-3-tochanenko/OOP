@@ -21,7 +21,9 @@ export const environment = {
   logoutService: 'http://localhost:8180/sso/logout',
   bookingService: 'http://localhost:8180/booking',
   rideStatusService: 'http://localhost:8180/rideStatus',
-  carClassStatusService: 'http://localhost:8180/carClass'
+  carClassStatusService: 'http://localhost:8180/carClass',
+  carService: 'http://localhost:8180/car',
+  userService: 'http://localhost:8180/user'
 };
 
 /*

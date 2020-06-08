@@ -1,3 +1,5 @@
+import {Car} from './car.model';
+
 export interface User {
   id: number;
   email: string;
@@ -5,6 +7,7 @@ export interface User {
   surname: string;
   role: string;
   password: string;
+  car: Car;
 }
 
 export function getEmptyUser(): User {
@@ -14,17 +17,22 @@ export function getEmptyUser(): User {
     name: null,
     surname: null,
     role: null,
-    password: null
+    password: null,
+    car: null
   };
 }
 
-export function getUser(id: number, email: string, name: string, surname: string, role: string, password: string): User {
+export function getUser(id: number, email: string,
+                        name: string, surname: string,
+                        role: string, password: string,
+                        car: Car): User {
   return {
     id,
     email,
     name,
     surname,
     role,
-    password
+    password,
+    car
   };
 }

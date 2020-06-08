@@ -10,10 +10,12 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RideDTO {
+    private Long id;
+
     @NotNull(message = "Price required")
-    private int price;
+    private Integer price;
 
-    private int carId;
+    private Long carId;
 
-    private int bookingId;
+    private Long bookingId;
 }

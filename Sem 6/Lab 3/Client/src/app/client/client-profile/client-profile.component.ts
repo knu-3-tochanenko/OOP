@@ -33,7 +33,10 @@ export class ClientProfileComponent implements OnInit {
       console.log(this.keycloakAngular.getKeycloakInstance().loadUserInfo());
       this.keycloakAngular.loadUserProfile(true).then(
         data => {
-          const user = getUser(Number(data.id), data.email, data.firstName, data.lastName, 'CLIENT', '');
+          const user = getUser(Number(data.id), data.email,
+            data.firstName, data.lastName,
+            'CLIENT', '',
+            null);
           this.userData = this.registrationService.registerUser(user).pipe(
             map(_ => {
                 this.userService.setCurrentUser(user);

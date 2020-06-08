@@ -19,7 +19,7 @@ export class DispatcherProfileComponent implements OnInit {
   }
 
   loadBookings() {
-    this.pendingBookings = this.bookingService.getBookingsBuStatus('PENDING');
+    this.pendingBookings = this.bookingService.getBookingsByStatus('PENDING');
   }
 
 }
