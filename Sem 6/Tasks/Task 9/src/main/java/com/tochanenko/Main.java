@@ -3,48 +3,23 @@ package com.tochanenko;
 import com.tochanenko.lfqueue.LockFreeQueue;
 
 public class Main {
-    public static void main(String[] args) {
-        LockFreeQueue<Integer> Queue = new LockFreeQueue<Integer>();
+    public static void main(String[] args) throws InterruptedException {
+        LockFreeQueue<Integer> queue = new LockFreeQueue<>();
 
-        Thread[] thread = new Thread[8];
-        for (int i = 0; i < thread.length; i++) {
-            thread[i] = new Thread(() -> {
-                int t = (int) (Math.random() * 100);
-                Queue.enq(t);
-            });
-        }
+        Adder adder1 = new Adder(queue, 0, 100, 1);
+        Adder adder2 = new Adder(queue, 900, 999, 1);
 
-        for (Thread thread1 : thread) {
-            thread1.start();
-        }
+        Thread thread1 = new Thread(adder1);
+        Thread thread2 = new Thread(adder2);
 
-        for (Thread thread1 : thread) {
-            try {
-                thread1.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        thread1.start();
+        thread2.start();
 
-        Queue.show(Queue);
+        thread1.join();
+        thread2.join();
 
-        for (int i = 0; i < thread.length; i++) {
-            thread[i] = new Thread(() -> {
-                Queue.deq();
-            });
-        }
-
-        for (Thread thread1 : thread) {
-            thread1.start();
-        }
-
-        for (Thread thread1 : thread) {
-            try {
-                thread1.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        Queue.show(Queue);
+        queue.print();
     }
+
+
 }

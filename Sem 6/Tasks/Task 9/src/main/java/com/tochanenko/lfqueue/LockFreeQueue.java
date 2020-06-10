@@ -1,89 +1,103 @@
 package com.tochanenko.lfqueue;
 
-import java.util.concurrent.atomic.AtomicReference;
+import sun.misc.Unsafe;
 
-public class LockFreeQueue<T> {
-    private AtomicReference<Node> head, tail;
+import java.lang.reflect.Constructor;
+
+public class LockFreeQueue<E> {
+    private Node<E> head;
+    private Node<E> tail;
 
     public LockFreeQueue() {
-        head = new AtomicReference(new Node(null));
-        tail = head;
+        head = tail = new Node<E>(null);
     }
 
-    public class Node {
+    public boolean offer(E item) {
+        checkNotNull(item);
+        Node<E> node = new Node<E>(item);
 
-        private T value;
-        private AtomicReference<Node> next;
-
-        public Node(T v) {
-            value = v;
-            next = new AtomicReference<>(null);
+        for (Node<E> t = tail, p = t; ; ) {
+            Node<E> q = p.next;
+            if (q == null) {
+                if (p.casNext(null, node)) {
+                    if (p != t) {
+                        casTail(t, node);
+                    }
+                    return true;
+                }
+            } else if (q == p) {
+                p = (t != (t = tail)) ? t : head;
+            } else {
+                p = (t != (t = tail)) ? t : q;
+            }
         }
     }
 
-    public T deq() throws IllegalStateException {
-        while (true) {
-            Node first = head.get();
-            Node last = tail.get();
-            Node next = first.next.get();
+    public void print() {
+        Node<E> node = head;
+        while (node != null) {
+            System.out.println(node.item);
+            node = node.next;
+        }
+    }
 
-            if (first == head.get()) {
-                if (first == last) {
-                    if (next == null) {
-                        throw new IllegalStateException("The Queue is empty");
+    public E poll() {
+        restartFromHead:
+        for (; ; ) {
+            for (Node<E> h = head, p = h, q; ; ) {
+                E item = p.item;
+                if (item != null && p.casItem(item, null)) {
+                    if (p != h) {
+                        updateHead(h, ((q = p.next) != null ? q : p));
                     }
-                    tail.compareAndSet(last, next);
+                    return item;
+                } else if ((q = p.next) == null) {
+                    updateHead(h, p);
+                    return null;
+                } else if (q == p) {
+                    continue restartFromHead;
                 } else {
-                    T value = next.value;
-
-                    if (head.compareAndSet(first, next)) {
-                        return value;
-                    }
+                    p = q;
                 }
             }
         }
     }
 
-    public void show(LockFreeQueue Q) {
-        Node first = head.get();
-        Node last = tail.get();
-        while (first != last.next.get()) {
-            if (first != head.get()) {
-                System.out.print(first.value + " ");
-            }
-            first = first.next.get();
-        }
-        System.out.println();
-    }
-
-    public void enq(T value) {
-        Node node = new Node(value);
-
-        while (true) {
-            Node last = tail.get();
-            Node next = last.next.get();
-
-            if (last == tail.get()) {
-
-                if (next == null) {
-
-                    if (last.next.compareAndSet(next, node)) {
-                        tail = new AtomicReference(node);
-                        return;
-                    }
-                } else {
-                    tail.compareAndSet(last, next);
-                }
-            }
+    private void updateHead(Node<E> h, Node<E> p) {
+        if (h != p && casHead(h, p)) {
+            h.lazyNext(h);
         }
     }
 
-    @Override
-    public String toString() {
-        return "LockFreeQueue{" +
-                "head=" + head +
-                ", tail=" + tail +
-                ", deq=" + deq() +
-                '}';
+    private boolean casHead(Node<E> h, Node<E> p) {
+        return UNSAFE.compareAndSwapObject(this, headOffset, h, p);
     }
+
+    private boolean casTail(Node<E> t, Node<E> node) {
+        return UNSAFE.compareAndSwapObject(this, tailOffset, t, node);
+    }
+
+    private static void checkNotNull(Object item) {
+        if (item == null) {
+            throw new NullPointerException();
+        }
+    }
+
+    private static final sun.misc.Unsafe UNSAFE;
+    private static final long tailOffset;
+    private static final long headOffset;
+
+    static {
+        try {
+            Constructor con = Unsafe.class.getDeclaredConstructor();
+            con.setAccessible(true);
+            UNSAFE = (Unsafe) con.newInstance(null);
+            Class k = LockFreeQueue.class;
+            tailOffset = UNSAFE.objectFieldOffset(k.getDeclaredField("tail"));
+            headOffset = UNSAFE.objectFieldOffset(k.getDeclaredField("head"));
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+    }
+
 }
