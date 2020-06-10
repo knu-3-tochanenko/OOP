@@ -6,7 +6,6 @@ import {KeycloakService} from 'keycloak-angular';
 import {UserService} from '../../service/userService/user.service';
 import {RegistrationService} from '../../service/registrationService/registration.service';
 import {map, mergeMap} from 'rxjs/operators';
-import {Ride} from '../../models/ride.model';
 import {RideService} from '../../ride.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CarDialogComponent} from '../car-dialog/car-dialog.component';

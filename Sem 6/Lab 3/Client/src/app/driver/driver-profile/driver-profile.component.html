@@ -11,7 +11,7 @@
     <mat-card *ngIf="(userData|async)?.car">
       <mat-card-content>
         <h3>Car class:{{(userData|async)?.car.carClass}}</h3>
-        <h3>Car class:{{(userData|async)?.car.seatsNumber}}</h3>
+        <h3>Seats number:{{(userData|async)?.car.seatsNumber}}</h3>
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button *ngIf="(userData|async)?.car.serviceable" color="accent"
