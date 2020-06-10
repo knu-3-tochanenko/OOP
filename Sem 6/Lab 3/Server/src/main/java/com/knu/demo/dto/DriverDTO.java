@@ -19,7 +19,7 @@ public class DriverDTO {
     @NotNull(message = "Surname is required")
     private String surname;
 
-    private int carId;
+    private Long carId;
 
 }
 

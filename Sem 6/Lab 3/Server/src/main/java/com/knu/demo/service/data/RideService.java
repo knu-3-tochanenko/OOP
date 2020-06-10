@@ -1,5 +1,6 @@
 package com.knu.demo.service.data;
 
+import com.knu.demo.entity.Booking;
 import com.knu.demo.entity.Ride;
 import com.knu.demo.entity.RideStatus;
 import com.knu.demo.repository.RideRepository;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class RideService {
         return rideRepository.save(ride);
     }
 
-    public List<Ride> getRidesByCar(Long carId) {
-        return rideRepository.findByCarIdAndBooking_RideStatus(carId, RideStatus.WAITING);
+    public List<Booking> getRideBookingsByCar(Long carId) {
+        return rideRepository.findRidesByCarIdAndBookingRideStatus(carId, RideStatus.WAITING).stream().map(Ride::getBooking).collect(Collectors.toList());
     }
 }

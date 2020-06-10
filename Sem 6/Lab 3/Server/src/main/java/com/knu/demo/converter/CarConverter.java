@@ -5,6 +5,7 @@ import com.knu.demo.entity.Car;
 import com.knu.demo.entity.CarClass;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Converter;
 import java.util.List;
 import java.util.stream.Collectors;
 

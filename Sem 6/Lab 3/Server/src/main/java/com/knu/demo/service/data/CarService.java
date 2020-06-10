@@ -15,7 +15,7 @@ public class CarService {
     private final CarRepository carRepository;
 
     public List<Car> findCarByBooking(Booking booking) {
-        return carRepository.findCarsByCarClassGreaterThanAndSeatsNumberGreaterThanAndServiceable(booking.getMinClass(), booking.getMinSeats(), true);
+        return carRepository.findCarsByCarClassGreaterThanEqualAndSeatsNumberGreaterThanEqualAndServiceable(booking.getMinClass(), booking.getMinSeats(), true);
     }
 
     public Optional<Car> findCarById(Long carId){

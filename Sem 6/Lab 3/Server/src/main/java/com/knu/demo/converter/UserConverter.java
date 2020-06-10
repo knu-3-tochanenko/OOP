@@ -5,6 +5,8 @@ import com.knu.demo.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Converter;
+
 @Component
 @RequiredArgsConstructor
 public class UserConverter {

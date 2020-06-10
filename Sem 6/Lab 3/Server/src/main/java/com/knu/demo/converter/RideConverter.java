@@ -7,6 +7,7 @@ import com.knu.demo.entity.Ride;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Converter;
 import java.util.List;
 import java.util.stream.Collectors;
 

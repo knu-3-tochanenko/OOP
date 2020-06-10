@@ -33,7 +33,7 @@
             <column name="name" type="VARCHAR(30)"/>
             <column name="surname" type="VARCHAR(30)"/>
             <column name="car_id" type="INTEGER">
-                <constraints foreignKeyName="fk_car_id" referencedTableName="cars" referencedColumnNames="id"/>
+                <constraints foreignKeyName="fk_user_car_id" referencedTableName="cars" referencedColumnNames="id"/>
             </column>
             <column name="role" type="user_role"/>
         </createTable>
@@ -50,7 +50,8 @@
             <column name="min_seats" type="INT"/>
             <column name="status" type="ride_status" defaultValue="PENDING"/>
             <column name="user_id" type="INTEGER">
-                <constraints foreignKeyName="fk_user_id" referencedTableName="users" referencedColumnNames="id"/>
+                <constraints foreignKeyName="fk_booking_user_id" referencedTableName="users"
+                             referencedColumnNames="id"/>
             </column>
         </createTable>
 
@@ -58,11 +59,12 @@
             <column name="id" autoIncrement="true" type="INTEGER">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="card_id" type="INTEGER">
-                <constraints foreignKeyName="fk_cad_id" referencedTableName="cars" referencedColumnNames="id"/>
+            <column name="car_id" type="INTEGER">
+                <constraints foreignKeyName="fk_ride_car_id" referencedTableName="cars" referencedColumnNames="id"/>
             </column>
             <column name="booking_id" type="INTEGER">
-                <constraints foreignKeyName="fk_booking_id" referencedTableName="bookings" referencedColumnNames="id"/>
+                <constraints foreignKeyName="fk_ride_booking_id" referencedTableName="bookings"
+                             referencedColumnNames="id"/>
             </column>
             <column name="price" type="INTEGER"/>
         </createTable>

@@ -10,7 +10,7 @@ import java.sql.Date;
 
 @Data
 @Entity
-@Table(name = "cars")
+@Table(name = "cars", schema = "public")
 @TypeDef(
         name = "car_class",
         typeClass = PostgreSQLEnumType.class

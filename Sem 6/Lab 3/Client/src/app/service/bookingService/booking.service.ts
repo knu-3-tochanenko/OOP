@@ -25,6 +25,6 @@ export class BookingService {
   }
 
   updateBooking(bookingId: number, status: string): Observable<Booking> {
-    return this.http.patch<Booking>(environment.bookingService + '/' + bookingId + '/' + status, status);
+    return this.http.patch<Booking>(environment.bookingService + '/' + bookingId + '/status/' + status, status);
   }
 }

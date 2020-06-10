@@ -6,6 +6,7 @@ import com.knu.demo.exception.BookingNotFoundException;
 import com.knu.demo.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +32,10 @@ public class BookingService {
         return bookingRepository.findByRideStatus(status);
     }
 
+    @Transactional
     public Booking updateBooking(Long bookingId, RideStatus rideStatus) {
-        Optional<Booking> booking = bookingRepository.findById(bookingId);
-        if (!booking.isPresent()) {
-            throw new BookingNotFoundException("Booking with id: " + booking + " not found");
-        }
-        booking.get().setRideStatus(rideStatus);
-        return booking.get();
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException("Booking with id: " + bookingId + " not found"));
+        booking.setRideStatus(rideStatus);
+        return booking;
     }
 }

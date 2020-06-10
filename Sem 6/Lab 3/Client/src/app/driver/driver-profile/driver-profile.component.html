@@ -18,11 +18,10 @@
                 (click)="setServiceable(false)">Set
           broken
         </button>
-        <button mat-raised-button *ngIf="!(userData|async)?.car.serviceable" color="accent"
+        <button mat-raised-button *ngIf="(userData|async)?.car.serviceable==false" color="accent"
                 (click)="setServiceable(true)">
           Set serviceable
         </button>
-        <button mat-raised-button color="accent">Set broken</button>
       </mat-card-actions>
     </mat-card>
 
@@ -34,8 +33,8 @@
   </div>
 
   <mat-card class="rides">
-    <div *ngFor="let ride of rides | async">
-      <app-ride-driver-item [ride]="ride"></app-ride-driver-item>
+    <div *ngFor="let booking of bookings | async">
+      <app-ride-driver-item [booking]="booking" (changed)="loadBookings()"></app-ride-driver-item>
     </div>
   </mat-card>
 

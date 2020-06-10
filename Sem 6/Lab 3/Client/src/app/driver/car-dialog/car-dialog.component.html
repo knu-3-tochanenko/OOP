@@ -3,7 +3,7 @@
 <mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field appearance="outline">
-      <mat-label>Min class</mat-label>
+      <mat-label>Car class</mat-label>
       <mat-select formControlName="carClass">
         <mat-option *ngFor='let carClass of classList?(classList |async):(loadClassList() | async)'
                     [value]="carClass">{{carClass |titlecase}}</mat-option>

@@ -5,11 +5,20 @@
   <p>Depart: {{booking.depart}}</p>
   <p>Destination: {{booking.destination}}</p>
   <p>Min car seats: {{booking.minSeats}}</p>
-  <mat-select>
-    <mat-option *ngFor="let car of cars | async" [value]="car">
-      Car class: {{car.carClass}}  Car seats number: {{car.seatsNumber}}  Last inspection: {{car.lastInspection}}
-    </mat-option>
-  </mat-select>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Car</mat-label>
+      <mat-select formControlName="car">
+        <mat-option *ngFor="let car of cars | async" [value]="car">
+          Car class: {{car.carClass}}  Car seats number: {{car.seatsNumber}}  Last inspection: {{car.lastInspection}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" required min="0">
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>

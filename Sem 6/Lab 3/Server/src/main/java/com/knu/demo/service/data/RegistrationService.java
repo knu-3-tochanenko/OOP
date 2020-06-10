@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class RegistrationService {
@@ -15,7 +13,6 @@ public class RegistrationService {
 
     @Transactional
     public User save(User currentUser) {
-        Optional<User> oldUser = userRepository.findByEmail(currentUser.getEmail());
-        return oldUser.orElseGet(() -> userRepository.save(currentUser));
+        return userRepository.findByEmail(currentUser.getEmail()).orElseGet(() -> userRepository.save(currentUser));
     }
 }

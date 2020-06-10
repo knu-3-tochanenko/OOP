@@ -5,11 +5,12 @@ import {Router} from '@angular/router';
 import {KeycloakService} from 'keycloak-angular';
 import {UserService} from '../../service/userService/user.service';
 import {RegistrationService} from '../../service/registrationService/registration.service';
-import {map} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
 import {Ride} from '../../models/ride.model';
 import {RideService} from '../../ride.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CarDialogComponent} from '../car-dialog/car-dialog.component';
+import {Booking} from '../../models/booking.model';
 
 @Component({
   selector: 'app-driver-profile',
@@ -18,7 +19,7 @@ import {CarDialogComponent} from '../car-dialog/car-dialog.component';
 })
 export class DriverProfileComponent implements OnInit {
   userData: Observable<User>;
-  rides: Observable<Ride[]>;
+  bookings: Observable<Booking[]>;
 
   constructor(private router: Router,
               private keycloakAngular: KeycloakService,
@@ -35,12 +36,12 @@ export class DriverProfileComponent implements OnInit {
         data => {
           const user = getUser(Number(data.id), data.email,
             data.firstName, data.lastName,
-            'CLIENT', '',
+            'DRIVER', '',
             null);
           this.userData = this.registrationService.registerUser(user).pipe(
-            map(_ => {
-                this.userService.setCurrentUser(user);
-                return user;
+            map(resp => {
+                this.userService.setCurrentUser(resp);
+                return resp;
               },
               err => {
                 console.log(err);
@@ -62,7 +63,8 @@ export class DriverProfileComponent implements OnInit {
   loadBookings() {
     const user = this.userService.getCurrentUser();
     if (user.car != null) {
-      this.rides = this.rideService.getRidesByCar(user.car.id);
+      console.log(user.car);
+      this.bookings = this.rideService.getRideBookingsByCar(user.car.id);
     }
   }
 
@@ -71,7 +73,9 @@ export class DriverProfileComponent implements OnInit {
     const user = this.userService.getCurrentUser();
     user.car.serviceable = serviceable;
     user.car.lastInspection = Date.now().toString();
-    this.userService.updateUser(user);
+    this.userData = this.userService.updateUser(user).pipe(
+      mergeMap(_ => this.registrationService.registerUser(user))
+    );
   }
 
   addCar() {
@@ -83,8 +87,9 @@ export class DriverProfileComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe(
-      _ => this.userData = this.registrationService.registerUser(this.userService.getCurrentUser())
+    dialogRef.afterClosed().pipe(
+      map(_ => this.userService.updateUser(this.userService.getCurrentUser())),
+      mergeMap(_ => this.userData = this.registrationService.registerUser(this.userService.getCurrentUser()))
     );
   }
 }

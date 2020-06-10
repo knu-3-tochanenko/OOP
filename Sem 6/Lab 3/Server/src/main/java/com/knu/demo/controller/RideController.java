@@ -1,5 +1,6 @@
 package com.knu.demo.controller;
 
+import com.knu.demo.dto.BookingDTO;
 import com.knu.demo.dto.RideDTO;
 import com.knu.demo.service.RideControllerService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class RideController {
         return rideService.save(rideDTO);
     }
 
-    @GetMapping(value = "/ride/{carId}")
-    public List<RideDTO> getRidesByCar(@PathVariable Long carId) {
-        return rideService.getRidesByCar(carId);
+    @GetMapping(value = "/ride/booking/{carId}")
+    public List<BookingDTO> getRideBookingsByCar(@PathVariable Long carId) {
+        return rideService.getRideBookingsByCar(carId);
     }
 }

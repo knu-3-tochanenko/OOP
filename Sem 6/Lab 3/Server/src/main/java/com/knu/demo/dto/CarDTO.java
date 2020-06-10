@@ -14,7 +14,7 @@ public class CarDTO {
     private Long id;
 
     @NotNull(message = "Seats number is required")
-    private int seatsNumber;
+    private Integer seatsNumber;
 
     @NotNull(message = "Car class is required")
     private String carClass;

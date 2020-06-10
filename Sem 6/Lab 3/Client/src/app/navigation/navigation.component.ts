@@ -28,7 +28,7 @@ export class NavigationComponent implements OnInit {
   toProfile() {
     const roles = this.keycloakAngular.getUserRoles();
     if (roles.includes('dispatcher')) {
-      this.router.navigateByUrl('/dispatch_profile');
+      this.router.navigateByUrl('/dispatcher_profile');
     } else if (roles.includes('client')) {
       this.router.navigateByUrl('/user_profile');
     } else if (roles.includes('driver')) {

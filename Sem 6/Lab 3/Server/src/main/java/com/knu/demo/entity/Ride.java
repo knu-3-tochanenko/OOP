@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "rides")
+@Table(name = "rides", schema = "public")
 @NoArgsConstructor
 public class Ride {
     @Id
@@ -17,11 +17,11 @@ public class Ride {
     private Long id;
 
     @Column(name = "price")
-    private int price;
+    private Integer price;
 
-    @OneToOne
+    @OneToOne(targetEntity = Car.class)
     private Car car;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Booking booking;
 }

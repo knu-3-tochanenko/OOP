@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Ride} from '../../models/ride.model';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BookingService} from '../../service/bookingService/booking.service';
+import {Booking} from '../../models/booking.model';
 
 @Component({
   selector: 'app-ride-driver-item',
@@ -8,7 +8,8 @@ import {BookingService} from '../../service/bookingService/booking.service';
   styleUrls: ['./ride-driver-item.component.css']
 })
 export class RideDriverItemComponent implements OnInit {
-  @Input() ride: Ride;
+  @Input() booking: Booking;
+  @Output() changed = new EventEmitter<boolean>();
 
   constructor(private bookingService: BookingService) {
   }
@@ -16,7 +17,9 @@ export class RideDriverItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateRide(ride: Ride) {
-    this.bookingService.updateBooking(ride.bookingId, 'COMPLETED');
+  updateRide() {
+    this.bookingService.updateBooking(this.booking.id, 'COMPLETED').subscribe(
+      _ => this.changed.emit(true)
+    );
   }
 }

@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "bookings")
+@Table(name = "bookings", schema = "public")
 @TypeDef(
         name = "car_class",
         typeClass = PostgreSQLEnumType.class
@@ -43,6 +43,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "status", name = "status")
     @Type(type = "ride_status")
+    @OrderColumn
     private RideStatus rideStatus;
 
     @ManyToOne
