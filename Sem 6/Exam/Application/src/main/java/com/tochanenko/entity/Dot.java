@@ -5,9 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Triangle {
-    int id;
-    private int a;
-    private int b;
-    private int c;
+public class Dot {
+    private int id;
+    private float x;
+    private float y;
 }
