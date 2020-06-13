@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .button {
+            background-color: #1DE9B6;
+            padding: 0 2rem;
+            border-radius: 6px;
+
+            font-family: "IBM Plex Mono",monospace;
+            font-stretch: expanded;
+            font-weight: bold;
+            font-size: 1rem;
+            line-height: 36px;
+            color: #009688;
+
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 50px;
+
+            cursor: pointer;
+
+            box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
+            -webkit-box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
+
+            transition: box-shadow, filter 300ms;
+            -webkit-transition: -webkit-box-shadow 300ms, filter 300ms;
+            transition: -webkit-box-shadow 300ms, filter 300ms;
+            transition: box-shadow 300ms, -webkit-box-shadow 300ms, filter 300ms;
+        }
+
+        .button:hover {
+            box-shadow: 0 8px 10px 1px rgba(100, 255, 218, 0.5), 0 3px 14px 2px rgba(100, 255, 218, 0.48), 0 5px 5px -3px rgba(100, 255, 218, 0.56);
+            -webkit-box-shadow: 0 8px 10px 1px rgba(100, 255, 218, 0.5), 0 3px 14px 2px rgba(100, 255, 218, 0.48), 0 5px 5px -3px rgba(100, 255, 218, 0.56);
+        }
+
+        .button:active {
+            filter: brightness(90%);
+            box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
+            -webkit-box-shadow: 0 2px 2px 0 rgba(100, 255, 218, 0.5), 0 1px 5px 0 rgba(100, 255, 218, 0.48), 0 3px 1px -2px rgba(100, 255, 218, 0.56);
+        }
+
+        #start_button {
+            display: block;
+        }
+
+        #stop_button {
+            display: none;
+        }
+    </style>
+    <title>Balls Collision</title>
+    <script src="js/three.js"></script>
+</head>
+<body>
+    <div id="start_button" class="button">START</div>
+    <div id="stop_button" class="button">STOP</div>
+</body>
+<script>
+
+    let camera, scene, renderer;
+    let geometry, material_1, material_2, sphere_1, sphere_2;
+
+    let a_x_pos, a_y_pos, a_radius, b_x_pos, b_y_pos, b_radius;
+
+    // Server communication
+    const startButton = document.getElementById("start_button");
+    const stopButton = document.getElementById("stop_button");
+    const socket = new WebSocket("ws://localhost:8080/socket");
+
+    socket.onopen = function () {
+        socket.send("Connected");
+        init();
+    };
+
+    socket.onmessage = function (event) {
+        receiveCoordinates(event.data);
+    };
+
+    startButton.onclick = function () {
+        startButton.style.display = "none";
+        stopButton.style.display = "block";
+        socket.send("Start");
+    }
+
+    stopButton.onclick = function () {
+        startButton.style.display = "block";
+        stopButton.style.display = "none";
+        socket.send("Stop");
+    }
+
+    function receiveCoordinates(data) {
+        if (data[0] === 'Z') {
+
+            // Init block
+            
+            let res = data.split(" ");
+            a_x_pos = parseFloat(res[1]);
+            a_y_pos = parseFloat(res[2]);
+            a_radius = parseFloat(res[3]);
+
+            console.log("RADIUS : " + a_radius)
+
+            b_x_pos = parseFloat(res[4]);
+            b_y_pos = parseFloat(res[5]);
+            b_radius = parseFloat(res[6]);
+        } else {
+            let res = data.split(" ");
+            a_x_pos = parseFloat(res[0]);
+            a_y_pos = parseFloat(res[1]);
+
+            b_x_pos = parseFloat(res[2]);
+            b_y_pos = parseFloat(res[3]);
+
+            sphere_1.position.x = a_x_pos;
+            sphere_1.position.y = a_y_pos;
+            sphere_2.position.x = b_x_pos;
+            sphere_2.position.y = b_y_pos;
+
+            console.log("1: " + sphere_1.position.x + " / " + sphere_1.position.y);
+            console.log("2: " + sphere_2.position.x + " / " + sphere_2.position.y)
+
+            renderer.render(scene, camera);
+        }
+    }
+
+    // Visualisation
+
+    function init() {
+        socket.send("INIT");
+
+        camera = new THREE.PerspectiveCamera(
+            70, window.innerWidth / window.innerHeight, 0.01, 10);
+        camera.position.z = 1;
+
+        scene = new THREE.Scene();
+
+        geometry = new THREE.SphereGeometry(0.15, 32, 32);
+        let texture_1 = new THREE.TextureLoader().load('textures/sphere-1.jpg');
+        let texture_2 = new THREE.TextureLoader().load('textures/sphere-2.jpg')
+        material_1 = new THREE.MeshBasicMaterial( { map: texture_1 } );
+        material_2 = new THREE.MeshBasicMaterial( { map: texture_2 } );
+
+        sphere_1 = new THREE.Mesh(geometry, material_1);
+        scene.add(sphere_1);
+
+        sphere_2 = new THREE.Mesh(geometry, material_2);
+        scene.add(sphere_2);
+
+        sphere_1.position.x = a_x_pos;
+        sphere_1.position.y = -a_y_pos;
+        sphere_2.position.x = b_x_pos;
+        sphere_2.position.y = -b_y_pos;
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+    }
+</script>
+</html>
