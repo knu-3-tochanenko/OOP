@@ -19,7 +19,35 @@ public class TriangleDao {
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()) {
-            System.out.println("#" + resultSet.getInt("id") + " of area " + resultSet.getFloat("area"));
+            System.out.println("Triangle with area as close to " + area + "is \u001B[96m#" + resultSet.getInt("id") + "\u001B[0m of difference \u001B[96m" + resultSet.getFloat("area") + "\u001B[0m");
+        }
+    }
+
+    public static void getSumOfAreas(float area) throws SQLException, ClassNotFoundException {
+        String query = ScriptLoader.load("query2.sql");
+
+        Connection connection = DBConnection.initDB();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setFloat(1, area);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            System.out.println("WRITE RESULT HERE");
+        }
+    }
+
+    public static void getInsideCircle(float r) throws SQLException, ClassNotFoundException {
+        String query = ScriptLoader.load("query3.sql");
+
+        Connection connection = DBConnection.initDB();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setFloat(1, r);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            System.out.println("WRITE RESULT HERE");
         }
     }
 }

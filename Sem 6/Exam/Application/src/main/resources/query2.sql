@@ -1,6 +1,6 @@
 
 
-
+-- Этот скрипт находит площадь каждого треугольника --
 SELECT t.id, (ABS((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) / 2) AS area
 FROM "triangles" t
          INNER JOIN dots a ON t.a = a.id

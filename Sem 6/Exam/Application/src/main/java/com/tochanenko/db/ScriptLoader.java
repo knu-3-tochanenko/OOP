@@ -13,9 +13,8 @@ public class ScriptLoader {
 
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("Current relative path is: " + s);
 
-        File file = new File("C:/Workspace/Repos/knu-3/OOP/OOP - Exam/Sem 6/Exam/Application/src/main/resources/" + fileName);
+        File file = new File("src/main/resources/" + fileName);
         StringBuilder res = new StringBuilder("");
 
         BufferedReader bufferedReader;
