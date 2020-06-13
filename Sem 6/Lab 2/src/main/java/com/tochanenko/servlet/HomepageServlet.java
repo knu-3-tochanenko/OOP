@@ -3,14 +3,12 @@ package com.tochanenko.servlet;
 import com.tochanenko.database.UserDao;
 import com.tochanenko.entities.User;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet({ "/", "/home"})
@@ -23,11 +21,6 @@ public class HomepageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
-        System.out.println("---------------------------------------------");
-        System.out.println("email is " + email);
-        System.out.println("password is " + password);
-        System.out.println("---------------------------------------------");
 
         User user = null;
 
