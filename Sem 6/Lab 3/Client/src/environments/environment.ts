@@ -9,7 +9,7 @@ const keycloakConfig: KeycloakConfig = {
   realm: 'Autobase',
   clientId: 'autobase-frontend',
   credentials: {
-    secret: '32791008-1f83-42dc-810b-bfe5d4c72d03',
+    secret: '0bbb934e-e713-4ac8-94fb-711741217b78',
   }
 };
 
