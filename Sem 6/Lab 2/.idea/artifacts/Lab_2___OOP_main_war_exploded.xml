@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Lab_2_-_OOP.main:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Lab_2___OOP_main_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Lab_2_-_OOP.main" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="Lab_2_-_OOP.main/web/Web Gradle : Lab 2 - OOP-1.0-SNAPSHOT.war" />
+    </root>
+  </artifact>
+</component>
